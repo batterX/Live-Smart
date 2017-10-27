@@ -33,7 +33,6 @@ sudo chmod 777 /home/pi/BatterX
 Update the auto-run script
 ```
 sudo cp livesmart/launcher.sh /home/pi
-sudo chmod 777 /home/pi
 ```
 
 Remove the LiveSmart directory
