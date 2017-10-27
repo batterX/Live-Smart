@@ -8,7 +8,7 @@ Login to your Live & Smart Box using `Remote Desktop Connection` or directly usi
 
 Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
 
-Execute `updater.sh`
+Double-click on `updater.sh` and click `Execute` or `Execute in Terminal`
 
 The updater script automatically performs all steps from the manual update below
 
