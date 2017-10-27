@@ -38,7 +38,7 @@ sudo chmod 777 /home/pi/launcher.sh
 
 Remove the LiveSmart directory
 ```
-sudo rm livesmart
+sudo rm livesmart -r
 ```
 
 Restart the Raspberry Pi
