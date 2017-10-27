@@ -6,7 +6,7 @@ Login to your Live&Smart Box using `Remote Desktop Connection` or directly using
 
 Open Raspberry Pi's `Terminal`
 
-#####To manually update the software run the following commands:
+##### To manually update the software run the following commands:
 
 Clone the GitHub repository
 `git clone https://github.com/batterx/livesmart.git`
