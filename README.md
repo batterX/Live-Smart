@@ -19,16 +19,16 @@ sudo cp livesmart/html /var/www -r
 ```
 
 Update the communication software
-`sudo cp livesmart/BatterX /home/pi`
+```
+sudo cp livesmart/BatterX /home/pi
+```
 
 Update the auto-run script
-`sudo cp livesmart/launcher.sh /home/pi`
+```
+sudo cp livesmart/launcher.sh /home/pi
+```
 
 Remove the LiveSmart directory
-`sudo rm livesmart`
-
 ```
-git clone https://github.com/batterx/livesmart.git
-sudo cp livesmart/html /var/www -r
-sudo cp livesmart/BatterX /home/pi
+sudo rm livesmart
 ```
