@@ -10,29 +10,34 @@ TODO
 
 ### Manual Update:
 
-Open Raspberry Pi's `Terminal`
+1. Open Raspberry Pi's `Terminal`
 
-Clone the GitHub repository
+2. Clone the GitHub repository
 ```
 git clone https://github.com/batterx/livesmart.git
 ```
 
-Update the local web-app
+3. Update the local web-app
 ```
 sudo cp livesmart/html /var/www -r
 ```
 
-Update the communication software
+4. Update the communication software
 ```
 sudo cp livesmart/BatterX /home/pi
 ```
 
-Update the auto-run script
+5. Update the auto-run script
 ```
 sudo cp livesmart/launcher.sh /home/pi
 ```
 
-Remove the LiveSmart directory
+6. Remove the LiveSmart directory
 ```
 sudo rm livesmart
+```
+
+7. Restart the Raspberry Pi
+```
+sudo reboot
 ```
