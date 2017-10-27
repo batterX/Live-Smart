@@ -9,10 +9,14 @@ Login to your Live&Smart Box using `Remote Desktop Connection` or directly using
 Open Raspberry Pi's `Terminal`
 
 Clone the GitHub repository
-`git clone https://github.com/batterx/livesmart.git`
+```
+git clone https://github.com/batterx/livesmart.git
+```
 
 Update the local web-app
-```sudo cp livesmart/html /var/www -r```
+```
+sudo cp livesmart/html /var/www -r
+```
 
 Update the communication software
 `sudo cp livesmart/BatterX /home/pi`
