@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>BatterX | Dashboard</title>
+		<link rel="shortcut icon" href="img/x.png">
+		<link href="css/components/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/components/normalize.css">
+		<link rel="stylesheet" type="text/css" href="css/components/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/components/jasny-bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+	</head>
+	
+	
+	<body>
+		
+		<!-- NAVIGATION MENU - LEFT-SIDE DRAWER -->
+		<div id="slider-left" class="navmenu navmenu-fixed-left offcanvas-port">
+			<div class="wrap">
+				<div class="text-center">
+					<img src="img/logo-livesmart.svg" class="logo-livesmart">
+					<img src="img/x-lg.png" class="logo" id="logo">
+					<div><button type="button" id="live"><h4 class="active">LIVE</h4></button></div>
+					<img src="img/under.png" class="img-under">
+					<div><button type="button" id="energy"><h4>ENERGY</h4></button></div>
+					<img src="img/under.png" class="img-under">
+					<div><button type="button" id="device"><h4>SYSTEM</h4></button></div>
+					<img src="img/under.png" class="img-under">
+				</div>
+			</div>
+		</div>
+
+		<!-- MAIN VIEW - MIDDLE -->
+		<div id="middle">
+
+			<!-- NAVIGATION BAR -->
+			<div class="navigation row">
+				
+				<div class="col-2 no-padding no-margin">
+					<button type="button" class="navbar-toggle hidden-land" data-toggle="offcanvas" data-target="#slider-left">
+						<img src="img/hamburger.png" class="hamburger">
+					</button>
+				</div>
+				
+				<div class="col-8 text-center">
+					<img src="img/x-sm.png" class="logo">
+					<h4 class="title" id="title">LIVE</h4>
+					<img src="img/under.png" class="img-under">
+				</div>
+				
+				<div id="btnNotification" class="col-2 no-margin no-padding">
+					<img src="img/notification-white.png" class="notification blink">
+					<span class="button-badge blink"></span>
+				</div>
+				
+			</div>
+
+			<!-- MAIN CONTENT (FRAME + LIST) -->
+			<iframe src="live.html" id="frame"></iframe>
+
+			<!-- BOTTOM NOTIFICATION BAR -->
+			<div class="notifbar">
+				<div id="notifbar-parent">
+					<img src="img/mail.png" id="notifbar-icon" class="notifbar-icon">
+					<h4 id="notifbar-text">Send statistics on my email</h4>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- NOTIFICATIONS MENU - RIGHT-SIDE DRAWER -->
+		<div id="slider-right" class="navmenu navmenu-fixed-right offcanvas">
+			
+			<div class="text-center">
+				<img src="img/x-sm.png" class="logo">
+				<h4 class="title">NOTIFICATIONS</h4>
+				<img src="img/under.png" class="img-under">
+			</div>
+			
+			<!-- SHOW LAST UPDATE TIME -->
+			<div class="wrap" id="notif-lastupdate">
+				<!--
+				<div class='row notif-head'>
+					<img src='img/notif-new.png' class='notif-circle'/>
+					<h4>Notification</h4>
+				</div>
+				-->
+			</div>
+			
+			<!-- LIST WITH ACTIVE WARNINGS -->
+			<div class="wrap" id="notif-active">
+				<div class="warnings">
+					<!--
+					<div class='row notif-head-active'>
+						<img src='img/notif-new.png' class='notif-circle'/>
+						<h4>Notification</h4>
+					</div>
+					-->
+				</div>
+				<div class="faults"></div>
+			</div>
+			
+			<!-- LIST WITH NOTIFICATIONS -->
+			<div class="wrap" id="notif-container">
+				<!--
+				<article>
+					<div class='row notif-head'>
+						<img src='img/notif-new.png' class='notif-circle'/>
+						<h4>Notification</h4>
+					</div>
+					<div class='row'>
+						<div class='notif-bar'/>
+						<div class='notif-desc'>
+							<img src='img/under.png' class='img-under'>
+							<p class='time'>17-03-2017 11:40:52</p>
+							<p>Description of the notification</p>
+						</div>
+					</div>
+				</article>
+				-->
+			</div>
+		</div>
+		
+		<script src="js/components/jquery.js"></script>
+		<script src="js/components/bootstrap.js"></script>
+		<script src="js/components/moment.js"></script>
+		<script src="js/components/jasny-bootstrap.js"></script>
+		<script src="js/batterx-notifications.js"></script>
+		<script src="js/index.js"></script>
+		
+	</body>
+
+</html>

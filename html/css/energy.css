@@ -1,0 +1,150 @@
+/* Remove any extra spacing + Add some basic settings */
+html, body {
+	margin: 0px;
+	padding: 0px;
+	font-size: 0px;
+	height: 100%;
+	font-family: 'Raleway' !important;
+}
+* {
+	font-family: 'Raleway' !important;
+}
+body {
+	background-color: #131313;
+	display: flex;
+	flex-flow: column;
+}
+.row {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+
+/* Style the Top Part */
+div.top {
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-basis: auto;
+	padding-left: 2.5vw;
+	padding-right: 2.5vw;
+}
+
+div.top .container {
+	background-color: #1b1b1b;
+	width: 100%;
+	padding: 1.25vh 0vw;
+	cursor: pointer;
+}
+.dropdown-under {
+	height: 0.25vh;
+	width: 100%;
+}
+div.top .col-2, div.top .col-5 {
+	padding: 3.5vh 2.5vw 2.25vh 2.5vw;
+}
+div.top .container .name {
+	color: gray;
+	font-size: 2.5vh;
+	padding: 5px;
+}
+div.top .container img {
+	height: 2.5vh;
+}
+
+.btn-selected h4 {
+	color: white !important;
+}
+
+
+
+/* Style the Middle Part */
+div.middle {
+	height: 1px;
+	background: #333333;
+	margin: 1.25vh 0 2.5vh 0;
+}
+
+
+
+/* Style the Bottom Part */
+div.bottom {
+	height: auto;
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex-basis: auto;
+	position: relative;
+}
+div.bottom .chart-container{
+	height: calc(100vh - 14.75vh - 15px); /* 11vh + 10px is the top container, 3.75vh + 1px is the middle container, 4px are added for rounding etc. */
+	width: 100%;
+}
+#chart {
+	width: 100%;
+	height: 100%;
+	padding: 2vh 10px 1vh 10px;
+}
+#btnZoom {
+	width: 5vh;
+	height: 5vh;
+	position: absolute;
+	right: 3vh;
+	top: 4vh;
+	background: url(../img/plus.png);
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+
+
+/* Style the Tooltips */
+#chartjs-tooltip {
+	font-family: "Raleway";
+	font-size: 14px;
+	opacity: 1;
+	position: absolute;
+	background: rgba(0, 0, 0, .9);
+	color: white;
+	border-radius: 5px;
+	box-shadow: 0 0 0 0.25vh #87d403;
+	transition: all .1s ease;
+	pointer-events: none;
+	transform: translate(-50%, 0);
+}
+.chartjs-tooltip-key {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: 10px;
+}
+thead {
+	border-bottom: 0.25vh solid #87d403;
+}
+tfoot {
+	border-top: .25vh solid #87d403;
+}
+
+th, td {
+	font-family: "Raleway";
+	white-space: nowrap;
+	overflow: hidden;
+}
+thead th {
+	padding-bottom: 5px;
+}
+tfoot td {
+	padding-top: 5px;
+}
+.value {
+	padding-left:10px;
+	color: #87d403;
+}
+
+
+
+/* Special Style for Landscape */
+@media (orientation: landscape) {
+	/* TODO */
+}
