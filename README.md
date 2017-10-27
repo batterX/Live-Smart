@@ -1,10 +1,14 @@
 # batterX Live & Smart
 
-### Update Local Monitoring App
+## Update Local Monitoring App
 
 Login to your Live&Smart Box using `Remote Desktop Connection` or directly using HDMI display
 
-#### To manually update the software run the following commands:
+### Auto Update:
+
+TODO
+
+### Manual Update:
 
 Open Raspberry Pi's `Terminal`
 
