@@ -20,7 +20,7 @@ git clone https://github.com/batterx/livesmart.git
 Update the local web-app
 ```
 sudo cp livesmart/html /var/www -r
-sudo chmod 777 /var/www -r
+sudo chmod 777 /var/www -R
 ```
 
 Update the communication software
