@@ -6,7 +6,11 @@ Login to your Live&Smart Box using `Remote Desktop Connection` or directly using
 
 ### One-click Update:
 
-TODO
+Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
+
+Execute `updater.sh`
+
+The updater script automatically performs all steps from the manual update below
 
 ### Manual Update:
 
