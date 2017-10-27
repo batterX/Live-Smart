@@ -4,7 +4,7 @@
 
 Login to your Live&Smart Box using `Remote Desktop Connection` or directly using an HDMI display
 
-### One-Click Update:
+### One-click Update:
 
 TODO
 
