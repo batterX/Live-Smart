@@ -1,6 +1,6 @@
 # batterX Live & Smart
 
-## Update Local Monitoring App
+## Update Monitoring App
 
 Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
 
