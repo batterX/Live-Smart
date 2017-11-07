@@ -34,7 +34,7 @@ div.top {
 }
 div.top #uploadButton {
 	width: 100%;
-	background: url(../img/upload-image.svg);
+	background: url(../img/upload-image.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 50vh;
