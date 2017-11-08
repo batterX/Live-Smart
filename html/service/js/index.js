@@ -3,6 +3,71 @@ var MD5 = function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){
 password = "914706ee0483ce46dd61f26907167baf";
 authenticated = false;
 
+$('#update').on('click', function() {
+	if(!authenticated) {
+		pw = prompt("Enter Password", "");
+		if(password == MD5(pw)) 
+			authenticated = true;
+	}
+	
+	if(!authenticated)
+		return;
+	
+	flag = confirm("Press 'OK' to Update the System\nThe system will automatically reboot after a successfull update");
+	if(!flag) return;
+	
+	$.ajax({
+		type: 'POST',
+		url: 'php/update.php',
+		success: function (response) {},
+		error: function (response) {}
+	});
+});
+
+$('#reboot').on('click', function() {
+	if(!authenticated) {
+		pw = prompt("Enter Password", "");
+		if(password == MD5(pw)) 
+			authenticated = true;
+	}
+	
+	if(!authenticated)
+		return;
+	
+	flag = confirm("Press 'OK' to Reboot the System");
+	if(!flag) return;
+	
+	$.ajax({
+		type: 'POST',
+		url: 'php/reboot.php',
+		success: function (response) {},
+		error: function (response) {}
+	});
+});
+
+$('#shutdown').on('click', function() {
+	if(!authenticated) {
+		pw = prompt("Enter Password", "");
+		if(password == MD5(pw)) 
+			authenticated = true;
+	}
+	
+	if(!authenticated)
+		return;
+	
+	flag = confirm("Press 'OK' to Shutdown the System");
+	if(!flag) return;
+	
+	$.ajax({
+		type: 'POST',
+		url: 'php/shutdown.php',
+		success: function (response) {},
+		error: function (response) {}
+	});
+	
+	setTimeout(function() { alert("An error has occured!"); }, 5000);
+});
+
 $('#addField').on('click', function() {
 	if($('#func1:hidden').length) 
 		$('#func1').css('display', 'flex');
