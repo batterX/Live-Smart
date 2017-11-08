@@ -12,6 +12,7 @@ The easiest way is to open your browser and:
 
 3. Click `OK` to confirm that the System should be updated
 
+After the update is complete the Raspberry Pi will reboot automatically
 
 ### One-click Update:
 
