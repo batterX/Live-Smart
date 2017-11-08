@@ -6,7 +6,7 @@
 
 The easiest way is to open your browser and:
 
-1. Navigate to http://YOUR_RASPI_IP_ADDRESS/service
+1. Navigate to `http://YOUR_RASPI_IP_ADDRESS/service`
 
 2. Click the `Update` icon (enter the correct password, if prompted)
 
