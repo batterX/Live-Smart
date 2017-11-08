@@ -2,9 +2,20 @@
 
 ## Update Monitoring App
 
-Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
+### Update using the Local Web App
+
+The easiest way is to open your browser and:
+
+1. Navigate to http://YOUR_RASPI_IP_ADDRESS/service
+
+2. Click the `Update` icon (enter the correct password, if prompted)
+
+3. Click `OK` to confirm that the System should be updated
+
 
 ### One-click Update:
+
+Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
 
 Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
 
@@ -13,6 +24,8 @@ Double-click on `updater.sh` and click `Execute` or `Execute in Terminal`
 The updater script automatically performs all steps from the manual update below
 
 ### Manual Update:
+
+Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
 
 Open Raspberry Pi's `Terminal`
 
