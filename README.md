@@ -19,9 +19,7 @@ After the update is complete the Raspberry Pi will reboot automatically
 #### Version < v17.11.8
 
 Open `Terminal`, type `$ sudo crontab -e` and make sure that the following line exists
-```
-* * * * * sh /home/pi/launcher.sh >/home/pi/logs/crontab.log 2>&1
-```
+```* * * * * sh /home/pi/launcher.sh >/home/pi/logs/crontab.log 2>&1```
 
 Open `Terminal`, type `$ sudo visudo` and make sure that the following line exists
 ```
