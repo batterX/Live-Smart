@@ -13,7 +13,7 @@ $('#update').on('click', function() {
 	if(!authenticated)
 		return;
 	
-	flag = confirm("Press 'OK' to Update the System\nThe system will automatically reboot after a successfull update");
+	flag = confirm("Press 'OK' to Update the System\nThe system will automatically reboot after a successfull update\nThe version number will change as well");
 	if(!flag) return;
 	
 	$.ajax({
@@ -64,8 +64,6 @@ $('#shutdown').on('click', function() {
 		success: function (response) {},
 		error: function (response) {}
 	});
-	
-	setTimeout(function() { alert("An error has occured!"); }, 5000);
 });
 
 $('#addField').on('click', function() {

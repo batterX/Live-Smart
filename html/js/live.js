@@ -408,10 +408,10 @@ $(document).ready(function () {
 					solarVoltage2 = 0;
 					solarVoltage3 = 0;
 					solarVoltage4 = 0;
-					if(json.hasOwnProperty("1553") && json["1553"].hasOwnProperty("1")) solarVoltage1 = round(parseInt(json["1553"]["1"]["entityvalue"])*0.01, 0);
-					if(json.hasOwnProperty("1554") && json["1554"].hasOwnProperty("1")) solarVoltage2 = round(parseInt(json["1554"]["1"]["entityvalue"])*0.01, 0);
-					if(json.hasOwnProperty("1555") && json["1555"].hasOwnProperty("1")) solarVoltage3 = round(parseInt(json["1555"]["1"]["entityvalue"])*0.01, 0);
-					if(json.hasOwnProperty("1556") && json["1556"].hasOwnProperty("1")) solarVoltage4 = round(parseInt(json["1556"]["1"]["entityvalue"])*0.01, 0);
+					if(json.hasOwnProperty("1553")) solarVoltage1 = round(parseInt(json["1553"][Object.keys(json["1553"])[0]]["entityvalue"])*0.01, 0);
+					if(json.hasOwnProperty("1554")) solarVoltage2 = round(parseInt(json["1554"][Object.keys(json["1554"])[0]]["entityvalue"])*0.01, 0);
+					if(json.hasOwnProperty("1555")) solarVoltage3 = round(parseInt(json["1555"][Object.keys(json["1555"])[0]]["entityvalue"])*0.01, 0);
+					if(json.hasOwnProperty("1556")) solarVoltage4 = round(parseInt(json["1556"][Object.keys(json["1556"])[0]]["entityvalue"])*0.01, 0);
 
 					if(solarVoltage1 > 1 || solarVoltage2 > 1 || solarVoltage3 > 1 || solarVoltage4 > 1) 
 						$(".top-left").css("visibility", "visible");
@@ -439,24 +439,24 @@ $(document).ready(function () {
 				if(solarContNum == 1) 
 				{
 					if(json.hasOwnProperty("1553")) {
-						if(json.hasOwnProperty("1553") && json["1553"].hasOwnProperty("1")) $('#solarVoltage1').html(round(parseInt(json["1553"]["1"]["entityvalue"])*0.01, 0).toString() + " V");
-						if(json.hasOwnProperty("1569") && json["1569"].hasOwnProperty("1")) $('#solarCurrent1').html(round(parseInt(json["1569"]["1"]["entityvalue"])*0.01, 1).toString() + " A");
-						if(json.hasOwnProperty("1617") && json["1617"].hasOwnProperty("1")) $('#solarPower1').html(round(parseInt(json["1617"]["1"]["entityvalue"]), 1).toString() + " W");
+						if(json.hasOwnProperty("1553")) $('#solarVoltage1').html(round(parseInt(json["1553"][Object.keys(json["1553"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
+						if(json.hasOwnProperty("1569")) $('#solarCurrent1').html(round(parseInt(json["1569"][Object.keys(json["1569"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
+						if(json.hasOwnProperty("1617")) $('#solarPower1').html(round(parseInt(json["1617"][Object.keys(json["1617"])[0]]["entityvalue"]), 1).toString() + " W");
 					}
 					if(json.hasOwnProperty("1554")) {
-						if(json.hasOwnProperty("1554") && json["1554"].hasOwnProperty("1")) $('#solarVoltage2').html(round(parseInt(json["1554"]["1"]["entityvalue"])*0.01, 0).toString() + " V");
-						if(json.hasOwnProperty("1570") && json["1570"].hasOwnProperty("1")) $('#solarCurrent2').html(round(parseInt(json["1570"]["1"]["entityvalue"])*0.01, 1).toString() + " A");
-						if(json.hasOwnProperty("1618") && json["1618"].hasOwnProperty("1")) $('#solarPower2').html(round(parseInt(json["1618"]["1"]["entityvalue"]), 1).toString() + " W");
+						if(json.hasOwnProperty("1554")) $('#solarVoltage2').html(round(parseInt(json["1554"][Object.keys(json["1554"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
+						if(json.hasOwnProperty("1570")) $('#solarCurrent2').html(round(parseInt(json["1570"][Object.keys(json["1570"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
+						if(json.hasOwnProperty("1618")) $('#solarPower2').html(round(parseInt(json["1618"][Object.keys(json["1618"])[0]]["entityvalue"]), 1).toString() + " W");
 					}
 					if(json.hasOwnProperty("1555")) {
-						if(json.hasOwnProperty("1555") && json["1555"].hasOwnProperty("1")) $('#solarVoltage3').html(round(parseInt(json["1555"]["1"]["entityvalue"])*0.01, 0).toString() + " V");
-						if(json.hasOwnProperty("1571") && json["1571"].hasOwnProperty("1")) $('#solarCurrent3').html(round(parseInt(json["1571"]["1"]["entityvalue"])*0.01, 1).toString() + " A");
-						if(json.hasOwnProperty("1619") && json["1619"].hasOwnProperty("1")) $('#solarPower3').html(round(parseInt(json["1619"]["1"]["entityvalue"]), 1).toString() + " W");
+						if(json.hasOwnProperty("1555")) $('#solarVoltage3').html(round(parseInt(json["1555"][Object.keys(json["1555"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
+						if(json.hasOwnProperty("1571")) $('#solarCurrent3').html(round(parseInt(json["1571"][Object.keys(json["1571"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
+						if(json.hasOwnProperty("1619")) $('#solarPower3').html(round(parseInt(json["1619"][Object.keys(json["1619"])[0]]["entityvalue"]), 1).toString() + " W");
 					}
 					if(json.hasOwnProperty("1556")) {
-						if(json.hasOwnProperty("1556") && json["1556"].hasOwnProperty("1")) $('#solarVoltage4').html(round(parseInt(json["1556"]["1"]["entityvalue"])*0.01, 0).toString() + " V");
-						if(json.hasOwnProperty("1572") && json["1572"].hasOwnProperty("1")) $('#solarCurrent4').html(round(parseInt(json["1572"]["1"]["entityvalue"])*0.01, 1).toString() + " A");
-						if(json.hasOwnProperty("1620") && json["1620"].hasOwnProperty("1")) $('#solarPower4').html(round(parseInt(json["1620"]["1"]["entityvalue"]), 1).toString() + " W");
+						if(json.hasOwnProperty("1556")) $('#solarVoltage4').html(round(parseInt(json["1556"][Object.keys(json["1556"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
+						if(json.hasOwnProperty("1572")) $('#solarCurrent4').html(round(parseInt(json["1572"][Object.keys(json["1572"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
+						if(json.hasOwnProperty("1620")) $('#solarPower4').html(round(parseInt(json["1620"][Object.keys(json["1620"])[0]]["entityvalue"]), 1).toString() + " W");
 					}
 				}
 				else if(solarContNum > 1)
