@@ -14,6 +14,20 @@ The easiest way is to open your browser and:
 
 After the update is complete the Raspberry Pi will reboot automatically
 
+### Notes:
+
+#### Version < v17.11.8
+
+Type `$ sudo crontab -e` and make sure that the following line exists
+```
+* * * * * sh /home/pi/launcher.sh >/home/pi/logs/crontab.log 2>&1
+```
+
+Type `$ sudo visudo` and make sure that the following line exists
+```
+www-data ALL=NOPASSWD: /sbin/reboot, /sbin/halt, /bin/sh, /home/pi/updater.sh
+```
+
 ### One-click Update:
 
 Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
