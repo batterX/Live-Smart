@@ -437,7 +437,13 @@ $(document).ready(function () {
 				
 				if(solarContNum == 1 && solarNum == 1) $("#solarInfo1 h2").html("SOLAR");
 				
-				if(json.hasOwnProperty("1634")) $('#solarPowerTotal').html(round(parseInt(json["1634"]["0"]["entityvalue"]), 1).toString() + " W");
+				if(json.hasOwnProperty("1634")) { 
+					$('#solarPowerTotal').html(round(parseInt(json["1634"]["0"]["entityvalue"]), 1).toString() + " W");
+					if(parseInt(json["1634"]["0"]["entityvalue"]) > 1) 
+						$(".top-left .arrow-line").css("visibility", "visible");
+					else 
+						$(".top-left .arrow-line").css("visibility", "hidden");
+				}
 				
 				if(solarContNum == 1) 
 				{
@@ -642,9 +648,13 @@ $(document).ready(function () {
 					if(round(parseInt(json["353"][Object.keys(json["353"])[0]]["entityvalue"]), 1) > 0) {
 						$('.top-right .arrow').removeClass('arrow-up');
 						$('.top-right .arrow').addClass('arrow-down');
-					} else {
+						$(".top-right .arrow-line").css("visibility", "visible");
+					} else if(round(parseInt(json["353"][Object.keys(json["353"])[0]]["entityvalue"]), 1) < 0) {
 						$('.top-right .arrow').removeClass('arrow-down');
 						$('.top-right .arrow').addClass('arrow-up');
+						$(".top-right .arrow-line").css("visibility", "visible");
+					} else {
+						$(".top-right .arrow-line").css("visibility", "hidden");
 					}
 				}
 				
@@ -691,9 +701,13 @@ $(document).ready(function () {
 					if(round(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"]), 1) < 0) {
 						$('.bottom-left .arrow').removeClass('arrow-down');
 						$('.bottom-left .arrow').addClass('arrow-up');
-					} else {
+						$(".bottom-left .arrow-line").css("visibility", "visible");
+					} else if(round(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"]), 1) > 0) {
 						$('.bottom-left .arrow').removeClass('arrow-up');
 						$('.bottom-left .arrow').addClass('arrow-down');
+						$(".bottom-left .arrow-line").css("visibility", "visible");
+					} else {
+						$(".bottom-left .arrow-line").css("visibility", "hidden");
 					}
 				}
 				
@@ -732,8 +746,13 @@ $(document).ready(function () {
 				
 				if(loadNum == 1) $("#loadInfo1 h2").html("LOAD");
 				
-				if(json.hasOwnProperty("1377"))
+				if(json.hasOwnProperty("1377")) {
 					$('#loadPowerTotal').html(round(parseInt(json["1377"][Object.keys(json["1377"])[0]]["entityvalue"]), 1).toString() + " W");
+					if(parseInt(json["1377"][Object.keys(json["1377"])[0]]["entityvalue"]) > 1) 
+						$(".bottom-right .arrow-line").css("visibility", "visible");
+					else 
+						$(".bottom-right .arrow-line").css("visibility", "hidden");
+				}
 				
 				if(loadNum > 0) {
 					if(json.hasOwnProperty("1297")) $('#loadVoltageL1').html(round(parseInt(json["1297"][Object.keys(json["1297"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
