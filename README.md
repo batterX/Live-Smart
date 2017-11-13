@@ -4,13 +4,11 @@
 
 ### One-Click Update:
 
-The easiest way is to open your browser and:
+Navigate to `http://YOUR_RASPI_IP_ADDRESS/service`
 
-1. Navigate to `http://YOUR_RASPI_IP_ADDRESS/service`
+Click the `Update` icon (enter the correct password, if prompted)
 
-2. Click the `Update` icon (enter the correct password, if prompted)
-
-3. Click `OK` to confirm that the System should be updated
+Click `OK` to confirm that the System should be updated
 
 After the update the Raspberry Pi will automatically reboot and apply the new version
 
