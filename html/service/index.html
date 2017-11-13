@@ -47,7 +47,7 @@
 						<a id="shutdown" class="nav-link" href="#"><img src="../img/ic_stop.png" style="height: 22px"></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" target="_blank" href="https://github.com/batterX/LiveSmart">v17.11.9</a>
+						<a class="nav-link" target="_blank" href="https://github.com/batterX/LiveSmart">v17.11.13</a>
 					</li>
 				</ul>
 				
@@ -73,10 +73,10 @@
 							<option>Output 2</option>
 							<option>Output 3</option>
 							<option>Output 4</option>
-							<!--<option>Input 1</option>
+							<option>Input 1</option>
 							<option>Input 2</option>
 							<option>Input 3</option>
-							<option>Input 4</option>-->
+							<option>Input 4</option>
 						</select>
 					</div>
 				</div>
@@ -92,10 +92,19 @@
 					</div>
 				</div>
 				
-				
+				<!-- PIN -->
+				<div id="whenActive" class="card card-inverse bg-inverse my-3 mx-0 p-3" style="display: none">
+					<div>
+						<h4 class="p-0 m-0 pb-3">When Active</h4>
+						<select id="inputFunc" class="form-control text-center">
+							<option>Enable Grid Injection</option>
+							<option>Disable Grid Injection</option>
+						</select>
+					</div>
+				</div>
 				
 				<!-- ACTIVE WHEN -->
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
+				<div id="activeWhen" class="card card-inverse bg-inverse my-3 mx-0 p-3">
 
 					<div>
 
@@ -296,8 +305,8 @@
 
 				</div>
 				
-				<!-- ACTIVE -->
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
+				<!-- SELECT TIME -->
+				<div id="selectTime" class="card card-inverse bg-inverse my-3 mx-0 p-3">
 					<div>
 						<h4 class="p-0 m-0 pb-3">Time from - to</h4>
 						<div id="timeFrom" class="row p-0 m-0 mb-3">

@@ -36,6 +36,9 @@ $(document).ready(function () {
 					case 'batterx h10':
 						$(".device").css("background-image", "url('img/device-h10.png')");
 						break;
+					case 'batterx bs':
+						$(".device").css("background-image", "url('img/device-bs.png')");
+						break;
 					default:
 						$(".device").css("background-image", "url('img/device-h5.png')");
 						break;

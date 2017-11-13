@@ -3,6 +3,10 @@ var MD5 = function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){
 password = "914706ee0483ce46dd61f26907167baf";
 authenticated = false;
 
+
+
+
+
 $('#update').on('click', function() {
 	if(!authenticated) {
 		pw = prompt("Enter Password", "");
@@ -81,6 +85,24 @@ $('#addField').on('click', function() {
 	}
 });
 
+
+
+
+
+$('#pin').on('change', function() {
+	if($(this).val().toLowerCase().charAt(0) == 'i') {
+		// Input
+		$("#whenActive").css('display', 'flex');
+		$("#activeWhen").css('display', 'none');
+		$("#selectTime").css('display', 'none');
+	} else {
+		// Output
+		$("#whenActive").css('display', 'flex');
+		$("#activeWhen").css('display', 'flex');
+		$("#selectTime").css('display', 'flex');
+	}
+});
+
 $('#submit').on('click', function() {
 	
 	if(!authenticated) {
@@ -88,10 +110,12 @@ $('#submit').on('click', function() {
 		if(password == MD5(pw)) 
 			authenticated = true;
 	}
-	
+
 	if(!authenticated)
 		return;
-		
+	
+	
+	
 	var pin = '';
 	var active = '';
 	var timeFrom = '';
@@ -108,83 +132,98 @@ $('#submit').on('click', function() {
 	if(active == 'enable') active = 1;
 	else active = 0;
 	
-	// TIME-FROM, TIME-TO
-	var fromHour = $('#timeFrom .hour').val();
-	var fromMinute = $('#timeFrom .minute').val();
-	var fromSecond = $('#timeFrom .second').val();
-	var toHour = $('#timeTo .hour').val();
-	var toMinute = $('#timeTo .minute').val();
-	var toSecond = $('#timeTo .second').val();
-	if(pin.charAt(0) == 'o' && fromHour != '' && fromMinute != '' && fromSecond != '' && toHour != '' && toMinute != '' && toSecond != '') {
-		if(fromHour.length == 1) fromHour = '0' + fromHour;
-		if(fromMinute.length == 1) fromMinute = '0' + fromMinute;
-		if(fromSecond.length == 1) fromSecond = '0' + fromSecond;
-		if(toHour.length == 1) toHour = '0' + toHour;
-		if(toMinute.length == 1) toMinute = '0' + toMinute;
-		if(toSecond.length == 1) toSecond = '0' + toSecond;
-		if(fromHour >= 0 && fromHour < 24 && fromMinute >= 0 && fromMinute < 60 && fromSecond >= 0 && fromSecond < 60 && toHour >= 0 && toHour < 24 && toMinute >= 0 && toMinute < 60 && toSecond >= 0 && toSecond < 60) {
-			timeFrom = fromHour + ":" + fromMinute + ":" + fromSecond;
-			timeTo = toHour + ":" + toMinute + ":" + toSecond;
-		}
-	}
 	
-	// STATEMENT
-	if($('#func1:visible').length && $('#func1 .value').val() != '') 
+	
+	if(pin.charAt(0) == 'i')
 	{
-		statement += $('#func1 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
-		statement += ' ';
-		statement += $('#func1 .operator').find('option:selected').val().toLowerCase();
-		statement += ' ';
-		statement += $('#func1 .value').val();
-	
-		if($('#func2:visible').length && $('#func2 .value').val() != '') 
+		statement = $('#inputFunc').find('option:selected').val().toLowerCase().split(" ").join("_");
+	}
+	else if(pin.charAt(0) == 'o')
+	{
+		// TIME-FROM, TIME-TO
+		var fromHour = $('#timeFrom .hour').val();
+		var fromMinute = $('#timeFrom .minute').val();
+		var fromSecond = $('#timeFrom .second').val();
+		var toHour = $('#timeTo .hour').val();
+		var toMinute = $('#timeTo .minute').val();
+		var toSecond = $('#timeTo .second').val();
+		if(pin.charAt(0) == 'o' && fromHour != '' && fromMinute != '' && fromSecond != '' && toHour != '' && toMinute != '' && toSecond != '') {
+			if(fromHour.length == 1) fromHour = '0' + fromHour;
+			if(fromMinute.length == 1) fromMinute = '0' + fromMinute;
+			if(fromSecond.length == 1) fromSecond = '0' + fromSecond;
+			if(toHour.length == 1) toHour = '0' + toHour;
+			if(toMinute.length == 1) toMinute = '0' + toMinute;
+			if(toSecond.length == 1) toSecond = '0' + toSecond;
+			if(fromHour >= 0 && fromHour < 24 && fromMinute >= 0 && fromMinute < 60 && fromSecond >= 0 && fromSecond < 60 && toHour >= 0 && toHour < 24 && toMinute >= 0 && toMinute < 60 && toSecond >= 0 && toSecond < 60) {
+				timeFrom = fromHour + ":" + fromMinute + ":" + fromSecond;
+				timeTo = toHour + ":" + toMinute + ":" + toSecond;
+			}
+		}
+
+		// STATEMENT
+		if($('#func1:visible').length && $('#func1 .value').val() != '') 
 		{
+			statement += $('#func1 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
 			statement += ' ';
-			statement += $('#func2 .logic').find('option:selected').val().toLowerCase();
+			statement += $('#func1 .operator').find('option:selected').val().toLowerCase();
 			statement += ' ';
-			statement += $('#func2 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
-			statement += ' ';
-			statement += $('#func2 .operator').find('option:selected').val().toLowerCase();
-			statement += ' ';
-			statement += $('#func2 .value').val();
-		
-			if($('#func3:visible').length && $('#func3 .value').val() != '') 
+			statement += $('#func1 .value').val();
+
+			if($('#func2:visible').length && $('#func2 .value').val() != '') 
 			{
 				statement += ' ';
-				statement += $('#func3 .logic').find('option:selected').val().toLowerCase();
+				statement += $('#func2 .logic').find('option:selected').val().toLowerCase();
 				statement += ' ';
-				statement += $('#func3 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
+				statement += $('#func2 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
 				statement += ' ';
-				statement += $('#func3 .operator').find('option:selected').val().toLowerCase();
+				statement += $('#func2 .operator').find('option:selected').val().toLowerCase();
 				statement += ' ';
-				statement += $('#func3 .value').val();
-			
-				if($('#func4:visible').length && $('#func4 .value').val() != '') 
+				statement += $('#func2 .value').val();
+
+				if($('#func3:visible').length && $('#func3 .value').val() != '') 
 				{
 					statement += ' ';
-					statement += $('#func4 .logic').find('option:selected').val().toLowerCase();
+					statement += $('#func3 .logic').find('option:selected').val().toLowerCase();
 					statement += ' ';
-					statement += $('#func4 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
+					statement += $('#func3 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
 					statement += ' ';
-					statement += $('#func4 .operator').find('option:selected').val().toLowerCase();
+					statement += $('#func3 .operator').find('option:selected').val().toLowerCase();
 					statement += ' ';
-					statement += $('#func4 .value').val();
-				
-					if($('#func5:visible').length && $('#func2 .value').val() != '') 
+					statement += $('#func3 .value').val();
+
+					if($('#func4:visible').length && $('#func4 .value').val() != '') 
 					{
 						statement += ' ';
-						statement += $('#func5 .logic').find('option:selected').val().toLowerCase();
+						statement += $('#func4 .logic').find('option:selected').val().toLowerCase();
 						statement += ' ';
-						statement += $('#func5 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
+						statement += $('#func4 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
 						statement += ' ';
-						statement += $('#func5 .operator').find('option:selected').val().toLowerCase();
+						statement += $('#func4 .operator').find('option:selected').val().toLowerCase();
 						statement += ' ';
-						statement += $('#func5 .value').val();
+						statement += $('#func4 .value').val();
+
+						if($('#func5:visible').length && $('#func2 .value').val() != '') 
+						{
+							statement += ' ';
+							statement += $('#func5 .logic').find('option:selected').val().toLowerCase();
+							statement += ' ';
+							statement += $('#func5 .function').find('option:selected').val().toLowerCase().split(" ").join("_");
+							statement += ' ';
+							statement += $('#func5 .operator').find('option:selected').val().toLowerCase();
+							statement += ' ';
+							statement += $('#func5 .value').val();
+						}
 					}
 				}
 			}
 		}
 	}
+
+	
+	
+	//alert("pin " + pin + "\nactive " + active + "\ntimeFrom " + timeFrom + "\ntimeTo " + timeTo + "\nstatement " + statement);
+	
+	
 	
 	$.ajax({
 		type: 'POST',
@@ -211,4 +250,5 @@ $('#submit').on('click', function() {
 			console.log(response);
 		}
 	});
+
 });
