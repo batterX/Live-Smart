@@ -2,7 +2,7 @@
 
 ## Update Monitoring App
 
-### Update using the Local Web App:
+### One-Click Update:
 
 The easiest way is to open your browser and:
 
