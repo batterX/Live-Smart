@@ -1,7 +1,7 @@
 #!/bin/sh
 # updater.sh
 
-sudo cd /home/pi
+cd /home/pi
 
 git clone https://github.com/batterx/livesmart.git
 
