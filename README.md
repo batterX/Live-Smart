@@ -1,4 +1,4 @@
-# batterX Live & Smart (v17.11.9)
+# batterX Live & Smart (v17.11.13)
 
 ## Update Monitoring App
 
@@ -12,60 +12,16 @@ The easiest way is to open your browser and:
 
 3. Click `OK` to confirm that the System should be updated
 
-After the update is complete the Raspberry Pi will reboot automatically
-
-### One-click Update:
-
-Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
-
-Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
-
-Double-click on `updater.sh` and click `Execute` or `Execute in Terminal`
-
-The updater script automatically performs all steps from the manual update below
+After the update the Raspberry Pi will automatically reboot and apply the new version
 
 ### Manual Update:
 
-Login to your Live & Smart Box using `Remote Desktop Connection` or directly using an HDMI display
+If for some reason it is not possible to update the software using the Local Web App
 
-Open Raspberry Pi's `Terminal`
+Login to your Raspberry Pi using `Remote Desktop Connection` or directly using an HDMI display
 
-Clone the GitHub repository
-```
-git clone https://github.com/batterx/livesmart.git
-```
+Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
 
-Update the local web-app
-```
-sudo cp livesmart/html /var/www -r
-sudo chmod 777 /var/www -R
-```
+Double-click on `updater.sh` and click `Execute in Terminal`
 
-Update the communication software
-```
-sudo rm /home/pi/BatterX
-sudo cp livesmart/BatterX /home/pi
-sudo chmod 777 /home/pi/BatterX
-```
-
-Update the auto-run script
-```
-sudo cp livesmart/launcher.sh /home/pi
-sudo chmod 777 /home/pi/launcher.sh
-```
-
-Update the one-click-updater script
-```
-sudo cp livesmart/updater.sh /home/pi
-sudo chmod 777 /home/pi/updater.sh
-```
-
-Remove the LiveSmart directory
-```
-sudo rm livesmart -r
-```
-
-Restart the Raspberry Pi
-```
-sudo reboot
-```
+After the update the Raspberry Pi will automatically reboot and apply the new version.
