@@ -1,0 +1,29 @@
+body {
+	background-color: #131313;
+}
+
+* {
+	font-family: 'Raleway' !important;
+}
+input, select {
+	background: #212121 !important;
+	min-height: 50px;
+}
+h1, h2, h3, h4, h5, h6, p, input, select, button, .list-group-item {
+	color: white !important;
+}
+
+.btn-secondary { 
+	color: #ffffff; 
+	background-color: #444; 
+	border-color: #222;
+}
+.btn-secondary:hover, 
+.btn-secondary:focus, 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.open .dropdown-toggle.btn-secondary { 
+	color: #ffffff; 
+	background-color: #333; 
+	border-color: #222; 
+}
