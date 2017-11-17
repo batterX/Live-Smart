@@ -47,7 +47,7 @@
 						<a id="shutdown" class="nav-link" href="#"><img src="../img/ic_stop.png" style="height: 22px"></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" target="_blank" href="https://github.com/batterX/LiveSmart">v17.11.13</a>
+						<a class="nav-link" target="_blank" href="https://github.com/batterX/LiveSmart">v17.11.17</a>
 					</li>
 				</ul>
 				
@@ -60,39 +60,36 @@
 		
 		<div class="row m-0">
 		
-			<div class="col-12 col-md-1 col-lg-2 col-xl-3"></div>
-			
-			<div class="col-12 col-md-10 col-lg-8 col-xl-6 px-1">
+			<div class="col-12">
 				
-				<!-- PIN -->
+				<!-- PIN SELECT + ENABLE/DISABLE -->
 				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
 					<div>
 						<h4 class="p-0 m-0 pb-3">Select Pin</h4>
-						<select id="pin" class="form-control text-center">
-							<option>Output 1</option>
-							<option>Output 2</option>
-							<option>Output 3</option>
-							<option>Output 4</option>
-							<option>Input 1</option>
-							<option>Input 2</option>
-							<option>Input 3</option>
-							<option>Input 4</option>
-						</select>
+						<div class="row">
+							<div class="col-6 pr-2">
+								<select id="pin" class="form-control text-center">
+									<option>Output 1</option>
+									<option>Output 2</option>
+									<option>Output 3</option>
+									<option>Output 4</option>
+									<option>Input 1</option>
+									<option>Input 2</option>
+									<option>Input 3</option>
+									<option>Input 4</option>
+								</select>
+							</div>
+							<div class="col-6 pl-2">
+								<select id="active" class="form-control text-center">
+									<option>Enable</option>
+									<option>Disable</option>
+								</select>
+							</div>
+						</div>
 					</div>
 				</div>
 				
-				<!-- ACTIVE -->
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
-					<div>
-						<h4 class="p-0 m-0 pb-3">Enable / Disable Pin</h4>
-						<select id="active" class="form-control text-center">
-							<option>Enable</option>
-							<option>Disable</option>
-						</select>
-					</div>
-				</div>
-				
-				<!-- PIN -->
+				<!-- WHEN ACTIVE -->
 				<div id="whenActive" class="card card-inverse bg-inverse my-3 mx-0 p-3" style="display: none">
 					<div>
 						<h4 class="p-0 m-0 pb-3">When Active</h4>
@@ -105,233 +102,55 @@
 				
 				<!-- ACTIVE WHEN -->
 				<div id="activeWhen" class="card card-inverse bg-inverse my-3 mx-0 p-3">
-
-					<div>
-
-						<h4 class="p-0 m-0 pb-3">Active (closed) when</h4>
-						
-						<!-- FUNCTION 1 -->
-						<div id="func1" class="row p-0 m-0 mb-3">
-							<div class="col-5 px-0 pr-3">
-								<select class="function form-control text-center">
-									<option id="grid_voltage">Grid Voltage</option>
-									<option id="grid_current">Grid Current</option>
-									<option id="grid_power">Grid Power</option>
-									<option id="battery_voltage">Battery Voltage</option>
-									<option id="battery_current">Battery Current</option>
-									<option id="battery_power">Battery Power</option>
-									<option id="solar_voltage">Solar Voltage</option>
-									<option id="solar_current">Solar Current</option>
-									<option id="solar_power">Solar Power</option>
-									<option id="load_voltage">Load Voltage</option>
-									<option id="load_current">Load Current</option>
-									<option id="load_power">Load Power</option>
-								</select>
-							</div>
-							<div class="col-2 p-0">
-								<select class="operator form-control text-center">
-									<option>&lt;</option>
-									<option>&gt;</option>
-								</select>
-							</div>
-							<div class="col-5 px-0 pl-3">
-								<input type="number" step="0.01" class="value form-control text-center" placeholder="value">
-							</div>
+					
+					<div class="row px-2">
+					
+						<div class="col-12 px-2">
+							<h4 class="p-0 m-0">Active (closed) when</h4>
+							<hr class="mt-3 mb-2" style="background-color: #666666">
 						</div>
 						
-						<!-- FUNCTION 2 -->
-						<div id="func2" class="row p-0 m-0 mb-3" style="display: none">
-							
-							<div class="col-4"></div>
-							<div class="col-4 p-0">
-								<select class="logic form-control text-center mb-3">
-									<option>AND</option>
-									<option>OR</option>
-								</select>
-							</div>
-							<div class="col-4"></div>
-							
-							<div class="col-5 px-0 pr-3">
-								<select class="function form-control text-center">
-									<option id="grid_voltage">Grid Voltage</option>
-									<option id="grid_current">Grid Current</option>
-									<option id="grid_power">Grid Power</option>
-									<option id="battery_voltage">Battery Voltage</option>
-									<option id="battery_current">Battery Current</option>
-									<option id="battery_power">Battery Power</option>
-									<option id="solar_voltage">Solar Voltage</option>
-									<option id="solar_current">Solar Current</option>
-									<option id="solar_power">Solar Power</option>
-									<option id="load_voltage">Load Voltage</option>
-									<option id="load_current">Load Current</option>
-									<option id="load_power">Load Power</option>
-								</select>
-							</div>
-							<div class="col-2 p-0">
-								<select class="operator form-control text-center">
-									<option>&lt;</option>
-									<option>&gt;</option>
-								</select>
-							</div>
-							<div class="col-5 px-0 pl-3">
-								<input type="number" step="0.01" class="value form-control text-center" placeholder="value">
-							</div>
-
-						</div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Grid Voltage</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Battery Voltage</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Solar Voltage</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Load Voltage</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Grid Current</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Battery Current</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Solar Current</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Load Current</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Grid Power</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Battery Power</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Solar Power</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Load Power</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Input 1</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Input 2</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Input 3</button></div>
+						<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-block">Input 4</button></div>
 						
-						<!-- FUNCTION 3 -->
-						<div id="func3" class="row p-0 m-0 mb-3" style="display: none">
-							
-							<div class="col-4"></div>
-							<div class="col-4 p-0">
-								<select class="logic form-control text-center mb-3">
-									<option>AND</option>
-									<option>OR</option>
-								</select>
-							</div>
-							<div class="col-4"></div>
-							
-							<div class="col-5 px-0 pr-3">
-								<select class="function form-control text-center">
-									<option id="grid_voltage">Grid Voltage</option>
-									<option id="grid_current">Grid Current</option>
-									<option id="grid_power">Grid Power</option>
-									<option id="battery_voltage">Battery Voltage</option>
-									<option id="battery_current">Battery Current</option>
-									<option id="battery_power">Battery Power</option>
-									<option id="solar_voltage">Solar Voltage</option>
-									<option id="solar_current">Solar Current</option>
-									<option id="solar_power">Solar Power</option>
-									<option id="load_voltage">Load Voltage</option>
-									<option id="load_current">Load Current</option>
-									<option id="load_power">Load Power</option>
-								</select>
-							</div>
-							<div class="col-2 p-0">
-								<select class="operator form-control text-center">
-									<option>&lt;</option>
-									<option>&gt;</option>
-								</select>
-							</div>
-							<div class="col-5 px-0 pl-3">
-								<input type="number" step="0.01" class="value form-control text-center" placeholder="value">
-							</div>
-
-						</div>
+						<div class="col-4 p-1"><button class="btnFunc btn btn-secondary btn-block">Current Time</button></div>
 						
-						<!-- FUNCTION 4 -->
-						<div id="func4" class="row p-0 m-0 mb-3" style="display: none">
-							
-							<div class="col-4"></div>
-							<div class="col-4 p-0">
-								<select class="logic form-control text-center mb-3">
-									<option>AND</option>
-									<option>OR</option>
-								</select>
-							</div>
-							<div class="col-4"></div>
-							
-							<div class="col-5 px-0 pr-3">
-								<select class="function form-control text-center">
-									<option id="grid_voltage">Grid Voltage</option>
-									<option id="grid_current">Grid Current</option>
-									<option id="grid_power">Grid Power</option>
-									<option id="battery_voltage">Battery Voltage</option>
-									<option id="battery_current">Battery Current</option>
-									<option id="battery_power">Battery Power</option>
-									<option id="solar_voltage">Solar Voltage</option>
-									<option id="solar_current">Solar Current</option>
-									<option id="solar_power">Solar Power</option>
-									<option id="load_voltage">Load Voltage</option>
-									<option id="load_current">Load Current</option>
-									<option id="load_power">Load Power</option>
-								</select>
-							</div>
-							<div class="col-2 p-0">
-								<select class="operator form-control text-center">
-									<option>&lt;</option>
-									<option>&gt;</option>
-								</select>
-							</div>
-							<div class="col-5 px-0 pl-3">
-								<input type="number" step="0.01" class="value form-control text-center" placeholder="value">
-							</div>
-
-						</div>
+						<div class="col-1 p-1"><button class="btnLogic btn btn-secondary btn-block">AND</button></div>
+						<div class="col-1 p-1"><button class="btnLogic btn btn-secondary btn-block">OR</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">&lt;</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">&gt;</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">&lt;=</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">&gt;=</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">==</button></div>
+						<div class="col-1 p-1"><button class="btnCompare btn btn-secondary btn-block">!=</button></div>
 						
-						<!-- FUNCTION 5 -->
-						<div id="func5" class="row p-0 m-0 mb-3" style="display: none">
-							
-							<div class="col-4"></div>
-							<div class="col-4 p-0">
-								<select class="logic form-control text-center mb-3">
-									<option>AND</option>
-									<option>OR</option>
-								</select>
-							</div>
-							<div class="col-4"></div>
-							
-							<div class="col-5 px-0 pr-3">
-								<select class="function form-control text-center">
-									<option id="grid_voltage">Grid Voltage</option>
-									<option id="grid_current">Grid Current</option>
-									<option id="grid_power">Grid Power</option>
-									<option id="battery_voltage">Battery Voltage</option>
-									<option id="battery_current">Battery Current</option>
-									<option id="battery_power">Battery Power</option>
-									<option id="solar_voltage">Solar Voltage</option>
-									<option id="solar_current">Solar Current</option>
-									<option id="solar_power">Solar Power</option>
-									<option id="load_voltage">Load Voltage</option>
-									<option id="load_current">Load Current</option>
-									<option id="load_power">Load Power</option>
-								</select>
-							</div>
-							<div class="col-2 p-0">
-								<select class="operator form-control text-center">
-									<option>&lt;</option>
-									<option>&gt;</option>
-								</select>
-							</div>
-							<div class="col-5 px-0 pl-3">
-								<input type="number" step="0.01" class="value form-control text-center" placeholder="value">
-							</div>
-
-						</div>
+						<div class="col-4 p-1"></div>
+						<div class="col-1 p-1"><button class="btnBrOpen btn btn-secondary btn-block">(</button></div>
+						<div class="col-1 p-1"><button class="btnBrClose btn btn-secondary btn-block">)</button></div>
+						<div class="col-4 p-1"><input id="value" type="number" step="0.01" class="form-control text-center" placeholder="VALUE"></div>
+						<div class="col-2 p-1"><button class="addValue btn btn-secondary btn-block">ENTER</button></div>
 						
-						<button id="addField" class="btn btn-lg btn-secondary btn-block">ADD FUNCTION</button>
+						<div class="col-12 px-2"><hr class="my-2" style="background-color: #666666"></div>
+						
+						<div class="col-10 px-1 pt-1"><input id="statement" type="text" class="form-control form-control-lg text-center" placeholder="S T A T E M E N T" disabled></div>
+						<div class="col-2 px-1 pt-1"><button class="btnDel btn btn-secondary btn-block btn-lg">DEL</button></div>
 						
 					</div>
 
-				</div>
-				
-				<!-- SELECT TIME -->
-				<div id="selectTime" class="card card-inverse bg-inverse my-3 mx-0 p-3">
-					<div>
-						<h4 class="p-0 m-0 pb-3">Time from - to</h4>
-						<div id="timeFrom" class="row p-0 m-0 mb-3">
-							<div class="col-4 px-0 pr-2">
-								<input type="number" class="hour form-control text-center" placeholder="hour">
-							</div>
-							<div class="col-4 px-2">
-								<input type="number" class="minute form-control text-center" placeholder="minute">
-							</div>
-							<div class="col-4 px-0 pl-2">
-								<input type="number" class="second form-control text-center" placeholder="second">
-							</div>
-						</div>
-						<div id="timeTo" class="row p-0 m-0 pb-1">
-							<div class="col-4 px-0 pr-2">
-								<input type="number" class="hour form-control text-center" placeholder="hour">
-							</div>
-							<div class="col-4 px-2">
-								<input type="number" class="minute form-control text-center" placeholder="minute">
-							</div>
-							<div class="col-4 px-0 pl-2">
-								<input type="number" class="second form-control text-center" placeholder="second">
-							</div>
-						</div>
-					</div>
 				</div>
 				
 				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
@@ -339,8 +158,6 @@
 				</div>
 			
 			</div>
-			
-			<div class="col-12 col-md-1 col-lg-2 col-xl-3"></div>
 			
 		</div>
 		

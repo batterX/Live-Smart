@@ -20,24 +20,41 @@ class BatterXService
 		// Declare all needed variables
 		$pin = null;
 		$active = null;
-		$timeFrom = null;
-		$timeTo = null;
 		$statement = null;
+		
+		$VarName = null;
+		$entity = null;
+		$mode = null;
+		$S1 = null;
 		
 		// Fill Variables
 		if(isset($_POST['pin'])) $pin = $_POST['pin'];
 		if(isset($_POST['active'])) $active = $_POST['active'];
-		if(isset($_POST['timeFrom'])) $timeFrom = $_POST['timeFrom'];
-		if(isset($_POST['timeTo'])) $timeTo = $_POST['timeTo'];
 		if(isset($_POST['statement'])) $statement = $_POST['statement'];
+		
+		if($pin == null || $pin == '') return FALSE;
+		
+		if($pin[0] == 'o') $VarName = 'BxOutPin';
+		else if($pin[0] == 'i') $VarName = 'BxInPin';
+		else return FALSE;
+		
+		$entity = substr($pin, -1);
+		
+		if($active != null && $active != '') $mode = $active;
+		else $mode = '0';
+				
+		if($statement != null && $statement != '') $S1 = $statement;
+		else { $mode = '0'; $S1 = ''; }
 		
 		// Build SQL String
 		$sql = "";
-		if($active != 1 || $pin == null || $pin == "" || $statement == null || $statement == "")
-			$sql = "REPLACE INTO `Settings_GPIO` (`pin`, `active`, `logtime`) VALUES('" . $pin . "', 0, CURRENT_TIMESTAMP)";
+		
+		if($mode == 0 || $S1 == '')
+			$sql = "REPLACE INTO `Settings` (`VarName`, `entity`, `mode`, `UpDateTime`) 
+					VALUES('" . $VarName . "', " . $entity . ", 0, CURRENT_TIMESTAMP)";
 		else
-			$sql = "REPLACE INTO `Settings_GPIO` (`pin`, `active`, `timeFrom`, `timeTo`, `statement`, `logtime`) 
-					VALUES('" . $pin . "'," . $active . ",'" . $timeFrom . "','" . $timeTo . "','" . $statement . "', CURRENT_TIMESTAMP)";
+			$sql = "REPLACE INTO `Settings` (`VarName`, `entity`, `mode`, `S1`, `UpDateTime`)
+					VALUES('" . $VarName . "', " . $entity . ", " . $mode . ", '" . $S1 . "', CURRENT_TIMESTAMP)";
 		
 		// Insert To Database
 		try {

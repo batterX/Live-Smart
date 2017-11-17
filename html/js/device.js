@@ -27,9 +27,9 @@ function showPanel(id) {
 	switch(id) {
 		case "model":
 			$("#textBox textarea").val(
-				"Device Model: " + device_model + "\r\n" + 
+				"Device Model:\r\n" + device_model + "\r\n" + 
 				"\r\n" +
-				"Serial Number: " + device_serial_number
+				"Serial Number:\r\n" + device_serial_number
 			);
 			break;
 		
