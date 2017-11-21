@@ -7,6 +7,11 @@ authenticated = false;
 
 
 
+
+
+
+
+
 $('#update').on('click', function() {
 	if(!authenticated) {
 		pw = prompt("Enter Password", "");
@@ -74,7 +79,18 @@ $('#shutdown').on('click', function() {
 
 
 
+
+
+
+
+
 $('#pin').on('change', function() {
+	
+	var pin = "";
+	pin = $('#pin').find('option:selected').val().toLowerCase();
+	if(pin.charAt(0) == 'i') pin = pin.substr(0, 2) + pin.charAt(6);
+	else if(pin.charAt(0) == 'o') pin = pin.substr(0, 3) + pin.charAt(7);
+	
 	var temp = $('#active').find('option:selected').val().toLowerCase();
 	if($(this).val().toLowerCase().charAt(0) == 'i') {
 		// Input
@@ -88,6 +104,47 @@ $('#pin').on('change', function() {
 		$("#whenActive").css('display', 'none');
 		$("#statement").val("");
 	}
+	
+	$.ajax({
+		type: 'POST',
+		url: '../db-interaction/service.php',
+		data: {
+			"action": 'getPinConfig',
+			"pin": pin
+		},
+		success: function (response) {
+			if(response) {
+				var json = JSON.parse(response);
+				console.log(json);
+
+				if(json.hasOwnProperty("Mode") && json.hasOwnProperty("S1")) {
+					if(json['Mode'] == '1')
+						$('#active').val('enable').change();
+					else
+						$('#active').val('disable').change();
+
+					var temp = $('#active').find('option:selected').val().toLowerCase();
+					if(pin.charAt(0) == 'i')
+						$('#inputFunc').val(json['S1']);
+					else
+						$('#statement').val(json['S1']);
+				} else {
+					console.log(response);
+					$('#active').val('disable').change();
+					$('#statement').val('');
+				}
+			} else {
+				console.log(response);
+				$('#active').val('disable').change();
+				$('#statement').val('');
+			}
+		},
+		error: function (response) {
+			console.log(response);
+			$('#active').val('disable').change();
+			$('#statement').val('');
+		}
+	});
 });
 
 
@@ -103,6 +160,13 @@ $('#active').on('change', function() {
 		else $("#activeWhen").css('display', 'flex');
 	}
 });
+
+$('#pin').change();
+
+
+
+
+
 
 
 

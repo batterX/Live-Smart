@@ -1,9 +1,16 @@
+Notification.requestPermission();
+
 /*
 	Set Warnings Begin Variables State
 */
 	
 var lastWarningTime = new Date("2000-01-01T01:01:01");
 var lastWarningList = [];
+
+
+
+
+
 
 
 
@@ -17,81 +24,6 @@ $(document).ready(function () {
 	
 	initNotifications();
 	
-	
-	
-	
-	
-	/*
-		Set OnClick Listeners for Left & Right Side Drawer's Buttons
-	*/
-	
-	// Notification Button Click
-	$('#btnNotification').click(function() {
-		$('#slider-right').offcanvas({
-			placement: 'right',
-			autohide: 'true'
-		});
-		$('#slider-right').offcanvas('show');
-	});
-	
-	// Sliders Click
-	$('#slider-left').click(function() {
-		if(window.innerHeight > window.innerWidth) {
-			setTimeout(function() {
-				$("#slider-left").offcanvas('hide');
-			}, 200);
-		}
-	});
-	$('#slider-right').click(function() {
-		setTimeout(function() {
-			$("#slider-right").offcanvas('hide');
-		}, 200);
-	});
-	
-	// Buttons in Left-Side-Drawer Click
-	$('#live').click(function() {
-		$('#frame').attr("src", "live.html");
-		$('#title').html("LIVE");
-		toggleActive("live");
-	});
-	$('#energy').click(function() {
-		$('#frame').attr("src", "energy.html");
-		$('#title').html("ENERGY");
-		toggleActive("energy");
-	});
-	$('#device').click(function() {
-		$('#frame').attr("src", "device.html");
-		$('#title').html("SYSTEM");
-		toggleActive("device");
-	});
-	
-	function toggleActive(id) {
-		$("#"+id).find("h4").addClass("active");
-		if(id != 'live') $("#live").find("h4").removeClass("active");
-		if(id != 'energy') $("#energy").find("h4").removeClass("active");
-		if(id != 'device') $("#device").find("h4").removeClass("active");
-	}
-	
-	
-	
-	
-	
-	/*
-		Update Notification Drawer Every 10 Seconds
-	*/
-	
-	setInterval(function() {
-		updateNotifications();
-	}, 10000);
-	
-	
-	
-	
-	
-	/*
-		Functions related to updating the Notifications Drawer
-	*/
-
 	// Load the 10 latest Warnings for the current device
 	function initNotifications()
 	{
@@ -158,6 +90,81 @@ $(document).ready(function () {
 		});
 	}
 	
+	
+	
+	
+	
+	/*
+		Set OnClick Listeners for Left & Right Side Drawer's Buttons
+	*/
+	
+	// Notification Button Click
+	$('#btnNotification').click(function() {
+		$('#slider-right').offcanvas({
+			placement: 'right',
+			autohide: 'true'
+		});
+		$('#slider-right').offcanvas('show');
+	});
+	
+	// Sliders Click
+	$('#slider-left').click(function() {
+		if(window.innerHeight > window.innerWidth) {
+			setTimeout(function() {
+				$("#slider-left").offcanvas('hide');
+			}, 200);
+		}
+	});
+	$('#slider-right').click(function() {
+		setTimeout(function() {
+			$("#slider-right").offcanvas('hide');
+		}, 200);
+	});
+	
+	// Buttons in Left-Side-Drawer Click
+	$('#live').click(function() {
+		$('#frame').attr("src", "live.html");
+		$('#title').html("LIVE");
+		toggleActive("live");
+	});
+	$('#energy').click(function() {
+		$('#frame').attr("src", "energy.html");
+		$('#title').html("ENERGY");
+		toggleActive("energy");
+	});
+	$('#device').click(function() {
+		$('#frame').attr("src", "device.html");
+		$('#title').html("SYSTEM");
+		toggleActive("device");
+	});
+	
+	function toggleActive(id) {
+		$("#"+id).find("h4").addClass("active");
+		if(id != 'live') $("#live").find("h4").removeClass("active");
+		if(id != 'energy') $("#energy").find("h4").removeClass("active");
+		if(id != 'device') $("#device").find("h4").removeClass("active");
+	}
+	
+	
+	
+	
+	
+	/*
+		Update Notification Drawer Every 10 Seconds
+	*/
+	
+	setTimeout(function() {
+		updateNotifications();
+	}, 10000);
+	
+	
+	
+	
+	
+	/*
+		Functions related to updating the Notifications Drawer
+	*/
+	
 	// Check if there is a new Warning for the current device
 	function updateNotifications()
 	{
@@ -167,6 +174,11 @@ $(document).ready(function () {
 			data: {
 				"action": "getWarningsData",
 				"count": "1",
+			},
+			complete: function (data) {
+				setTimeout(function() {
+					updateNotifications();
+				}, 5000);
 			},
 			success: function (response) {
 				var json = JSON.parse(response);
@@ -178,6 +190,8 @@ $(document).ready(function () {
 							
 							var tempList = json[x]['entityvalue'].split(" ");
 						
+							var flag = false;
+							
 							for(var y = 0; y < tempList.length; y++) 
 							{
 								if(!lastWarningList.includes(tempList[y])) 
@@ -199,7 +213,17 @@ $(document).ready(function () {
 									article += 	"</article>";
 
 									$("#notif-container").html(article + $("#notif-container").html());
+								
+									flag = true;
 								}
+							}
+							
+							if(flag && window.Notification && Notification.permission !== "denied") {
+								Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
+									var n = new Notification('WARNINGS UPDATE', { 
+										body: 'One or more new warnings have occured.'
+									}); 
+								});
 							}
 
 							lastWarningList = json[x]['entityvalue'].split(" ");
@@ -220,6 +244,11 @@ $(document).ready(function () {
 	}
 	
 });
+
+
+
+
+
 
 
 
@@ -263,11 +292,16 @@ function updateActiveNotifications()
 
 
 
+
+
+
+
+
 /*
 	Functions related to updating the Notifications Drawer
 */
 
-blinkInterval = null;
+var blinkInterval = null;
 
 // Listens to Call that a Fault has occured (called from Iframe View)
 function updateFaultStatus(flag, fault, logtime) 
@@ -312,6 +346,14 @@ function updateFaultStatus(flag, fault, logtime)
 			article += 		"</div>";
 			article += 	"</article>";
 			$("#notif-container").html(article + $("#notif-container").html());		
+		
+			if(flag && window.Notification && Notification.permission !== "denied") {
+				Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
+					var n = new Notification('FAULT: ' + warningsList[fault][0], { 
+						body: warningsList[fault][1]
+					}); 
+				});
+			}
 		}
 		
 	} else {
@@ -342,6 +384,11 @@ function updateLastTimestamp(str)
 	
 	$("#notif-lastupdate").append("<div class='row notif-head-active'><h4 class='last-timestamp'>" + convertDate(str) + "</h4></div>");
 }
+
+
+
+
+
 
 
 

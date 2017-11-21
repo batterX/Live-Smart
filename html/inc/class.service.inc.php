@@ -67,4 +67,35 @@ class BatterXService
 		
 		return FALSE;
 	}
+	
+	public function getPinConfig()
+	{
+		// Connect to Database
+		$db = new PDO('sqlite:/srv/bx/usv.db3');
+		
+		$pin = null;
+		$VarName = null;
+		$entity = null;
+		$mode = null;
+		$S1 = null;
+		
+		// Fill Variables
+		if(isset($_POST['pin'])) $pin = $_POST['pin'];
+		
+		if($pin == null || $pin == '') return FALSE;
+		
+		if($pin[0] == 'o') $VarName = 'BxOutPin';
+		else if($pin[0] == 'i') $VarName = 'BxInPin';
+		else return FALSE;
+		
+		$entity = substr($pin, -1);
+		
+		$sql = "SELECT mode, S1 FROM Settings WHERE VarName = '" . $VarName . "' AND entity = " . strval($entity);
+		
+		$result = $db->query($sql);
+		
+		$dbh = $result->fetch();
+		
+		return json_encode($dbh, JSON_FORCE_OBJECT);
+	}
 }

@@ -19,6 +19,11 @@ var info_customer = "";
 
 
 
+
+
+
+
+
 // PANEL SHOW/HIDE + CLOSE BUTTON + SAVE BUTTON
 
 function showPanel(id) {
@@ -136,6 +141,11 @@ function saveChanges() {
 
 
 
+
+
+
+
+
 // RIGHT SIDE SLIDER
 
 var slider = document.getElementById('slider');
@@ -150,6 +160,11 @@ toggle.addEventListener('click', function() {
 		slider.setAttribute('class', 'slide-in');
 	}
 });
+
+
+
+
+
 
 
 
@@ -198,6 +213,11 @@ $.ajax({
 
 
 
+
+
+
+
+
 /*
 	Image Upload Button Listeners
 */
@@ -226,6 +246,11 @@ $('#imageUploadForm').on("submit", function(e) {
 
 
 
+
+
+
+
+
 /*
 	Removes Active Image OnClick
 */
@@ -249,6 +274,11 @@ function removeImage(imageUrl) {
 		}
 	});
 }
+
+
+
+
+
 
 
 
@@ -293,6 +323,11 @@ $.ajax({
 		});
 	}
 });
+
+
+
+
+
 
 
 

@@ -11,6 +11,10 @@ if(!empty($_POST['action']))
 		case 'setPinConfig':
 			echo $serviceObj->setPinConfig();
 			break;
+			
+		case 'getPinConfig':
+			echo $serviceObj->getPinConfig();
+			break;
 		
 		default:
 			echo "";

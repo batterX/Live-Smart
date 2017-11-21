@@ -4,6 +4,11 @@ $(document).ready(function () {
 	
 	
 	
+	
+	
+	
+	
+	
 	// Device Model Details
 	
 	var solarContNum = 1;
@@ -11,6 +16,11 @@ $(document).ready(function () {
 	var batteryNum = 2;
 	var gridNum = 3;
 	var loadNum = 3;
+	
+	
+	
+	
+	
 	
 	
 	
@@ -51,12 +61,22 @@ $(document).ready(function () {
 	
 	
 	
+	
+	
+	
+	
+	
 	// Set Device OnClick Listener
 	
 	$('#device').click(function() {
 		$('#deviceMain').fadeToggle();
 		$('#deviceInfo').fadeToggle();
 	});
+	
+	
+	
+	
+	
 	
 	
 	
@@ -199,6 +219,11 @@ $(document).ready(function () {
 	
 	
 	
+	
+	
+	
+	
+	
 	// Set Battery OnClick Listener
 	
 	$('#battery').click(function() {
@@ -214,6 +239,11 @@ $(document).ready(function () {
 			$('#batteryPower').fadeToggle();
 		}
 	});
+	
+	
+	
+	
+	
 	
 	
 	
@@ -243,6 +273,11 @@ $(document).ready(function () {
 	
 
 	
+	
+	
+	
+	
+	
 	// Set Load OnClick Listener
 	
 	$('#load').click(function() {
@@ -267,11 +302,21 @@ $(document).ready(function () {
 	
 	
 	
+	
+	
+	
+	
+	
 	// Fade-Toggle All Arrows Every 1 Second
 	
 	setInterval(function() { 
 		$(".arrow-line").fadeToggle(1000);
 	}, 900);
+	
+	
+	
+	
+	
 	
 	
 	
@@ -323,6 +368,11 @@ $(document).ready(function () {
 	
 	
 	
+	
+	
+	
+	
+	
 	////////////////////
 	//				//
 	//  MAIN PROGRAM  //
@@ -332,10 +382,10 @@ $(document).ready(function () {
 	// Update Info - One Call At Begin
 	updateInfo();
 	
-	// Update Info Every 10 Seconds
-	setInterval(function() {
-		updateInfo();
-	}, 10000);
+	
+	
+	
+	
 	
 	
 	
@@ -349,13 +399,28 @@ $(document).ready(function () {
 		
 		
 		
+		
+		
+		
+		
+		
 		$.ajax({
 			type: "POST",
 			url: "db-interaction/data.php",
 			data: { 
 				"action": "getCurrentState" 
 			},
+			complete: function (data) {
+				setTimeout(function() {
+					updateInfo();
+				}, 5000);
+			},
 			success: function (response) {
+				
+				
+				
+				
+				
 				
 
 				
@@ -363,6 +428,11 @@ $(document).ready(function () {
 				
 				// Format Response To JSON
 				var json = JSON.parse(response);
+				
+				
+				
+				
+				
 				
 				
 				
@@ -378,6 +448,11 @@ $(document).ready(function () {
 				
 				
 				
+				
+				
+				
+				
+				
 				// Update Fault Notification Bar
 				
 				if(json.hasOwnProperty("16385") && json.hasOwnProperty("16386"))
@@ -388,6 +463,11 @@ $(document).ready(function () {
 					), 
 						json["16386"][Object.keys(json["16386"])[0]]["logtime"]
 					);
+				
+				
+				
+				
+				
 				
 				
 				
@@ -515,7 +595,7 @@ $(document).ready(function () {
 						if(json["1555"].hasOwnProperty("7")) $('#controllerVoltage73').html(round(parseInt(json["1555"]["7"]["entityvalue"])*0.01, 0).toString() + " V");
 						if(json["1555"].hasOwnProperty("8")) $('#controllerVoltage83').html(round(parseInt(json["1555"]["8"]["entityvalue"])*0.01, 0).toString() + " V");
 					}
-					// Solar Voltage X-3
+					// Solar Voltage X-4
 					if(json.hasOwnProperty("1556")) {
 						if(json["1556"].hasOwnProperty("1")) $('#controllerVoltage14').html(round(parseInt(json["1556"]["1"]["entityvalue"])*0.01, 0).toString() + " V");
 						if(json["1556"].hasOwnProperty("2")) $('#controllerVoltage24').html(round(parseInt(json["1556"]["2"]["entityvalue"])*0.01, 0).toString() + " V");
@@ -560,7 +640,7 @@ $(document).ready(function () {
 						if(json["1571"].hasOwnProperty("7")) $('#controllerCurrent73').html(round(parseInt(json["1571"]["7"]["entityvalue"])*0.01, 1).toString() + " A");
 						if(json["1571"].hasOwnProperty("8")) $('#controllerCurrent83').html(round(parseInt(json["1571"]["8"]["entityvalue"])*0.01, 1).toString() + " A");
 					}
-					// Solar Current X-3
+					// Solar Current X-4
 					if(json.hasOwnProperty("1572")) {
 						if(json["1572"].hasOwnProperty("1")) $('#controllerCurrent14').html(round(parseInt(json["1572"]["1"]["entityvalue"])*0.01, 1).toString() + " A");
 						if(json["1572"].hasOwnProperty("2")) $('#controllerCurrent24').html(round(parseInt(json["1572"]["2"]["entityvalue"])*0.01, 1).toString() + " A");
@@ -605,7 +685,7 @@ $(document).ready(function () {
 						if(json["1619"].hasOwnProperty("7")) $('#controllerPower73').html(round(parseInt(json["1619"]["7"]["entityvalue"]), 1).toString() + " W");
 						if(json["1619"].hasOwnProperty("8")) $('#controllerPower83').html(round(parseInt(json["1619"]["8"]["entityvalue"]), 1).toString() + " W");
 					}
-					// Solar Power X-3
+					// Solar Power X-4
 					if(json.hasOwnProperty("1620")) {
 						if(json["1620"].hasOwnProperty("1")) $('#controllerPower14').html(round(parseInt(json["1620"]["1"]["entityvalue"]), 1).toString() + " W");
 						if(json["1620"].hasOwnProperty("2")) $('#controllerPower24').html(round(parseInt(json["1620"]["2"]["entityvalue"]), 1).toString() + " W");
@@ -619,6 +699,11 @@ $(document).ready(function () {
 				}
 				
 		
+				
+				
+				
+				
+				
 		
 				
 				
@@ -678,6 +763,11 @@ $(document).ready(function () {
 				
 				
 				
+				
+				
+				
+				
+				
 				// Update Battery Section
 				
 				num = 0;
@@ -721,6 +811,11 @@ $(document).ready(function () {
 					if(json.hasOwnProperty("1057")) $('#batteryCurrent2').html(round(parseInt(json["1057"][Object.keys(json["1057"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("1124")) $('#batteryCapacity2').html(round(parseInt(json["1124"][Object.keys(json["1124"])[0]]["entityvalue"]), 1).toString() + " %");
 				}
+				
+				
+				
+				
+				
 				
 				
 				
@@ -774,6 +869,11 @@ $(document).ready(function () {
 				
 				
 				
+				
+				
+				
+				
+				
 				// Update Autarky Progress-Bar
 				
 				gridPower = 0;
@@ -791,6 +891,10 @@ $(document).ready(function () {
 				
 				
 				
+				
+				
+				
+				
 			}
 		});
 		
@@ -798,7 +902,17 @@ $(document).ready(function () {
 		
 		
 		
+		
+		
+		
+		
+		
 	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -810,6 +924,11 @@ $(document).ready(function () {
 		var multiplier = Math.pow(10, precision || 0);
 		return Math.round(value * multiplier) / multiplier;
 	}
+	
+	
+	
+	
+	
 	
 	
 	

@@ -511,16 +511,17 @@ $('#btn-calendar').daterangepicker({
 
 updateInfo();
 
-setInterval(function() {
-	updateInfo();
-}, 10000);
-
 function updateInfo() {
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
 		data: {
 			"action": "getCurrentState"
+		},
+		complete: function (data) {
+			setTimeout(function() {
+				updateInfo();
+			}, 5000);
 		},
 		success: function(response) {
 			var json = JSON.parse(response);
@@ -845,6 +846,13 @@ function getEnergy(updateChartType = true) {
 
 
 
+
+
+
+
+
+
+
 function getEnergy_daily(days) {
 	// updateBatteryOut
 	$.ajax({
@@ -945,6 +953,8 @@ function getEnergy_daily(days) {
 		}
 	});
 }
+
+
 
 
 
@@ -1061,6 +1071,8 @@ function getEnergy_monthly(days) {
 
 
 
+
+
 function getEnergy_yearly(days) {
 	// updateBatteryOut
 	$.ajax({
@@ -1174,6 +1186,8 @@ function getEnergy_yearly(days) {
 
 
 
+
+
 function calculateMonthlyEnergy(arr) {
 	var dataArray = [];
 	
@@ -1195,6 +1209,10 @@ function calculateMonthlyEnergy(arr) {
 	
 	return dataArray;
 }
+
+
+
+
 
 function calculateYearlyEnergy(arr) {
 	var dataArray = [];
