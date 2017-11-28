@@ -9,6 +9,19 @@ $(document).ready(function () {
 	
 	
 	
+	// Get Device Model
+	
+	var model = "";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Device Model Details
 	
 	var solarContNum = 1;
@@ -39,15 +52,23 @@ $(document).ready(function () {
 				switch(response.toLowerCase()) {
 					case 'batterx h3':
 						$(".device").css("background-image", "url('img/device-h3.png')");
+						model = response.toLowerCase();
 						break;
 					case 'batterx h5':
 						$(".device").css("background-image", "url('img/device-h5.png')");
+						model = response.toLowerCase();
+						break;
+					case 'batterx h5e':
+						$(".device").css("background-image", "url('img/device-h5e.png')");
+						model = response.toLowerCase();
 						break;
 					case 'batterx h10':
 						$(".device").css("background-image", "url('img/device-h10.png')");
+						model = response.toLowerCase();
 						break;
 					case 'batterx bs':
 						$(".device").css("background-image", "url('img/device-bs.png')");
+						model = response.toLowerCase();
 						break;
 					default:
 						$(".device").css("background-image", "url('img/device-h5.png')");
@@ -69,8 +90,17 @@ $(document).ready(function () {
 	// Set Device OnClick Listener
 	
 	$('#device').click(function() {
-		$('#deviceMain').fadeToggle();
-		$('#deviceInfo').fadeToggle();
+		if($('#deviceMain').css('display') != 'none') {
+			$('#deviceMain').fadeToggle();
+			$('#deviceInfo1').fadeToggle();
+		} else if($('#deviceInfo1').css('display') != 'none') {
+			$('#deviceInfo1').fadeToggle();
+			if(model == 'batterx bs') $('#deviceInfo2').fadeToggle();
+			else $('#deviceMain').fadeToggle();
+		} else if($('#deviceInfo2').css('display') != 'none') {
+			$('#deviceInfo2').fadeToggle();
+			$('#deviceMain').fadeToggle();
+		}
 	});
 	
 	
@@ -374,9 +404,9 @@ $(document).ready(function () {
 	
 	
 	////////////////////
-	//				//
+	//				  //
 	//  MAIN PROGRAM  //
-	//				//
+	//				  //
 	////////////////////
 	
 	// Update Info - One Call At Begin
@@ -885,6 +915,42 @@ $(document).ready(function () {
 				
 				if(gridPower <= 0) bar.animate(1);
 				else bar.animate(Math.max(1 - gridPower / (loadPower + Math.max(batteryPower, 0)), 0));
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				// Update Device Status (Business Series Only)
+				
+				if(model == 'batterx bs') {
+					var devicePFC = '-';
+					var deviceBoost = '-';
+					var deviceECO = '-';
+					
+					var temp = null;
+					if(json.hasOwnProperty("24577")) temp = parseInt(json["24577"][Object.keys(json["24577"])[0]]["entityvalue"]);
+					if(temp == 1) devicePFC = "ON"; 
+					else if(temp == 0) devicePFC = "OFF";
+					
+					temp = null;
+					if(json.hasOwnProperty("24578")) temp = parseInt(json["24578"][Object.keys(json["24578"])[0]]["entityvalue"]);
+					if(temp == 1) deviceBoost = "ON";
+					else if(temp == 0) deviceBoost = "OFF";
+					
+					temp = null;
+					if(json.hasOwnProperty("24579")) temp = parseInt(json["24579"][Object.keys(json["24579"])[0]]["entityvalue"]);
+					if(temp == 1) deviceECO = "ON";
+					else if(temp == 0) deviceECO = "OFF";
+					
+					$('#devicePFC').html(devicePFC);
+					$('#deviceBoost').html(deviceBoost);
+					$('#deviceECO').html(deviceECO);
+				}
 				
 				
 				
