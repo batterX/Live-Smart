@@ -1,4 +1,4 @@
-# batterX Live & Smart (v17.11.27)
+# batterX Live & Smart (v17.11.27-fix)
 
 ## Update Monitoring App
 
