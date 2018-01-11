@@ -363,7 +363,7 @@ h4.deletetab {
 @media (orientation: landscape) {
 	#slider-left {
 		width: 25vw;
-		border-right: 1px solid #87d403;
+		border-right: 0.25vh solid #87d403;
 		background-color: #151515;
 	}
 	#middle {

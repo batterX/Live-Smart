@@ -1,0 +1,42 @@
+body {
+	background-color: #131313;
+}
+
+* {
+	font-family: 'Raleway' !important;
+	border-radius: 0px !important;
+}
+
+.container * {
+	font-family: monospace!important;
+}
+
+input, select {
+	background: #212121 !important;
+}
+h1, h2, h3, h4, h5, h6, p, input, select, button, .list-group-item {
+	color: white !important;
+}
+
+h5, button {
+	font-size: 1rem !important;
+}
+
+input, select {
+	font-size: 0.8rem !important;
+}
+
+.btn-secondary { 
+	color: #ffffff; 
+	background-color: #444; 
+	border-color: #222;
+}
+.btn-secondary:hover, 
+.btn-secondary:focus, 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.open .dropdown-toggle.btn-secondary { 
+	color: #ffffff;
+	background-color: #333;
+	border-color: #222;
+}

@@ -58,7 +58,7 @@ $(document).ready(function () {
 						$(".device").css("background-image", "url('img/device-h5.png')");
 						model = response.toLowerCase();
 						break;
-					case 'batterx h5e':
+					case 'batterx h5-eco':
 						$(".device").css("background-image", "url('img/device-h5e.png')");
 						model = response.toLowerCase();
 						break;
@@ -444,6 +444,8 @@ $(document).ready(function () {
 				setTimeout(function() {
 					updateInfo();
 				}, 5000);
+				
+				$('.overlay').fadeOut(); // Overlay (when updating page)
 			},
 			success: function (response) {
 				

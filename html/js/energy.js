@@ -1,3 +1,54 @@
+var overlay_batteryOut = false; // Overlay (when updating page)
+var overlay_batteryIn = false; // Overlay (when updating page)
+var overlay_gridOut = false; // Overlay (when updating page)
+var overlay_gridIn = false; // Overlay (when updating page)
+var overlay_directConsumption = false; // Overlay (when updating page)
+
+function hideOverlay() { // Overlay (when updating page)
+	if(overlay_batteryOut == true && 
+	   overlay_batteryIn == true && 
+	   overlay_gridOut == true && 
+	   overlay_gridIn == true && 
+	   overlay_directConsumption == true
+	) $('.overlay').fadeOut();
+}
+
+
+
+
+
+
+
+
+
+
+// Get Device Model
+var model = "batterx bs";
+
+// Get Device Model
+$.ajax({
+	type: "POST",
+	url: "db-interaction/data.php",
+	data: {
+		"action": "getDeviceModel"
+	},
+	success: function (response) {
+		if(response) {
+			model = response.toLowerCase();
+			getEnergy();
+		}
+	}
+});
+
+
+
+
+
+
+
+
+
+
 /*
 	Define all needed Variables
 */
@@ -413,11 +464,19 @@ $('#btn-production').on('click', function() {
 	$('#btn-consumption').removeClass('btn-selected');
 	btnSelected = 1;
 	
-	chart.config.data.datasets = [
-		dataset_directConsumption,
-		dataset_batteryIn,
-		dataset_gridIn
-	];
+	if(model == "batterx bs") {
+		chart.config.data.datasets = [
+			dataset_directConsumption,
+			dataset_batteryIn
+		];
+	} else {
+		chart.config.data.datasets = [
+			dataset_directConsumption,
+			dataset_batteryIn,
+			dataset_gridIn
+		];
+	}
+	
 	chart.update();	
 });
 
@@ -557,7 +616,18 @@ function updateInfo() {
 	Get Energy Data
 */
 
-function getEnergy(updateChartType = true) {
+function getEnergy(updateChartType) {
+	
+	if(updateChartType === undefined) updateChartType = true;
+	
+	if(updateChartType) { // Overlay (when updating page)
+		$('.overlay').show(); // Overlay (when updating page)
+		overlay_batteryOut = false; // Overlay (when updating page)
+		overlay_batteryIn = false; // Overlay (when updating page)
+		overlay_gridOut = false; // Overlay (when updating page)
+		overlay_gridIn = false; // Overlay (when updating page)
+		overlay_directConsumption = false; // Overlay (when updating page)
+	}
 	
 	// Display the correct Chart Type
 	if(updateChartType) {
@@ -578,10 +648,12 @@ function getEnergy(updateChartType = true) {
 	dataset_gridOut.data = [];
 	dataset_gridIn.data = [];
 	dataset_directConsumption.data = [];
-	if(btnSelected == 1)
-		chart.config.data.datasets = [dataset_directConsumption, dataset_batteryIn, dataset_gridIn];
-	else
+	if(btnSelected == 1) {
+		if(model == "batterx bs") chart.config.data.datasets = [dataset_directConsumption, dataset_batteryIn];
+		else chart.config.data.datasets = [dataset_directConsumption, dataset_batteryIn, dataset_gridIn];
+	} else {
 		chart.config.data.datasets = [dataset_directConsumption, dataset_batteryOut, dataset_gridOut];
+	}
 	
 	
 	
@@ -640,6 +712,9 @@ function getEnergy(updateChartType = true) {
 					chart.config.data.datasets.push = dataset_batteryOut;
 					chart.update();
 				}
+				
+				overlay_batteryOut = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
 		});
 		$.ajax({
@@ -670,6 +745,9 @@ function getEnergy(updateChartType = true) {
 					chart.config.data.datasets.push = dataset_batteryIn;
 					chart.update();
 				}
+				
+				overlay_batteryIn = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
 		});
 		$.ajax({
@@ -700,38 +778,49 @@ function getEnergy(updateChartType = true) {
 					chart.config.data.datasets.push = dataset_gridOut;
 					chart.update();
 				}
-			}
-		});
-		$.ajax({
-			type: "POST",
-			url: "db-interaction/data.php",
-			data: {
-				"action": "getPowerData",
-				"type": date_from,
-				"entity": "11"
-			},
-			success: function(result) {
-				if(result != "0")
-					data_gridIn = convertStringsToIntegers(result.split(" "));
-				else
-					data_gridIn = [0];
-					
-				if(zoomActive) {
-					if(data_gridIn.length > 84)
-						data_gridIn = data_gridIn.slice(20, 84);
-					else if(data_gridIn.length > 20)
-						data_gridIn = data_gridIn.slice(20);
-				}
 				
-				// Update Data
-				dataset_gridIn.data = data_gridIn;
-				// Update Chart
-				if(btnSelected == 1) {
-					chart.config.data.datasets.push = dataset_gridIn;
-					chart.update();
-				}
+				overlay_gridOut = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
 		});
+		if(model != "batterx bs") {
+			$.ajax({
+				type: "POST",
+				url: "db-interaction/data.php",
+				data: {
+					"action": "getPowerData",
+					"type": date_from,
+					"entity": "11"
+				},
+				success: function(result) {
+					if(result != "0")
+						data_gridIn = convertStringsToIntegers(result.split(" "));
+					else
+						data_gridIn = [0];
+
+					if(zoomActive) {
+						if(data_gridIn.length > 84)
+							data_gridIn = data_gridIn.slice(20, 84);
+						else if(data_gridIn.length > 20)
+							data_gridIn = data_gridIn.slice(20);
+					}
+
+					// Update Data
+					dataset_gridIn.data = data_gridIn;
+					// Update Chart
+					if(btnSelected == 1) {
+						chart.config.data.datasets.push = dataset_gridIn;
+						chart.update();
+					}
+					
+					overlay_gridIn = true; // Overlay (when updating page)
+					hideOverlay(); // Overlay (when updating page)
+				}
+			});
+		} else {
+			overlay_gridIn = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
+		}
 		$.ajax({
 			type: "POST",
 			url: "db-interaction/data.php",
@@ -758,6 +847,9 @@ function getEnergy(updateChartType = true) {
 				// Update Chart
 				chart.config.data.datasets.push = dataset_directConsumption;
 				chart.update();
+				
+				overlay_directConsumption = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
 		});
 		
@@ -872,6 +964,9 @@ function getEnergy_daily(days) {
 				chart.config.data.datasets.push = dataset_batteryOut;
 				chart.update();
 			}
+			
+			overlay_batteryOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateBatteryIn
@@ -892,6 +987,9 @@ function getEnergy_daily(days) {
 				chart.config.data.datasets.push = dataset_batteryIn;
 				chart.update();
 			}
+			
+			overlay_batteryIn = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridOut
@@ -912,28 +1010,39 @@ function getEnergy_daily(days) {
 				chart.config.data.datasets.push = dataset_gridOut;
 				chart.update();
 			}
+			
+			overlay_gridOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridIn
-	$.ajax({
-		type: "POST",
-		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
-		},
-		success: function(result) {
-			// Update Data
-			data_gridIn = convertStringsToIntegers(result.split(","));
-			dataset_gridIn.data = data_gridIn;
-			// Update Chart
-			if(btnSelected == 1) {
-				chart.config.data.datasets.push = dataset_gridIn;
-				chart.update();
+	if(model != "batterx bs") {
+		$.ajax({
+			type: "POST",
+			url: "db-interaction/data.php",
+			data: {
+				"action": "getEnergyData",
+				"type": days.join(),
+				"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
+			},
+			success: function(result) {
+				// Update Data
+				data_gridIn = convertStringsToIntegers(result.split(","));
+				dataset_gridIn.data = data_gridIn;
+				// Update Chart
+				if(btnSelected == 1) {
+					chart.config.data.datasets.push = dataset_gridIn;
+					chart.update();
+				}
+				
+				overlay_gridIn = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
-		}
-	});
+		});
+	} else {
+		overlay_gridIn = true; // Overlay (when updating page)
+		hideOverlay(); // Overlay (when updating page)
+	}
 	// updateDirectConsumption
 	$.ajax({
 		type: "POST",
@@ -950,6 +1059,9 @@ function getEnergy_daily(days) {
 			// Update Chart
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
+			
+			overlay_directConsumption = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 }
@@ -979,6 +1091,9 @@ function getEnergy_monthly(days) {
 				chart.config.data.datasets.push = dataset_batteryOut;
 				chart.update();
 			}
+			
+			overlay_batteryOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateBatteryIn
@@ -1001,6 +1116,9 @@ function getEnergy_monthly(days) {
 				chart.config.data.datasets.push = dataset_batteryIn;
 				chart.update();
 			}
+			
+			overlay_batteryIn = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridOut
@@ -1023,30 +1141,41 @@ function getEnergy_monthly(days) {
 				chart.config.data.datasets.push = dataset_gridOut;
 				chart.update();
 			}
+			
+			overlay_gridOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridIn
-	$.ajax({
-		type: "POST",
-		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
-		},
-		success: function(result) {
-			// Read Data + Calculate To Months			
-			resultArray = convertStringsToIntegers(result.split(","));
-			// Update Data
-			data_gridIn = calculateMonthlyEnergy(resultArray);
-			dataset_gridIn.data = data_gridIn;
-			// Update Chart
-			if(btnSelected == 1) {
-				chart.config.data.datasets.push = dataset_gridIn;
-				chart.update();
+	if(model != "batterx bs") {
+		$.ajax({
+			type: "POST",
+			url: "db-interaction/data.php",
+			data: {
+				"action": "getEnergyData",
+				"type": days.join(),
+				"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
+			},
+			success: function(result) {
+				// Read Data + Calculate To Months			
+				resultArray = convertStringsToIntegers(result.split(","));
+				// Update Data
+				data_gridIn = calculateMonthlyEnergy(resultArray);
+				dataset_gridIn.data = data_gridIn;
+				// Update Chart
+				if(btnSelected == 1) {
+					chart.config.data.datasets.push = dataset_gridIn;
+					chart.update();
+				}
+				
+				overlay_gridIn = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
-		}
-	});
+		});
+	} else {
+		overlay_gridIn = true; // Overlay (when updating page)
+		hideOverlay(); // Overlay (when updating page)
+	}
 	// updateDirectConsumption
 	$.ajax({
 		type: "POST",
@@ -1065,6 +1194,9 @@ function getEnergy_monthly(days) {
 			// Update Chart
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
+			
+			overlay_directConsumption = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 }
@@ -1094,6 +1226,9 @@ function getEnergy_yearly(days) {
 				chart.config.data.datasets.push = dataset_batteryOut;
 				chart.update();
 			}
+			
+			overlay_batteryOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateBatteryIn
@@ -1116,6 +1251,9 @@ function getEnergy_yearly(days) {
 				chart.config.data.datasets.push = dataset_batteryIn;
 				chart.update();
 			}
+			
+			overlay_batteryIn = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridOut
@@ -1138,30 +1276,41 @@ function getEnergy_yearly(days) {
 				chart.config.data.datasets.push = dataset_gridOut;
 				chart.update();
 			}
+			
+			overlay_gridOut = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 	// updateGridIn
-	$.ajax({
-		type: "POST",
-		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
-		},
-		success: function(result) {
-			// Read Data + Calculate To Months			
-			resultArray = convertStringsToIntegers(result.split(","));
-			// Update Data
-			data_gridIn = calculateYearlyEnergy(resultArray);
-			dataset_gridIn.data = data_gridIn;
-			// Update Chart
-			if(btnSelected == 1) {
-				chart.config.data.datasets.push = dataset_gridIn;
-				chart.update();
+	if(model != "batterx bs") {
+		$.ajax({
+			type: "POST",
+			url: "db-interaction/data.php",
+			data: {
+				"action": "getEnergyData",
+				"type": days.join(),
+				"entity": "11" // 0 = Energy/Hour | 1 = Energy/Day
+			},
+			success: function(result) {
+				// Read Data + Calculate To Months			
+				resultArray = convertStringsToIntegers(result.split(","));
+				// Update Data
+				data_gridIn = calculateYearlyEnergy(resultArray);
+				dataset_gridIn.data = data_gridIn;
+				// Update Chart
+				if(btnSelected == 1) {
+					chart.config.data.datasets.push = dataset_gridIn;
+					chart.update();
+				}
+				
+				overlay_gridIn = true; // Overlay (when updating page)
+				hideOverlay(); // Overlay (when updating page)
 			}
-		}
-	});
+		});
+	} else {
+		overlay_gridIn = true; // Overlay (when updating page)
+		hideOverlay(); // Overlay (when updating page)
+	}
 	// updateDirectConsumption
 	$.ajax({
 		type: "POST",
@@ -1180,6 +1329,9 @@ function getEnergy_yearly(days) {
 			// Update Chart
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
+			
+			overlay_directConsumption = true; // Overlay (when updating page)
+			hideOverlay(); // Overlay (when updating page)
 		}
 	});
 }

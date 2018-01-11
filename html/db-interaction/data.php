@@ -36,6 +36,10 @@ if(!empty($_POST['action']))
 		case 'getCollectedData_compare':
 			echo $dataObj->getCollectedData_compare();
 			break;
+			
+		case 'getPinConfig':
+			echo $dataObj->getPinConfig();
+			break;
 		
 		default:
 			echo "";

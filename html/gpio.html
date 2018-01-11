@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+	
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>GPIO</title>
+		<link rel="shortcut icon" href="img/x.png">
+		<link href="css/components/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/components/normalize.css">
+		<link rel="stylesheet" type="text/css" href="css/components/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/gpio.css">
+	</head>
+	
+	<body>
+		
+		<div class="overlay" style="
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 100vw;
+			height: 100vh;
+			background-color: #131313;
+			z-index: 10000;
+		"></div>
+		
+		<div class="container-fluid switch-container">
+			
+			<div class="row">
+				
+				<div class="col-6 col-md-3 m-0 pt-3 pb-md-3 pl-3 pr-2">
+					<div class="switch card pb-3 m-0">
+						<h6 id="btn1Name" class="pt-3 pb-3 mb-3">Switch 1</h6>
+						<button type="button" id="btn1" class="no-decoration btn-toggle active" name="btn1" value="1">
+							<div class="handle"></div>
+						</button>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pt-3 pb-md-3 pl-2 pr-3 pr-md-2">
+					<div class="switch card pb-3 m-0">
+						<h6 id="btn2Name" class="pt-3 pb-3 mb-3">Switch 2</h6>
+						<button type="button" id="btn2" class="no-decoration btn-toggle" name="btn2" value="1">
+							<div class="handle"></div>
+						</button>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 py-3 pl-3 pl-md-2 pr-2">
+					<div class="switch card pb-3 m-0">
+						<h6 id="btn3Name" class="pt-3 pb-3 mb-3">Switch 3</h6>
+						<button type="button" id="btn3" class="no-decoration btn-toggle" name="btn3" value="1">
+							<div class="handle"></div>
+						</button>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 py-3 pl-2 pr-3">
+					<div class="switch card pb-3 m-0">
+						<h6 id="btn4Name" class="pt-3 pb-3 mb-3">Switch 4</h6>
+						<button type="button" id="btn4" class="no-decoration btn-toggle" name="btn4" value="1">
+							<div class="handle"></div>
+						</button>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		<div class="mb-3 ml-3 mr-3">
+			<table>
+				<tr>
+					<td style="min-width: 20vh;"><span style="font-size: 2.75vh;">O U T P U T S</span></td>
+					<td style="width: 100%;"><hr style="background-color: white !important;"/></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div class="container-fluid">
+			
+			<div class="row">
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-3 pr-2">
+					<div id="out1" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Output 1</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-2 pr-3 pr-md-2">
+					<div id="out2" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Output 2</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-3 pl-md-2 pr-2">
+					<div id="out3" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Output 3</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-2 pr-3">
+					<div id="out4" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Output 4</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		<div class="mb-3 ml-3 mr-3">
+			<table>
+				<tr>
+					<td style="min-width: 20vh;"><span style="font-size: 2.75vh;">I N P U T S</span></td>
+					<td style="width: 100%;"><hr style="background-color: white !important;"/></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div class="container-fluid">
+			
+			<div class="row">
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-3 pr-2">
+					<div id="in1" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Input 1</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-2 pr-3 pr-md-2">
+					<div id="in2" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Input 2</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-3 pl-md-2 pr-2">
+					<div id="in3" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Input 3</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-6 col-md-3 m-0 pb-3 pl-2 pr-3">
+					<div id="in4" class="card py-3 px-2 px-md-3 m-0">
+						<div class="form-inline">
+							<span class="name pr-1">Input 4</span>
+							<span class="status text-center float-right ml-auto red">OFF</span>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		
+		
+		
+		<script src="js/components/jquery.js"></script>
+		<script src="js/components/bootstrap.js"></script>
+		<script src="js/gpio.js"></script>
+		
+	</body>
+
+</html>

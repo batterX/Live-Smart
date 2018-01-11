@@ -90,6 +90,7 @@ $('#pin').on('change', function() {
 	pin = $('#pin').find('option:selected').val().toLowerCase();
 	if(pin.charAt(0) == 'i') pin = pin.substr(0, 2) + pin.charAt(6);
 	else if(pin.charAt(0) == 'o') pin = pin.substr(0, 3) + pin.charAt(7);
+	else if(pin.charAt(0) == 's') pin = pin.substr(0, 6) + pin.charAt(7);
 	
 	var temp = $('#active').find('option:selected').val().toLowerCase();
 	if($(this).val().toLowerCase().charAt(0) == 'i') {
@@ -97,12 +98,24 @@ $('#pin').on('change', function() {
 		if(temp == 'enable') $("#whenActive").css('display', 'flex');
 		else $("#whenActive").css('display', 'none');
 		$("#activeWhen").css('display', 'none');
-	} else {
+		$("#delayView").css('display', 'none');
+	} else if($(this).val().toLowerCase().charAt(0) == 'o') {
 		// Output
-		if(temp == 'enable') $("#activeWhen").css('display', 'flex');
-		else $("#activeWhen").css('display', 'none');
+		if(temp == 'enable') {
+			$("#activeWhen").css('display', 'flex');
+			$("#delayView").css('display', 'flex');
+		} else { 
+			$("#activeWhen").css('display', 'none');
+			$("#delayView").css('display', 'none');
+		}
 		$("#whenActive").css('display', 'none');
 		$("#statement").val("");
+		$("#onDelay").val("");
+		$("#offDelay").val("");
+	} else {
+		$("#activeWhen").css('display', 'none');
+		$("#whenActive").css('display', 'none');
+		$("#delayView").css('display', 'none');
 	}
 	
 	$.ajax({
@@ -116,6 +129,11 @@ $('#pin').on('change', function() {
 			if(response) {
 				var json = JSON.parse(response);
 				console.log(json);
+				
+				if(json.hasOwnProperty("Name") && json['Name'] != null)
+					$('#label').val(json['Name']);
+				else
+					$('#label').val("");
 
 				if(json.hasOwnProperty("Mode") && json.hasOwnProperty("S1")) {
 					if(json['Mode'] == '1')
@@ -126,23 +144,34 @@ $('#pin').on('change', function() {
 					var temp = $('#active').find('option:selected').val().toLowerCase();
 					if(pin.charAt(0) == 'i')
 						$('#inputFunc').val(json['S1']);
-					else
+					else {
 						$('#statement').val(json['S1']);
+						$('#onDelay').val(json['V6']);
+						$("#offDelay").val(json['V5']);
+					}
 				} else {
 					console.log(response);
 					$('#active').val('disable').change();
 					$('#statement').val('');
+					$("#onDelay").val("");
+					$("#offDelay").val("");
 				}
 			} else {
 				console.log(response);
 				$('#active').val('disable').change();
 				$('#statement').val('');
+				$("#onDelay").val("");
+				$("#offDelay").val("");
+				$('#label').val('');
 			}
 		},
 		error: function (response) {
 			console.log(response);
 			$('#active').val('disable').change();
 			$('#statement').val('');
+			$("#onDelay").val("");
+			$("#offDelay").val("");
+			$('#label').val('');
 		}
 	});
 });
@@ -155,9 +184,14 @@ $('#active').on('change', function() {
 	var temp = $('#pin').find('option:selected').val().toLowerCase().charAt(0);
 	$("#whenActive").css('display', 'none');
 	$("#activeWhen").css('display', 'none');
+	$("#delayView").css('display', 'none');
 	if($(this).val().toLowerCase() == 'enable') {
-		if(temp == 'i') $("#whenActive").css('display', 'flex');
-		else $("#activeWhen").css('display', 'flex');
+		if(temp == 'i') 
+			$("#whenActive").css('display', 'flex');
+		else if(temp == 'o') {
+			$("#activeWhen").css('display', 'flex');
+			$("#delayView").css('display', 'flex');
+		}
 	}
 });
 
@@ -205,7 +239,12 @@ $('.btnLogic').on('click', function() {
 			last == 'input_2' || 
 			last == 'input_3' || 
 			last == 'input_4' || 
+			last == 'switch_1' || 
+			last == 'switch_2' || 
+			last == 'switch_3' || 
+			last == 'switch_4' || 
 			last == 'current_time' || 
+			last == 'current_state' || 
 			last == ')')
 		$('#statement').val(st + " " + val);
 });
@@ -234,7 +273,12 @@ $('.btnCompare').on('click', function() {
 			last == 'input_2' || 
 			last == 'input_3' || 
 			last == 'input_4' || 
+			last == 'switch_1' || 
+			last == 'switch_2' || 
+			last == 'switch_3' || 
+			last == 'switch_4' ||
 			last == 'current_time' || 
+			last == 'current_state' || 
 			last == ')')
 		$('#statement').val(st + " " + val);
 });
@@ -273,7 +317,12 @@ $('.btnBrClose').on('click', function() {
 			last == 'input_2' || 
 			last == 'input_3' || 
 			last == 'input_4' || 
+			last == 'switch_1' || 
+			last == 'switch_2' || 
+			last == 'switch_3' || 
+			last == 'switch_4' ||
 			last == 'current_time' || 
+			last == 'current_state' || 
 			last == ')')
 		$('#statement').val(st + " " + val);
 });
@@ -311,18 +360,33 @@ $('#submit').on('click', function() {
 		return;
 	
 	var pin = '';
+	var label = '';
 	var active = '';
 	var statement = '';
+	var onDelay = '';
+	var offDelay = '';
 	
 	// PIN
 	pin = $('#pin').find('option:selected').val().toLowerCase();
 	if(pin.charAt(0) == 'i') pin = pin.substr(0, 2) + pin.charAt(6);
 	else if(pin.charAt(0) == 'o') pin = pin.substr(0, 3) + pin.charAt(7);
+	else if(pin.charAt(0) == 's') pin = pin.substr(0, 6) + pin.charAt(7);
+	
+	// LABEL
+	label = $('#label').val();
 	
 	// ACTIVE
 	active = $('#active').find('option:selected').val().toLowerCase();
 	if(active == 'enable') active = 1;
 	else active = 0;
+	
+	// ON-DELAY
+	onDelay = $('#onDelay').val();
+	if(!(0 <= onDelay && onDelay <= 60)) onDelay = 0;
+	
+	// OFF-DELAY
+	offDelay = $('#offDelay').val();
+	if(!(0 <= offDelay && offDelay <= 60)) offDelay = 0;
 	
 	// STATEMENT
 	if(pin.charAt(0) == 'i')
@@ -353,7 +417,12 @@ $('#submit').on('click', function() {
 			   last == 'input_2' || 
 			   last == 'input_3' || 
 			   last == 'input_4' || 
+			   last == 'switch_1' || 
+			   last == 'switch_2' || 
+			   last == 'switch_3' || 
+			   last == 'switch_4' ||
 			   last == 'current_time' || 
+			last == 'current_state' || 
 			   last == ')') 
 			{
 				if(st.split('(').length-1 == st.split(')').length-1)
@@ -362,16 +431,17 @@ $('#submit').on('click', function() {
 		}
 	}
 	
-	//alert("pin: " + pin + "\nactive: " + active + "\nstatement: " + statement);
-	
 	$.ajax({
 		type: 'POST',
 		url: '../db-interaction/service.php',
 		data: {
 			"action": 'setPinConfig',
 			"pin": pin,
+			"label": label,
 			"active": active,
-			"statement": statement
+			"statement": statement,
+			"onDelay": onDelay,
+			"offDelay": offDelay
 		},
 		success: function (response) {
 			if(response) {

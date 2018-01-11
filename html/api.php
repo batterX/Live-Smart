@@ -6,21 +6,34 @@ if(!empty($_GET['get']))
 	{
 		case 'currentstate':
 
-			$db = new PDO('sqlite:/srv/bx/ram/currentD.db3');
+			if(isset($_GET['type']) && isset($_GET['entity'])) 
+			{
+				$db = new PDO('sqlite:/srv/bx/ram/currentD.db3');
 		
-			$result = $db->query('SELECT type, entity, entityvalue, logtime FROM CurrentState');
+				$result = $db->query('SELECT entityvalue FROM CurrentState WHERE type=' . $_GET['type'] . ' AND entity=' . $_GET['entity'] . ' LIMIT 1');
 
-			$dbh = new stdClass();
-
-			foreach($result as $row) {
-				$type = (string) $row['type'];
-				$entity = (string) $row['entity'];
-				if(!isset($dbh->$type)) 
-					$dbh->$type = new stdClass();
-				$dbh->$type->$entity = $row;
+				$res = $result->fetchColumn();
+				
+				echo strval($res);
 			}
-			
-			echo json_encode($dbh, JSON_FORCE_OBJECT);
+			else
+			{
+				$db = new PDO('sqlite:/srv/bx/ram/currentD.db3');
+		
+				$result = $db->query('SELECT type, entity, entityvalue, logtime FROM CurrentState');
+
+				$dbh = new stdClass();
+
+				foreach($result as $row) {
+					$type = (string) $row['type'];
+					$entity = (string) $row['entity'];
+					if(!isset($dbh->$type)) 
+						$dbh->$type = new stdClass();
+					$dbh->$type->$entity = $row;
+				}
+				
+				echo json_encode($dbh, JSON_FORCE_OBJECT);
+			}
 
 			break;
 
@@ -52,6 +65,16 @@ if(!empty($_GET['get']))
 				}
 				
 				echo implode(',', $resultArray);
+			}
+			else if(isset($_GET['entity']))
+			{
+				$db = new PDO('sqlite:/srv/bx/usv.db3');
+				
+				$result = $db->query('SELECT SUM(entityvalue) FROM EnergyData WHERE entity=' . $_GET['entity']);
+
+				$res = $result->fetchColumn();
+				
+				echo strval($res);
 			}
 			else
 			{
@@ -123,6 +146,43 @@ if(!empty($_GET['get']))
 		default:
 			echo "";
 			break;
+	}
+}
+else if(isset($_GET['set']) && isset($_GET['state'])) 
+{
+	$state = $_GET['state'];
+	
+	if($state == '0' || $state == '1' || $state == '2') 
+	{
+		$db = new PDO('sqlite:/srv/bx/ram/currentC.db3');
+		
+		$sql = "";
+		
+		switch(strtolower($_GET['set']))
+		{
+			case 'switch1':
+				$sql = "INSERT INTO `CommandsIn` (`type`, `entity`, `text1`, `text2`) VALUES(20736, 0, '1', '" . $state . "')";
+				break;
+			case 'switch2':
+				$sql = "INSERT INTO `CommandsIn` (`type`, `entity`, `text1`, `text2`) VALUES(20736, 0, '2', '" . $state . "')";
+				break;
+			case 'switch3':
+				$sql = "INSERT INTO `CommandsIn` (`type`, `entity`, `text1`, `text2`) VALUES(20736, 0, '3', '" . $state . "')";
+				break;
+			case 'switch4':
+				$sql = "INSERT INTO `CommandsIn` (`type`, `entity`, `text1`, `text2`) VALUES(20736, 0, '4', '" . $state . "')";
+				break;
+			default:
+				break;
+		}
+		
+		try {
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			if($stmt->rowCount() == 1)
+				echo '1';
+			$stmt->closeCursor();
+		} catch(PDOException $e) {}
 	}
 }
 else

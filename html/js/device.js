@@ -321,6 +321,8 @@ $.ajax({
 				cssEase: 'linear'
 			});
 		});
+		
+		$('.overlay').fadeOut(); // Overlay (when updating page)
 	}
 });
 

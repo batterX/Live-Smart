@@ -1,0 +1,160 @@
+/* NEW FROM SAMUEL */
+
+/* Remove any extra spacing + Add some basic settings */
+html, body {
+	font-family: 'Raleway' !important;
+}
+* {
+	font-family: 'Raleway' !important;
+}
+body {
+	background-color: #131313;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	color: white;
+}
+
+.card {
+	border: 0;
+	/*box-shadow: 0 3px 10px -4px black;*/
+	/*border-radius: 0.5vh !important;*/
+	border-radius: 0px !important;
+	height: 100%;
+}
+
+.switch {
+	background-color: #191919;
+	border-top: 0.25vh solid #87d403 !important;
+}
+#btn1Name, #btn2Name, #btn3Name, #btn4Name {
+	background-color: #000000;
+}
+
+#out1, #out2, #out3, #out4, #in1, #in2, #in3, #in4 {
+	border-left: 0.25vh solid #87d403;
+	background-color: #191919;
+}
+
+.no-decoration {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.no-decoration:focus, .no-decoration:hover {
+  text-decoration: none;
+}
+
+.no-decoration:focus, .no-decoration.focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
+          box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
+}
+
+
+
+
+
+.name {
+	max-width: calc(100% - 6vh); /*calc(100% - 3rem)*/
+	letter-spacing: 0px;
+	font-size: 2.4vh; /*0.9rem*/
+}
+.status {
+	line-height: 3.5vh; /*1.875rem*/
+	width: 6vh; /*3rem*/
+	border-radius: 100px !important;
+	letter-spacing: 0px;
+	font-size: 1.2vh; /*0.7rem*/
+}
+
+.red {
+	background-color: #d9534f !important;
+}
+
+.green {
+	background-color: #87d403 !important;
+}
+
+
+
+
+
+/* 
+	Switch Style
+*/
+.switch-container .row {
+	text-align: center;
+}
+.switch-container h6 {
+	font-weight: 100;
+	font-size: 2.75vh; /*1rem*/
+	letter-spacing: 1px;
+	color: white;
+	margin: 0;
+	line-height: 3.5vh; /*1.25rem*/
+}
+.switch-container .btn-toggle {
+	left: 50%;
+	transform: translateX(-50%);
+}
+.btn-toggle {
+	position: relative;
+	border: none;
+	height: 4vh; /*2rem*/
+	width: 8vh; /*4rem*/
+	border-radius: 4vh; /*2rem*/
+	color: white;
+	background: #666666;
+}
+.btn-toggle:before,
+.btn-toggle:after {
+	line-height: 4vh; /*2rem*/
+	width: 8vh; /*4rem*/
+	text-align: center;
+	font-weight: 100;
+	font-size: 1.6vh; /*0.8rem*/
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	position: absolute;
+	bottom: 0;
+	transition: opacity .25s;
+}
+.btn-toggle:before {
+	content: 'Off';
+	left: -7vh; /*-3.5rem*/
+}
+.btn-toggle:after {
+	content: 'On';
+	right: -7vh; /*-3.5rem*/
+	opacity: .5;
+}
+.btn-toggle > .handle {
+	position: absolute;
+	top: 0.5vh; /*0.25rem*/
+	left: 0.5vh; /*0.25rem*/
+	width: 3vh; /*1.5rem*/
+	height: 3vh; /*1.5rem*/
+	border-radius: 3vh; /*1.5rem*/
+	background: #fff;
+	transition: left .25s;
+}
+.btn-toggle.active {
+	transition: background-color 0.25s;
+}
+.btn-toggle.active > .handle {
+	left: 4.5vh; /*2.25rem*/
+	transition: left .25s;
+}
+.btn-toggle.active:before {
+	opacity: .5;
+}
+.btn-toggle.active:after {
+	opacity: 1;
+}
+.btn-toggle.active {
+	background-color: #87d403;
+}

@@ -8,6 +8,10 @@ sudo rm /home/pi/BatterX
 sudo cp /home/pi/livesmart/BatterX /home/pi
 sudo chmod 777 /home/pi/BatterX
 
+sudo rm /home/pi/CloudStream
+sudo cp /home/pi/livesmart/CloudStream /home/pi
+sudo chmod 777 /home/pi/CloudStream
+
 sudo cp /home/pi/livesmart/launcher.sh /home/pi
 sudo chmod 777 /home/pi/launcher.sh
 

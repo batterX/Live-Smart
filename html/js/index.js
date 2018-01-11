@@ -1,5 +1,3 @@
-Notification.requestPermission();
-
 /*
 	Set Warnings Begin Variables State
 */
@@ -18,6 +16,8 @@ var lastWarningList = [];
 
 $(document).ready(function () {
 	
+	var model = "";
+	
 	/*
 		Initialize Notifications
 	*/
@@ -27,6 +27,33 @@ $(document).ready(function () {
 	// Load the 10 latest Warnings for the current device
 	function initNotifications()
 	{
+		$('.overlay').show(); // Overlay (when updating page)
+		
+		// Get Device Model
+		$.ajax({
+			type: "POST",
+			url: "db-interaction/data.php",
+			data: {
+				"action": "getDeviceModel"
+			},
+			success: function (response) {
+				// Update Device Image + Label
+				if(response) {
+					model = response.toLowerCase();
+					switch(response.toLowerCase()) {
+						case 'batterx bs':
+							$(".logo-livesmart").attr("src", "img/logo-efm.svg");
+							break;
+						default:
+							$(".logo-livesmart").attr("src", "img/logo-livesmart.svg");
+							break;
+					}
+				}
+				
+				$('.overlay').fadeOut(); // Overlay (when updating page)
+			}
+		});
+		
 		lastWarningTime = new Date("2000-01-01T01:01:01");
 		lastWarningList = [];
 		
@@ -51,7 +78,7 @@ $(document).ready(function () {
 						
 							for(var y = 0; y < tempList.length; y++) 
 							{
-								if(!lastWarningList.includes(tempList[y])) 
+								if(lastWarningList.indexOf(tempList[y]) == -1) 
 								{
 									var article = "";
 									article = 	"<article>";
@@ -137,12 +164,18 @@ $(document).ready(function () {
 		$('#title').html("SYSTEM");
 		toggleActive("device");
 	});
+	$('#gpio').click(function() {
+		$('#frame').attr("src", "gpio.html");
+		$('#title').html("GPIO");
+		toggleActive("gpio");
+	});
 	
 	function toggleActive(id) {
 		$("#"+id).find("h4").addClass("active");
 		if(id != 'live') $("#live").find("h4").removeClass("active");
 		if(id != 'energy') $("#energy").find("h4").removeClass("active");
 		if(id != 'device') $("#device").find("h4").removeClass("active");
+		if(id != 'gpio') $("#gpio").find("h4").removeClass("active");
 	}
 	
 	
@@ -189,12 +222,10 @@ $(document).ready(function () {
 						if(json[x]['entityvalue'] != "") {
 							
 							var tempList = json[x]['entityvalue'].split(" ");
-						
-							var flag = false;
 							
 							for(var y = 0; y < tempList.length; y++) 
 							{
-								if(!lastWarningList.includes(tempList[y])) 
+								if(lastWarningList.indexOf(tempList[y]) == -1) 
 								{
 									var article = "";
 									article = 	"<article>";
@@ -213,17 +244,7 @@ $(document).ready(function () {
 									article += 	"</article>";
 
 									$("#notif-container").html(article + $("#notif-container").html());
-								
-									flag = true;
 								}
-							}
-							
-							if(flag && window.Notification && Notification.permission !== "denied") {
-								Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
-									var n = new Notification('WARNINGS UPDATE', { 
-										body: 'One or more new warnings have occured.'
-									}); 
-								});
 							}
 
 							lastWarningList = json[x]['entityvalue'].split(" ");
@@ -345,15 +366,7 @@ function updateFaultStatus(flag, fault, logtime)
 			article += 			"</div>";
 			article += 		"</div>";
 			article += 	"</article>";
-			$("#notif-container").html(article + $("#notif-container").html());		
-		
-			if(flag && window.Notification && Notification.permission !== "denied") {
-				Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
-					var n = new Notification('FAULT: ' + warningsList[fault][0], { 
-						body: warningsList[fault][1]
-					}); 
-				});
-			}
+			$("#notif-container").html(article + $("#notif-container").html());
 		}
 		
 	} else {

@@ -2,7 +2,14 @@
 
 ## Update Monitoring App
 
-### One-Click Update:
+### Version Specific Requirements
+
+Before Updating please see if there are any `Version Specific Requirements` that need to be done
+
+#### v18.1.11
+Open `Terminal` and run command `$ sudo apt-get install sseclient-py`
+
+### One-Click Update
 
 Navigate to `http://YOUR_RASPI_IP_ADDRESS/service`
 

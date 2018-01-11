@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<title>BatterX Service</title>
+
+		<link href="../css/components/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/components/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/outputs.css">
+
+	</head>
+	
+	
+	<body>
+	
+		<!-- Static Navbar -->
+		<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+			
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<a class="navbar-brand" href="#">BatterX Service</a>
+
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+														
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="labels.html">Labels</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="outputs.html">Outputs</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="commands.html">Commands</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="settings.html">Settings</a>
+					</li>
+				</ul>
+				
+			</div>
+			
+		</nav>
+		<!-- Static Navbar -->
+		
+		
+		
+		<div class="row m-0">
+		
+			<div class="col-12">
+				
+				<!-- PIN SELECT + ENABLE/DISABLE -->
+				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
+					<div>
+						<h5 class="p-0 m-0 pb-2">Select Pin</h5>
+						<div class="row">
+							<div class="col-7 pr-2">
+								<select id="pin" class="form-control text-center">
+									<option>Output 1</option>
+									<option>Output 2</option>
+									<option>Output 3</option>
+									<option>Output 4</option>
+								</select>
+							</div>
+							<div class="col-5 pl-2">
+								<select id="active" class="form-control text-center">
+									<option value="enable">Enable</option>
+									<option value="disable">Disable</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- ACTIVE WHEN -->
+				<div id="activeWhen" class="card card-inverse bg-inverse my-3 mx-0 p-3">
+					
+					<div class="row px-2">
+					
+						<div class="col-12 px-2">
+							<h5 class="p-0 m-0">Active (closed) when</h5>
+							<hr class="mt-2 mb-1" style="background-color: #666666">
+						</div>
+						
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Voltage</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Voltage</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Voltage</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Voltage</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Current</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Current</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Current</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Current</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Power</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Power</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Power</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Power</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 1</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 2</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 3</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 4</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 1</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 2</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 3</button></div>
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 4</button></div>
+						
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Current Time</button></div>
+						
+						<div class="col-2 col-md-1 p-1"></div>
+						
+						<div class="col-2 col-md-1 p-1"><button class="btnLogic btn btn-secondary btn-block px-0">AND</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnLogic btn btn-secondary btn-block px-0">OR</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&lt;</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&gt;</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&lt;=</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&gt;=</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">==</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">!=</button></div>
+						
+						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Current State</button></div>
+						
+						<div class="col-2 col-md-1 p-1"></div>
+						
+						<div class="col-2 col-md-1 p-1"><button class="btnBrOpen btn btn-secondary btn-block px-0">(</button></div>
+						<div class="col-2 col-md-1 p-1"><button class="btnBrClose btn btn-secondary btn-block px-0">)</button></div>
+						<div class="col-8 col-md-4 p-1"><input id="value" type="number" step="0.01" class="form-control text-center" placeholder="VALUE"></div>
+						<div class="col-4 col-md-2 p-1"><button class="addValue btn btn-secondary btn-block px-0">ENTER</button></div>
+						
+						<div class="col-12 px-2"><hr class="my-2" style="background-color: #666666"></div>
+						
+						<div class="col-8 col-md-10 px-1 pt-1"><input id="statement" type="text" class="form-control text-center" placeholder="S T A T E M E N T" disabled></div>
+						<div class="col-4 col-md-2 px-1 pt-1"><button class="btnDel btn btn-secondary btn-block px-0">DEL</button></div>
+						
+					</div>
+
+				</div>
+				
+				<div id="delayView" class="row">
+					<div class="col-12 col-md-6 p-0 m-0 mb-3 mb-md-0">
+						<div class="card card-inverse bg-inverse my-0 ml-3 mr-3 mr-md-2 px-3 py-2">
+							<div class="row px-2">
+								<div class="col-12 col-xl-7 px-2"><h5 class="p-0 m-0" style='line-height: 50px'>Switch-on delay (seconds)</h5></div>
+								<div class="col-12 col-xl-5 px-1 pt-1"><input id="onDelay" type="number" min="0" class="form-control form-control-lg text-center"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 p-0 m-0">
+						<div class="card card-inverse bg-inverse my-0 ml-3 ml-md-2 mr-3 px-3 py-2">
+							<div class="row px-2">
+								<div class="col-12 col-xl-7 px-2"><h5 class="p-0 m-0" style='line-height: 50px'>Switch-off delay (seconds)</h5></div>
+								<div class="col-12 col-xl-5 px-1 pt-1"><input id="offDelay" type="number" min="0" class="form-control form-control-lg text-center"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
+					<button id="submit" class="btn btn-lg btn-secondary btn-block">A P P L Y &nbsp; C H A N G E S</button>
+				</div>
+				
+				<div class="card card-inverse bg-inverse my-3 mx-0 p-3 text-center">
+					The customer is responsible for the correct programming of the relay contacts. Incorrect programming makes the warranty invalid
+				</div>
+			
+			</div>
+			
+		</div>
+		
+		
+		
+		<script src="../js/components/jquery.js"></script>
+		<script src="../js/components/bootstrap.js"></script>
+		<script src="js/outputs.js"></script>
+		
+	</body>
+	
+</html>
