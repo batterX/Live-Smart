@@ -43,5 +43,3 @@ $ sudo cp /home/pi/livesmart/update.sh /home/pi
 $ sudo chmod 777 /home/pi/update.sh
 $ sudo sh /home/pi/update.sh
 ```
-
-TEST
