@@ -30,3 +30,16 @@ Open Raspberry Pi's `File Manager` and navigate to `/home/pi`
 Double-click on `updater.sh` and click `Execute in Terminal`
 
 After the update the Raspberry Pi will automatically reboot and apply the new version.
+
+### If the 'One-Click' and 'Manual' Update don't work:
+
+Login to your Raspberry Pi using `Remote Desktop Connection` or directly using an HDMI display
+
+Open the Linux `Terminal` and execute the following commands:
+```
+$ cd /home/pi
+$ git clone https://github.com/batterx/livesmart.git
+$ sudo cp /home/pi/livesmart/update.sh /home/pi
+$ sudo chmod 777 /home/pi/update.sh
+$ sudo sh /home/pi/update.sh
+```
