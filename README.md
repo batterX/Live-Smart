@@ -7,7 +7,7 @@
 Before Updating please see if there are any `Version Specific Requirements` that need to be done
 
 #### v18.1.11
-Open `Terminal` and run command `$ sudo apt-get install sseclient-py`
+Open `Terminal` and run command `$ sudo pip3 install sseclient-py`
 
 ### One-Click Update
 
