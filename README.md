@@ -1,4 +1,4 @@
-# batterX Live & Smart (v18.1.16)
+# batterX Live & Smart (v18.1.26)
 
 ## Update Monitoring App
 
