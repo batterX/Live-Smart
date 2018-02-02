@@ -269,6 +269,7 @@ class BatterXService
 		// Declare all needed variables
 		$entity = null;
 		$mode = null;
+		$V4 = null;
 		$V5 = null;
 		$V6 = null;
 		$S1 = null;
@@ -276,11 +277,13 @@ class BatterXService
 		// Fill Variables
 		if(isset($_POST['entity'])) $entity = $_POST['entity']; // 1|2|3|4
 		if(isset($_POST['mode'])) $mode = $_POST['mode']; // 0=disabled 1=enabled
+		if(isset($_POST['V4'])) $V4 = $_POST['V4']; // min-active-time
 		if(isset($_POST['V5'])) $V5 = $_POST['V5']; // off-delay
 		if(isset($_POST['V6'])) $V6 = $_POST['V6']; // on-delay
 		if(isset($_POST['S1'])) $S1 = $_POST['S1']; // statement
 		
 		if($mode == null) $mode = 0;
+		if($V4 == null || $V4 == "") $V4 = 0;
 		if($V5 == null || $V5 == "") $V5 = 0;
 		if($V6 == null || $V6 == "") $V6 = 0;
 		if($statement == null) $statement = "";
@@ -296,7 +299,7 @@ class BatterXService
 					0,
 					0,
 					0,
-					0,
+					" . $V4 . ",
 					" . $V5 . ",
 					" . $V6 . ",
 					'" . $S1 . "',
@@ -391,6 +394,7 @@ class BatterXService
 		// Declare all needed variables
 		$VarName = null;
 		$mode = null;
+		$V4 = null;
 		$V5 = null;
 		$V6 = null;
 		$S1 = null;
@@ -398,11 +402,13 @@ class BatterXService
 		// Fill Variables
 		if(isset($_POST['VarName'])) $VarName = $_POST['VarName']; // GridInjection | BatteryCharging | BatteryChargingAC
 		if(isset($_POST['mode'])) $mode = $_POST['mode']; // 0=disabled 1=enabled
+		if(isset($_POST['V4'])) $V4 = $_POST['V4']; // min-active-time
 		if(isset($_POST['V5'])) $V5 = $_POST['V5']; // off-delay
 		if(isset($_POST['V6'])) $V6 = $_POST['V6']; // on-delay
 		if(isset($_POST['S1'])) $S1 = $_POST['S1']; // statement
 		
 		if($mode == null) $mode = 0;
+		if($V4 == null || $V4 == "") $V4 = 0;
 		if($V5 == null || $V5 == "") $V5 = 0;
 		if($V6 == null || $V6 == "") $V6 = 0;
 		if($statement == null) $statement = "";
@@ -418,7 +424,7 @@ class BatterXService
 					0,
 					0,
 					0,
-					0,
+					" . $V4 . ",
 					" . $V5 . ",
 					" . $V6 . ",
 					'" . $S1 . "',

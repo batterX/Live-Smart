@@ -777,17 +777,14 @@ $(document).ready(function () {
 				
 				if(gridNum > 0) {
 					if(json.hasOwnProperty("273")) $('#gridVoltageL1').html(round(parseInt(json["273"][Object.keys(json["273"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("305")) $('#gridCurrentL1').html(round(parseInt(json["305"][Object.keys(json["305"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("337")) $('#gridPowerL1').html(round(parseInt(json["337"][Object.keys(json["337"])[0]]["entityvalue"]), 1).toString() + " W");
 				}
 				if(gridNum > 1) {
 					if(json.hasOwnProperty("274")) $('#gridVoltageL2').html(round(parseInt(json["274"][Object.keys(json["274"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("306")) $('#gridCurrentL2').html(round(parseInt(json["306"][Object.keys(json["306"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("338")) $('#gridPowerL2').html(round(parseInt(json["338"][Object.keys(json["338"])[0]]["entityvalue"]), 1).toString() + " W");
 				}
 				if(gridNum > 2) {
 					if(json.hasOwnProperty("275")) $('#gridVoltageL3').html(round(parseInt(json["275"][Object.keys(json["275"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("307")) $('#gridCurrentL3').html(round(parseInt(json["307"][Object.keys(json["307"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("339")) $('#gridPowerL3').html(round(parseInt(json["339"][Object.keys(json["339"])[0]]["entityvalue"]), 1).toString() + " W");
 				}
 				
@@ -883,17 +880,14 @@ $(document).ready(function () {
 				
 				if(loadNum > 0) {
 					if(json.hasOwnProperty("1297")) $('#loadVoltageL1').html(round(parseInt(json["1297"][Object.keys(json["1297"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("1329")) $('#loadCurrentL1').html(round(parseInt(json["1329"][Object.keys(json["1329"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("1361")) $('#loadPowerL1').html(round(parseInt(json["1361"][Object.keys(json["1361"])[0]]["entityvalue"]), 1).toString() + " W");
 				}				
 				if(loadNum > 1) {
 					if(json.hasOwnProperty("1298")) $('#loadVoltageL2').html(round(parseInt(json["1298"][Object.keys(json["1298"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("1330")) $('#loadCurrentL2').html(round(parseInt(json["1330"][Object.keys(json["1330"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("1362")) $('#loadPowerL2').html(round(parseInt(json["1362"][Object.keys(json["1362"])[0]]["entityvalue"]), 1).toString() + " W");
 				}
 				if(loadNum > 2) {
 					if(json.hasOwnProperty("1299")) $('#loadVoltageL3').html(round(parseInt(json["1299"][Object.keys(json["1299"])[0]]["entityvalue"])*0.01, 0).toString() + " V");
-					if(json.hasOwnProperty("1331")) $('#loadCurrentL3').html(round(parseInt(json["1331"][Object.keys(json["1331"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
 					if(json.hasOwnProperty("1363")) $('#loadPowerL3').html(round(parseInt(json["1363"][Object.keys(json["1363"])[0]]["entityvalue"]), 1).toString() + " W");
 				}
 				

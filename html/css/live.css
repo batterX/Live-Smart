@@ -211,7 +211,7 @@ h2 {
 	color: white;
 	font-size: 2.75vh;
 	letter-spacing: 1px;
-	padding: 1.25vh 7.5%;
+	padding: 2vh 7.5%;
 }
 #grid span {
 	float: right;
@@ -222,7 +222,7 @@ h2 {
 	color: white;
 	font-size: 2.75vh;
 	letter-spacing: 1px;
-	padding: 1.25vh 7.5%;
+	padding: 2vh 7.5%;
 }
 #load span {
 	float: right;
@@ -356,6 +356,16 @@ h2 {
 	background-size: contain;
 }
 
+h3 .label {
+	float: none !important;
+	color: white !important;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	padding-right: 5px;
+}
+
 
 
 
@@ -406,7 +416,7 @@ h2 {
 	padding: 0;
 }
 .modal .col-6 {
-	padding: 1vw 1.5vw 1vw 1.5vw;
+	padding: 1.5vw 1.5vw 1.5vw 1.5vw;
 }
 
 .controller {
@@ -414,14 +424,13 @@ h2 {
 	cursor: pointer;
 	margin: 0 auto;
 	width: 100%;
-	height: 20vh;
-	box-shadow: 0 0 0 0.25vh #87d403;
-	border-radius: 1vh;
+	height: 21vh;
+	box-shadow: 0 0.25vh 0px 0px #87d403;
 	background-color: #212121;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	display: none;
+	border-radius: 0.5vh 0.5vh 0 0;
 }
 
 .controller h2 {
@@ -456,4 +465,8 @@ h2 {
 }
 .controller .inside-info {
 	background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(../img/bg-solar.png);
+}
+
+.mb-1vh {
+	margin-bottom: 1vh;
 }

@@ -63,11 +63,13 @@ $('#command').on('change', function() {
 					if(json.hasOwnProperty('S1')) $('#statement').val(json['S1']);
 					if(json.hasOwnProperty('V6')) $('#onDelay').val(json['V6']);
 					if(json.hasOwnProperty('V5')) $("#offDelay").val(json['V5']);
+					if(json.hasOwnProperty('V4')) $("#minActiveTime").val(json['V4']);
 				} else {
 					$('#mode').val('0').change();
 					$('#statement').val("");
 					$("#onDelay").val("");
 					$("#offDelay").val("");
+					$("#minActiveTime").val("");
 				}
 			} else {
 				console.log(response);
@@ -75,6 +77,7 @@ $('#command').on('change', function() {
 				$('#statement').val('');
 				$("#onDelay").val("");
 				$("#offDelay").val("");
+				$("#minActiveTime").val("");
 			}
 		},
 		error: function (response) {
@@ -83,6 +86,7 @@ $('#command').on('change', function() {
 			$('#statement').val('');
 			$("#onDelay").val("");
 			$("#offDelay").val("");
+			$("#minActiveTime").val("");
 		}
 	});
 });
@@ -269,6 +273,7 @@ $('#submit').on('click', function() {
 	
 	var VarName = ''; // GridInjection | BatteryCharging | BatteryChargingAC
 	var mode = ''; // 0=n/a 1=enable 2=disable
+	var V4 = ''; // min-active-time
 	var V5 = ''; // off-delay
 	var V6 = ''; // on-delay
 	var S1 = ''; // statement
@@ -288,6 +293,10 @@ $('#submit').on('click', function() {
 	// OFF-DELAY
 	V5 = $('#offDelay').val();
 	if(V5 < 0) V5 = 0;
+	
+	// MIN-ACTIVE-TIME
+	V4 = $('#minActiveTime').val();
+	if(V4 < 0) V4 = 0;
 	
 	// STATEMENT
 	var st = $('#statement').val();
@@ -332,6 +341,7 @@ $('#submit').on('click', function() {
 			"action": 'setCommandConfig',
 			"VarName": VarName,
 			"mode": mode,
+			"V4": V4,
 			"V5": V5,
 			"V6": V6,
 			"S1": S1

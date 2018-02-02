@@ -65,11 +65,13 @@ $('#pin').on('change', function() {
 					if(json.hasOwnProperty('S1')) $('#statement').val(json['S1']);
 					if(json.hasOwnProperty('V6')) $('#onDelay').val(json['V6']);
 					if(json.hasOwnProperty('V5')) $("#offDelay").val(json['V5']);
+					if(json.hasOwnProperty('V4')) $("#minActiveTime").val(json['V4']);
 				} else {
 					$('#active').val('disable').change();
 					$('#statement').val("");
 					$("#onDelay").val("");
 					$("#offDelay").val("");
+					$("#minActiveTime").val("");
 				}
 			} else {
 				console.log(response);
@@ -77,6 +79,7 @@ $('#pin').on('change', function() {
 				$('#statement').val('');
 				$("#onDelay").val("");
 				$("#offDelay").val("");
+				$("#minActiveTime").val("");
 			}
 		},
 		error: function (response) {
@@ -85,6 +88,7 @@ $('#pin').on('change', function() {
 			$('#statement').val('');
 			$("#onDelay").val("");
 			$("#offDelay").val("");
+			$("#minActiveTime").val("");
 		}
 	});
 });
@@ -271,6 +275,7 @@ $('#submit').on('click', function() {
 	
 	var entity = ''; // 1|2|3|4
 	var mode = ''; // 0=disabled 1=enabled
+	var V4 = ''; // min-active-time
 	var V5 = ''; // off-delay
 	var V6 = ''; // on-delay
 	var S1 = ''; // statement
@@ -290,6 +295,10 @@ $('#submit').on('click', function() {
 	// OFF-DELAY
 	V5 = $('#offDelay').val();
 	if(V5 < 0) V5 = 0;
+	
+	// MIN-ACTIVE-TIME
+	V4 = $('#minActiveTime').val();
+	if(V4 < 0) V4 = 0;
 	
 	// STATEMENT
 	var st = $('#statement').val();
@@ -334,6 +343,7 @@ $('#submit').on('click', function() {
 			"action": 'setOutputConfig',
 			"entity": entity,
 			"mode": mode,
+			"V4": V4,
 			"V5": V5,
 			"V6": V6,
 			"S1": S1
