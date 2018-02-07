@@ -13,6 +13,10 @@ sudo chmod 777 /srv/bx/ram/currentC.db3-journal
 
 if ! pgrep -x "BatterX" > /dev/null
 then
+	gpio -g mode 17 out
+	gpio -g mode 27 out
+	gpio -g write 17 0
+	gpio -g write 27 0
 	cd /
 	cd home/pi
 	sudo ./BatterX
@@ -21,6 +25,8 @@ fi
 
 if ! pgrep -x "CloudStream" > /dev/null
 then
+	gpio -g mode 24 out
+	gpio -g write 24 0
 	cd /
 	cd home/pi
 	sudo ./CloudStream

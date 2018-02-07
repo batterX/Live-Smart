@@ -141,108 +141,60 @@ $(document).ready(function () {
 	});
 	
 	$('#controller1').click(function() {
-		if($('#controller1Power').css('display') != 'none') {
-			$('#controller1Power').fadeToggle(); $('#controllerInfo11').fadeToggle();
-		} else if($('#controllerInfo11').css('display') != 'none') {
-			$('#controllerInfo11').fadeToggle(); $('#controllerInfo12').fadeToggle();
-		} else if($('#controllerInfo12').css('display') != 'none') {
-			$('#controllerInfo12').fadeToggle(); $('#controllerInfo13').fadeToggle();
-		} else if($('#controllerInfo13').css('display') != 'none') {
-			$('#controllerInfo13').fadeToggle(); $('#controllerInfo14').fadeToggle();
-		} else if($('#controllerInfo14').css('display') != 'none') {
-			$('#controllerInfo14').fadeToggle(); $('#controller1Power').fadeToggle();
-		}
+		if($('#controller1Power').css('display') != 'none')      { $('#controller1Power').fadeToggle(); $('#controllerInfo11').fadeToggle(); }
+		else if($('#controllerInfo11').css('display') != 'none') { $('#controllerInfo11').fadeToggle(); $('#controllerInfo12').fadeToggle(); }
+		else if($('#controllerInfo12').css('display') != 'none') { $('#controllerInfo12').fadeToggle(); $('#controllerInfo13').fadeToggle(); }
+		else if($('#controllerInfo13').css('display') != 'none') { $('#controllerInfo13').fadeToggle(); $('#controllerInfo14').fadeToggle(); }
+		else if($('#controllerInfo14').css('display') != 'none') { $('#controllerInfo14').fadeToggle(); $('#controller1Power').fadeToggle(); }
 	});
 	$('#controller2').click(function() {
-		if($('#controller2Power').css('display') != 'none') {
-			$('#controller2Power').fadeToggle(); $('#controllerInfo21').fadeToggle();
-		} else if($('#controllerInfo21').css('display') != 'none') {
-			$('#controllerInfo21').fadeToggle(); $('#controllerInfo22').fadeToggle();
-		} else if($('#controllerInfo22').css('display') != 'none') {
-			$('#controllerInfo22').fadeToggle(); $('#controllerInfo23').fadeToggle();
-		} else if($('#controllerInfo23').css('display') != 'none') {
-			$('#controllerInfo23').fadeToggle(); $('#controllerInfo24').fadeToggle();
-		} else if($('#controllerInfo24').css('display') != 'none') {
-			$('#controllerInfo24').fadeToggle(); $('#controller2Power').fadeToggle();
-		}
+		if($('#controller2Power').css('display') != 'none')      { $('#controller2Power').fadeToggle(); $('#controllerInfo21').fadeToggle(); }
+		else if($('#controllerInfo21').css('display') != 'none') { $('#controllerInfo21').fadeToggle(); $('#controllerInfo22').fadeToggle(); }
+		else if($('#controllerInfo22').css('display') != 'none') { $('#controllerInfo22').fadeToggle(); $('#controllerInfo23').fadeToggle(); }
+		else if($('#controllerInfo23').css('display') != 'none') { $('#controllerInfo23').fadeToggle(); $('#controllerInfo24').fadeToggle(); }
+		else if($('#controllerInfo24').css('display') != 'none') { $('#controllerInfo24').fadeToggle(); $('#controller2Power').fadeToggle(); }
 	});
 	$('#controller3').click(function() {
-		if($('#controller3Power').css('display') != 'none') {
-			$('#controller3Power').fadeToggle(); $('#controllerInfo31').fadeToggle();
-		} else if($('#controllerInfo31').css('display') != 'none') {
-			$('#controllerInfo31').fadeToggle(); $('#controllerInfo32').fadeToggle();
-		} else if($('#controllerInfo32').css('display') != 'none') {
-			$('#controllerInfo32').fadeToggle(); $('#controllerInfo33').fadeToggle();
-		} else if($('#controllerInfo33').css('display') != 'none') {
-			$('#controllerInfo33').fadeToggle(); $('#controllerInfo34').fadeToggle();
-		} else if($('#controllerInfo34').css('display') != 'none') {
-			$('#controllerInfo34').fadeToggle(); $('#controller3Power').fadeToggle();
-		}
+		if($('#controller3Power').css('display') != 'none')      { $('#controller3Power').fadeToggle(); $('#controllerInfo31').fadeToggle(); }
+		else if($('#controllerInfo31').css('display') != 'none') { $('#controllerInfo31').fadeToggle(); $('#controllerInfo32').fadeToggle(); }
+		else if($('#controllerInfo32').css('display') != 'none') { $('#controllerInfo32').fadeToggle(); $('#controllerInfo33').fadeToggle(); }
+		else if($('#controllerInfo33').css('display') != 'none') { $('#controllerInfo33').fadeToggle(); $('#controllerInfo34').fadeToggle(); }
+		else if($('#controllerInfo34').css('display') != 'none') { $('#controllerInfo34').fadeToggle(); $('#controller3Power').fadeToggle(); }
 	});
 	$('#controller4').click(function() {
-		if($('#controller4Power').css('display') != 'none') {
-			$('#controller4Power').fadeToggle(); $('#controllerInfo41').fadeToggle();
-		} else if($('#controllerInfo41').css('display') != 'none') {
-			$('#controllerInfo41').fadeToggle(); $('#controllerInfo42').fadeToggle();
-		} else if($('#controllerInfo42').css('display') != 'none') {
-			$('#controllerInfo42').fadeToggle(); $('#controllerInfo43').fadeToggle();
-		} else if($('#controllerInfo43').css('display') != 'none') {
-			$('#controllerInfo43').fadeToggle(); $('#controllerInfo44').fadeToggle();
-		} else if($('#controllerInfo44').css('display') != 'none') {
-			$('#controllerInfo44').fadeToggle(); $('#controller4Power').fadeToggle();
-		}
+		if($('#controller4Power').css('display') != 'none')      { $('#controller4Power').fadeToggle(); $('#controllerInfo41').fadeToggle(); }
+		else if($('#controllerInfo41').css('display') != 'none') { $('#controllerInfo41').fadeToggle(); $('#controllerInfo42').fadeToggle(); }
+		else if($('#controllerInfo42').css('display') != 'none') { $('#controllerInfo42').fadeToggle(); $('#controllerInfo43').fadeToggle(); }
+		else if($('#controllerInfo43').css('display') != 'none') { $('#controllerInfo43').fadeToggle(); $('#controllerInfo44').fadeToggle(); }
+		else if($('#controllerInfo44').css('display') != 'none') { $('#controllerInfo44').fadeToggle(); $('#controller4Power').fadeToggle(); }
 	});
 	$('#controller5').click(function() {
-		if($('#controller5Power').css('display') != 'none') {
-			$('#controller5Power').fadeToggle(); $('#controllerInfo51').fadeToggle();
-		} else if($('#controllerInfo51').css('display') != 'none') {
-			$('#controllerInfo51').fadeToggle(); $('#controllerInfo52').fadeToggle();
-		} else if($('#controllerInfo52').css('display') != 'none') {
-			$('#controllerInfo52').fadeToggle(); $('#controllerInfo53').fadeToggle();
-		} else if($('#controllerInfo53').css('display') != 'none') {
-			$('#controllerInfo53').fadeToggle(); $('#controllerInfo54').fadeToggle();
-		} else if($('#controllerInfo54').css('display') != 'none') {
-			$('#controllerInfo54').fadeToggle(); $('#controller5Power').fadeToggle();
-		}
+		if($('#controller5Power').css('display') != 'none')      { $('#controller5Power').fadeToggle(); $('#controllerInfo51').fadeToggle(); }
+		else if($('#controllerInfo51').css('display') != 'none') { $('#controllerInfo51').fadeToggle(); $('#controllerInfo52').fadeToggle(); }
+		else if($('#controllerInfo52').css('display') != 'none') { $('#controllerInfo52').fadeToggle(); $('#controllerInfo53').fadeToggle(); }
+		else if($('#controllerInfo53').css('display') != 'none') { $('#controllerInfo53').fadeToggle(); $('#controllerInfo54').fadeToggle(); }
+		else if($('#controllerInfo54').css('display') != 'none') { $('#controllerInfo54').fadeToggle(); $('#controller5Power').fadeToggle(); }
 	});
 	$('#controller6').click(function() {
-		if($('#controller6Power').css('display') != 'none') {
-			$('#controller6Power').fadeToggle(); $('#controllerInfo61').fadeToggle();
-		} else if($('#controllerInfo61').css('display') != 'none') {
-			$('#controllerInfo61').fadeToggle(); $('#controllerInfo62').fadeToggle();
-		} else if($('#controllerInfo62').css('display') != 'none') {
-			$('#controllerInfo62').fadeToggle(); $('#controllerInfo63').fadeToggle();
-		} else if($('#controllerInfo63').css('display') != 'none') {
-			$('#controllerInfo63').fadeToggle(); $('#controllerInfo64').fadeToggle();
-		} else if($('#controllerInfo64').css('display') != 'none') {
-			$('#controllerInfo64').fadeToggle(); $('#controller6Power').fadeToggle();
-		}
+		if($('#controller6Power').css('display') != 'none')      { $('#controller6Power').fadeToggle(); $('#controllerInfo61').fadeToggle(); }
+		else if($('#controllerInfo61').css('display') != 'none') { $('#controllerInfo61').fadeToggle(); $('#controllerInfo62').fadeToggle(); }
+		else if($('#controllerInfo62').css('display') != 'none') { $('#controllerInfo62').fadeToggle(); $('#controllerInfo63').fadeToggle(); }
+		else if($('#controllerInfo63').css('display') != 'none') { $('#controllerInfo63').fadeToggle(); $('#controllerInfo64').fadeToggle(); }
+		else if($('#controllerInfo64').css('display') != 'none') { $('#controllerInfo64').fadeToggle(); $('#controller6Power').fadeToggle(); }
 	});
 	$('#controller7').click(function() {
-		if($('#controller7Power').css('display') != 'none') {
-			$('#controller7Power').fadeToggle(); $('#controllerInfo71').fadeToggle();
-		} else if($('#controllerInfo71').css('display') != 'none') {
-			$('#controllerInfo71').fadeToggle(); $('#controllerInfo72').fadeToggle();
-		} else if($('#controllerInfo72').css('display') != 'none') {
-			$('#controllerInfo72').fadeToggle(); $('#controllerInfo73').fadeToggle();
-		} else if($('#controllerInfo73').css('display') != 'none') {
-			$('#controllerInfo73').fadeToggle(); $('#controllerInfo74').fadeToggle();
-		} else if($('#controllerInfo74').css('display') != 'none') {
-			$('#controllerInfo74').fadeToggle(); $('#controller7Power').fadeToggle();
-		}
+		if($('#controller7Power').css('display') != 'none')      { $('#controller7Power').fadeToggle(); $('#controllerInfo71').fadeToggle(); }
+		else if($('#controllerInfo71').css('display') != 'none') { $('#controllerInfo71').fadeToggle(); $('#controllerInfo72').fadeToggle(); }
+		else if($('#controllerInfo72').css('display') != 'none') { $('#controllerInfo72').fadeToggle(); $('#controllerInfo73').fadeToggle(); }
+		else if($('#controllerInfo73').css('display') != 'none') { $('#controllerInfo73').fadeToggle(); $('#controllerInfo74').fadeToggle(); }
+		else if($('#controllerInfo74').css('display') != 'none') { $('#controllerInfo74').fadeToggle(); $('#controller7Power').fadeToggle(); }
 	});
 	$('#controller8').click(function() {
-		if($('#controller8Power').css('display') != 'none') {
-			$('#controller8Power').fadeToggle(); $('#controllerInfo81').fadeToggle();
-		} else if($('#controllerInfo81').css('display') != 'none') {
-			$('#controllerInfo81').fadeToggle(); $('#controllerInfo82').fadeToggle();
-		} else if($('#controllerInfo82').css('display') != 'none') {
-			$('#controllerInfo82').fadeToggle(); $('#controllerInfo83').fadeToggle();
-		} else if($('#controllerInfo83').css('display') != 'none') {
-			$('#controllerInfo83').fadeToggle(); $('#controllerInfo84').fadeToggle();
-		} else if($('#controllerInfo84').css('display') != 'none') {
-			$('#controllerInfo84').fadeToggle(); $('#controller8Power').fadeToggle();
-		}
+		if($('#controller8Power').css('display') != 'none')      { $('#controller8Power').fadeToggle(); $('#controllerInfo81').fadeToggle(); }
+		else if($('#controllerInfo81').css('display') != 'none') { $('#controllerInfo81').fadeToggle(); $('#controllerInfo82').fadeToggle(); }
+		else if($('#controllerInfo82').css('display') != 'none') { $('#controllerInfo82').fadeToggle(); $('#controllerInfo83').fadeToggle(); }
+		else if($('#controllerInfo83').css('display') != 'none') { $('#controllerInfo83').fadeToggle(); $('#controllerInfo84').fadeToggle(); }
+		else if($('#controllerInfo84').css('display') != 'none') { $('#controllerInfo84').fadeToggle(); $('#controller8Power').fadeToggle(); }
 	});
 	
 	
