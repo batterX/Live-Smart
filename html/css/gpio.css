@@ -1,5 +1,3 @@
-/* NEW FROM SAMUEL */
-
 /* Remove any extra spacing + Add some basic settings */
 html, body {
 	font-family: 'Raleway' !important;
@@ -124,11 +122,11 @@ body {
 	transition: opacity .25s;
 }
 .btn-toggle:before {
-	content: 'Off';
+	content: attr(data-off);
 	left: -7vh; /*-3.5rem*/
 }
 .btn-toggle:after {
-	content: 'On';
+	content: attr(data-on);
 	right: -7vh; /*-3.5rem*/
 	opacity: .5;
 }

@@ -1,14 +1,14 @@
-var loadedLabels = false; // Overlay (when updating page)
-var loadedCurrentState = false; // Overlay (when updating page)
+// Check if should hide Overlay
+var loadedLabels = false;
+var loadedCurrentState = false;
 
 
 
 
 
+// Set Buttons On-Click Listeners
 $('#btn1').on('click', function() {
-	var flag = confirm("Press 'OK' to Toggle the Switch");
-	if(!flag) return;
-	
+	if(!confirm("Press 'OK' to Toggle the Switch")) return;
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/gpio.php",
@@ -23,11 +23,8 @@ $('#btn1').on('click', function() {
 		}
 	});
 });
-
 $('#btn2').on('click', function() {
-	var flag = confirm("Press 'OK' to Toggle the Switch");
-	if(!flag) return;
-	
+	if(!confirm("Press 'OK' to Toggle the Switch")) return;
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/gpio.php",
@@ -42,11 +39,8 @@ $('#btn2').on('click', function() {
 		}
 	});
 });
-
 $('#btn3').on('click', function() {
-	var flag = confirm("Press 'OK' to Toggle the Switch");
-	if(!flag) return;
-	
+	if(!confirm("Press 'OK' to Toggle the Switch")) return;
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/gpio.php",
@@ -61,11 +55,8 @@ $('#btn3').on('click', function() {
 		}
 	});
 });
-
 $('#btn4').on('click', function() {
-	var flag = confirm("Press 'OK' to Toggle the Switch");
-	if(!flag) return;
-	
+	if(!confirm("Press 'OK' to Toggle the Switch")) return;
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/gpio.php",
@@ -85,16 +76,17 @@ $('#btn4').on('click', function() {
 
 
 
-// LOAD GPIO's LABELS
-
+// Load Labels
 $.ajax({
 	type: "POST",
 	url: "db-interaction/service.php",
-	data: { "action": "getLabels" },
+	data: {
+		"action": "getLabels"
+	},
 	success: function (response) {
 		// Format Response To JSON
 		var json = JSON.parse(response);
-
+		// Set Labels
 		if(json.hasOwnProperty('BxOutPin')) {
 			if(json['BxOutPin'].hasOwnProperty('1') && json['BxOutPin']['1'] != null && json['BxOutPin']['1'] != "") $('#out1 .name').html(json['BxOutPin']['1']);
 			else $('#out1 .name').html("Output 1");
@@ -105,7 +97,6 @@ $.ajax({
 			if(json['BxOutPin'].hasOwnProperty('4') && json['BxOutPin']['4'] != null && json['BxOutPin']['4'] != "") $('#out4 .name').html(json['BxOutPin']['4']);
 			else $('#out4 .name').html("Output 4");
 		}
-		
 		if(json.hasOwnProperty('BxInPin')) {
 			if(json['BxInPin'].hasOwnProperty('1') && json['BxInPin']['1'] != null && json['BxInPin']['1'] != "") $('#in1 .name').html(json['BxInPin']['1']);
 			else $('#in1 .name').html("Input 1");
@@ -116,7 +107,6 @@ $.ajax({
 			if(json['BxInPin'].hasOwnProperty('4') && json['BxInPin']['4'] != null && json['BxInPin']['4'] != "") $('#in4 .name').html(json['BxInPin']['4']);
 			else $('#in4 .name').html("Input 4");
 		}
-		
 		if(json.hasOwnProperty('Switch')) {
 			if(json['Switch'].hasOwnProperty('1') && json['Switch']['1'] != null && json['Switch']['1'] != "") $('#btn1Name').html(json['Switch']['1']);
 			else $('#btn1Name').html("Switch 1");
@@ -127,9 +117,9 @@ $.ajax({
 			if(json['Switch'].hasOwnProperty('4') && json['Switch']['4'] != null && json['Switch']['4'] != "") $('#btn4Name').html(json['Switch']['4']);
 			else $('#btn4Name').html("Switch 4");
 		}
-		
-		if(loadedCurrentState) $('.overlay').fadeOut(); // Overlay (when updating page)
-		else loadedLabels = true; // Overlay (when updating page)
+		// Hide Overlay ?
+		if(loadedCurrentState) $('.overlay').fadeOut();
+		else loadedLabels = true;
 	}
 });
 
@@ -137,12 +127,11 @@ $.ajax({
 
 
 
-// UPDATE BUTTONS STATUS
-
-updateInfo();
-
-function updateInfo() {
-	
+// Start Main Loop Function
+// Handles Updating the Fields within the Page
+// Loop - Long Polling - Every 2.5 seconds
+mainLoop();
+function mainLoop() {
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
@@ -150,11 +139,10 @@ function updateInfo() {
 			"action": "getCurrentState" 
 		},
 		complete: function (data) {
-			setTimeout(function() {
-				updateInfo();
-			}, 1000);
-			
-			if(loadedLabels) $('.overlay').fadeOut(); // Overlay (when updating page)
+			// Long Polling Every 2.5 seconds
+			setTimeout(function() { mainLoop(); }, 2500);
+			// Fade Out the Overlay (Visible only on first run)
+			if(loadedLabels) $('.overlay').fadeOut();
 			else loadedCurrentState = true; // Overlay (when updating page)
 		},
 		success: function (response) {
@@ -163,17 +151,13 @@ function updateInfo() {
 			var json = JSON.parse(response);
 			
 			// Update Last Timestamp in Index.php	
-			window.parent.updateLastTimestamp(
-				json["273"][Object.keys(json["273"])[0]]['logtime']
-			);
-				
+			window.parent.updateLastTimestamp(json["273"][Object.keys(json["273"])[0]]['logtime']);
+			
 			// Update Fault Notification Bar
 			if(json.hasOwnProperty("16385") && json.hasOwnProperty("16386"))
-				window.parent.updateFaultStatus(parseInt(
-					json["16385"][Object.keys(json["16385"])[0]]["entityvalue"]
-				), parseInt(
-					json["16386"][Object.keys(json["16386"])[0]]["entityvalue"]
-				), 
+				window.parent.updateFaultStatus(
+					parseInt(json["16385"][Object.keys(json["16385"])[0]]["entityvalue"]),
+					parseInt(json["16386"][Object.keys(json["16386"])[0]]["entityvalue"]),
 					json["16386"][Object.keys(json["16386"])[0]]["logtime"]
 				);
 			
@@ -227,5 +211,4 @@ function updateInfo() {
 		
 		}
 	});
-	
 }

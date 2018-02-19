@@ -75,7 +75,7 @@ div.bottom {
 	flex-basis: auto;
 	position: relative;
 }
-div.bottom .chart-container{
+div.bottom .chart-container {
 	height: calc(100vh - 14.75vh - 15px); /* 11vh + 10px is the top container, 3.75vh + 1px is the middle container, 4px are added for rounding etc. */
 	width: 100%;
 }

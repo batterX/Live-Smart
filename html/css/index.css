@@ -190,12 +190,13 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: calc(100% - 6vh);
+	width: 100%;
 	margin: 0;
-	padding: 0 0 0 2vh;
+	padding: 0;
 	color: white;
 	font-size: 2.5vh;
-	letter-spacing: 0.3vh;
+	letter-spacing: 0.1vh;
+	text-align: center;
 }
 
 
@@ -363,7 +364,7 @@ h4.deletetab {
 @media (orientation: landscape) {
 	#slider-left {
 		width: 25vw;
-		border-right: 0.25vh solid #87d403;
+		border-right: 1px solid #87d403;
 		background-color: #151515;
 	}
 	#middle {

@@ -4,26 +4,14 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Get Device Model
-	
 	var model = "";
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
 	// Device Model Details
-	
 	var solarContNum = 1;
 	var solarNum = 4;
 	var batteryNum = 2;
@@ -34,12 +22,8 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Get Device Model
+	// Update Device Image + Label
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
@@ -47,31 +31,49 @@ $(document).ready(function () {
 			"action": "getDeviceModel"
 		},
 		success: function (response) {
-			// Update Device Image + Label
 			if(response) {
 				switch(response.toLowerCase()) {
 					case 'batterx h3':
 						$(".device").css("background-image", "url('img/device-h3.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load.png)");
+						$("#load .inside").css("background-image", "url(img/bg-load.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load.png)");
 						model = response.toLowerCase();
 						break;
 					case 'batterx h5':
 						$(".device").css("background-image", "url('img/device-h5.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load.png)");
+						$("#load .inside").css("background-image", "url(img/bg-load.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load.png)");
 						model = response.toLowerCase();
 						break;
 					case 'batterx h5-eco':
 						$(".device").css("background-image", "url('img/device-h5e.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load.png)");
+						$("#load .inside").css("background", "url(img/bg-load.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load.png)");
 						model = response.toLowerCase();
 						break;
 					case 'batterx h10':
 						$(".device").css("background-image", "url('img/device-h10.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load.png)");
+						$("#load .inside").css("background-image", "url(img/bg-load.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load.png)");
 						model = response.toLowerCase();
 						break;
 					case 'batterx bs':
 						$(".device").css("background-image", "url('img/device-bs.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load-bs.png)");
+						$("#load .inside").css("background-image", "url(img/bg-load-bs.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load-bs.png)");
 						model = response.toLowerCase();
 						break;
 					default:
 						$(".device").css("background-image", "url('img/device-h5.png')");
+						$(".bottom-right .img-label").css("background-image", "url(img/img-load.png)");
+						$("#load .inside").css("background-image", "url(img/bg-load.png)");
+						$("#load .inside-info").css("background-image", "linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(img/bg-load.png)");
+						model = "batterx h5";
 						break;
 				}
 			}
@@ -82,13 +84,7 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Set Device OnClick Listener
-	
 	$('#device').click(function() {
 		if($('#deviceMain').css('display') != 'none') {
 			$('#deviceMain').fadeToggle();
@@ -102,11 +98,6 @@ $(document).ready(function () {
 			$('#deviceMain').fadeToggle();
 		}
 	});
-	
-	
-	
-	
-	
 	
 	
 	
@@ -201,13 +192,7 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Set Battery OnClick Listener
-	
 	$('#battery').click(function() {
 		if($('#batteryPower').css('display') != 'none') {
 			$('#batteryPower').fadeToggle();
@@ -226,13 +211,7 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Set Grid OnClick Listener
-	
 	$('#grid').click(function() {
 		if($('#gridPower').css('display') != 'none') {
 			$('#gridPower').fadeToggle();
@@ -253,15 +232,9 @@ $(document).ready(function () {
 	
 	
 	
-
-	
-	
-	
-	
 	
 	
 	// Set Load OnClick Listener
-	
 	$('#load').click(function() {
 		if($('#loadPower').css('display') != 'none') {
 			$('#loadPower').fadeToggle();
@@ -284,28 +257,14 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
 	// Fade-Toggle All Arrows Every 1 Second
-	
-	setInterval(function() { 
-		$(".arrow-line").fadeToggle(1000);
-	}, 900);
-	
-	
-	
-	
-	
+	setInterval(function() { $(".arrow-line").fadeToggle(1000); }, 900);
 	
 	
 	
 	
 	
 	// Middle Section ProgressBar Design
-	
 	var bar = new ProgressBar.Circle(progressBar, {
 		color: '#87d403',
 		trailColor: '#7b7b7b',
@@ -350,41 +309,11 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-	
-	////////////////////
-	//				  //
-	//  MAIN PROGRAM  //
-	//				  //
-	////////////////////
-	
-	// Update Info - One Call At Begin
-	updateInfo();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// Update Info Function
-	
-	function updateInfo() {
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	// Start Main Loop Function
+	// Handles Updating the Fields within the Page
+	// Loop - Long Polling - Every 5 seconds
+	mainLoop();
+	function mainLoop() {
 		
 		$.ajax({
 			type: "POST",
@@ -393,20 +322,14 @@ $(document).ready(function () {
 				"action": "getCurrentState" 
 			},
 			complete: function (data) {
-				setTimeout(function() {
-					updateInfo();
-				}, 5000);
-				
-				$('.overlay').fadeOut(); // Overlay (when updating page)
+				// Long Polling Every 5 Seconds
+				setTimeout(function() { mainLoop(); }, 5000);
+				// Fade Out the Overlay (Visible only on first run)
+				$('.overlay').fadeOut();
 			},
 			success: function (response) {
 				
 				
-				
-				
-				
-				
-
 				
 				
 				
@@ -417,41 +340,20 @@ $(document).ready(function () {
 				
 				
 				
-				
-				
-				
-				
-				
 				// Update Last Timestamp in Index.php
-				
-				window.parent.updateLastTimestamp(
-					json["273"][Object.keys(json["273"])[0]]['logtime']
-				);
-				
-				
-				
-				
-				
+				window.parent.updateLastTimestamp(json["273"][Object.keys(json["273"])[0]]['logtime']);
 				
 				
 				
 				
 				
 				// Update Fault Notification Bar
-				
 				if(json.hasOwnProperty("16385") && json.hasOwnProperty("16386"))
-					window.parent.updateFaultStatus(parseInt(
-						json["16385"][Object.keys(json["16385"])[0]]["entityvalue"]
-					), parseInt(
-						json["16386"][Object.keys(json["16386"])[0]]["entityvalue"]
-					), 
+					window.parent.updateFaultStatus(
+						parseInt(json["16385"][Object.keys(json["16385"])[0]]["entityvalue"]),
+						parseInt(json["16386"][Object.keys(json["16386"])[0]]["entityvalue"]),
 						json["16386"][Object.keys(json["16386"])[0]]["logtime"]
 					);
-				
-				
-				
-				
-				
 				
 				
 				
@@ -463,32 +365,25 @@ $(document).ready(function () {
 					solarContNum = Object.keys(json["1553"]).length;
 					solarNum = 1;
 				}
+				
 				if(solarContNum == 1) {
 					if(json.hasOwnProperty("1554")) solarNum += 1;
 					if(json.hasOwnProperty("1555")) solarNum += 1;
 					if(json.hasOwnProperty("1556")) solarNum += 1;
 				}
 				
-				if(solarContNum == 1) 
-				{
-					solarVoltage1 = 0;
-					solarVoltage2 = 0;
-					solarVoltage3 = 0;
-					solarVoltage4 = 0;
+				if(solarContNum == 1) {
+					solarVoltage1 = 0; solarVoltage2 = 0; solarVoltage3 = 0; solarVoltage4 = 0;
 					if(json.hasOwnProperty("1553")) solarVoltage1 = round(parseInt(json["1553"][Object.keys(json["1553"])[0]]["entityvalue"])*0.01, 0);
 					if(json.hasOwnProperty("1554")) solarVoltage2 = round(parseInt(json["1554"][Object.keys(json["1554"])[0]]["entityvalue"])*0.01, 0);
 					if(json.hasOwnProperty("1555")) solarVoltage3 = round(parseInt(json["1555"][Object.keys(json["1555"])[0]]["entityvalue"])*0.01, 0);
 					if(json.hasOwnProperty("1556")) solarVoltage4 = round(parseInt(json["1556"][Object.keys(json["1556"])[0]]["entityvalue"])*0.01, 0);
-
 					if(solarVoltage1 > 1 || solarVoltage2 > 1 || solarVoltage3 > 1 || solarVoltage4 > 1) 
 						$(".top-left").css("visibility", "visible");
 					else 
 						$(".top-left").css("visibility", "hidden");
-				} 
-				else if(solarContNum > 1)
-				{
+				} else if(solarContNum > 1) {
 					$(".top-left").css("visibility", "visible");
-					
 					$("#controller1").css("display", "block");
 					$("#controller2").css("display", "block");
 					if(solarContNum > 2) $("#controller3").css("display", "block");
@@ -682,32 +577,26 @@ $(document).ready(function () {
 					}
 				}
 				
-		
 				
 				
-				
-				
-				
-		
 				
 				
 				// Update Grid Section
-				
 				num = 0;
 				if(json.hasOwnProperty("273")) num += 1;
 				if(json.hasOwnProperty("274")) num += 1;
 				if(json.hasOwnProperty("275")) num += 1;
 				if(num != 0) gridNum = num;
 				
-				gridVoltageL1 = 0;
-				gridVoltageL2 = 0;
-				gridVoltageL3 = 0;
+				gridVoltageL1 = 0; gridVoltageL2 = 0; gridVoltageL3 = 0;
 				if(json.hasOwnProperty("273")) gridVoltageL1 = round(parseInt(json["273"][Object.keys(json["273"])[0]]["entityvalue"])*0.01, 0);
 				if(json.hasOwnProperty("274")) gridVoltageL2 = round(parseInt(json["274"][Object.keys(json["274"])[0]]["entityvalue"])*0.01, 0);
 				if(json.hasOwnProperty("275")) gridVoltageL3 = round(parseInt(json["275"][Object.keys(json["275"])[0]]["entityvalue"])*0.01, 0);
 				
-				if(gridVoltageL1 > 1 || gridVoltageL2 > 1 || gridVoltageL3 > 1) $(".top-right").css("visibility", "visible");
-				else $(".top-right").css("visibility", "hidden");
+				if(gridVoltageL1 > 1 || gridVoltageL2 > 1 || gridVoltageL3 > 1) 
+					$(".top-right").css("visibility", "visible");
+				else 
+					$(".top-right").css("visibility", "hidden");
 				
 				if(gridNum == 1) $("#gridInfo1 h2").html("GRID");
 				
@@ -744,25 +633,20 @@ $(document).ready(function () {
 				
 				
 				
-				
-				
-				
-				
-				
 				// Update Battery Section
-				
 				num = 0;
 				if(json.hasOwnProperty("1042")) num += 1;
 				if(json.hasOwnProperty("1041")) num += 1;
 				if(num != 0) batteryNum = num;
 				
-				batteryVoltagePlus = 0;
-				batteryVoltageMinus = 0;
+				batteryVoltagePlus = 0; batteryVoltageMinus = 0;
 				if(json.hasOwnProperty("1042")) batteryVoltagePlus = round(parseInt(json["1042"][Object.keys(json["1042"])[0]]["entityvalue"])*0.01, 1);
 				if(json.hasOwnProperty("1041")) batteryVoltageMinus = round(parseInt(json["1041"][Object.keys(json["1041"])[0]]["entityvalue"])*0.01, 1);
 				
-				if(batteryVoltagePlus > 1 || batteryVoltageMinus > 1) $(".bottom-left").css("visibility", "visible");
-				else $(".bottom-left").css("visibility", "hidden");
+				if(batteryVoltagePlus > 1 || batteryVoltageMinus > 1) 
+					$(".bottom-left").css("visibility", "visible");
+				else 
+					$(".bottom-left").css("visibility", "hidden");
 				
 				if(batteryNum == 1) $("#batteryInfo1 h2").html("BATTERY");
 				
@@ -797,28 +681,22 @@ $(document).ready(function () {
 				
 				
 				
-				
-				
-				
-				
-				
 				// Update Load Section
-				
 				num = 0;
 				if(json.hasOwnProperty("1297")) num += 1;
 				if(json.hasOwnProperty("1298")) num += 1;
 				if(json.hasOwnProperty("1299")) num += 1;
 				if(num != 0) loadNum = num;
 				
-				loadVoltageL1 = 0;
-				loadVoltageL2 = 0;
-				loadVoltageL3 = 0;
+				loadVoltageL1 = 0; loadVoltageL2 = 0; loadVoltageL3 = 0;
 				if(json.hasOwnProperty("1297")) loadVoltageL1 = round(parseInt(json["1297"][Object.keys(json["1297"])[0]]["entityvalue"])*0.01, 0);
 				if(json.hasOwnProperty("1298")) loadVoltageL2 = round(parseInt(json["1298"][Object.keys(json["1298"])[0]]["entityvalue"])*0.01, 0);
 				if(json.hasOwnProperty("1299")) loadVoltageL3 = round(parseInt(json["1299"][Object.keys(json["1299"])[0]]["entityvalue"])*0.01, 0);
 				
-				if(loadVoltageL1 > 1 || loadVoltageL2 > 1 || loadVoltageL3 > 1) $(".bottom-right").css("visibility", "visible");
-				else $(".bottom-right").css("visibility", "hidden");
+				if(loadVoltageL1 > 1 || loadVoltageL2 > 1 || loadVoltageL3 > 1) 
+					$(".bottom-right").css("visibility", "visible");
+				else 
+					$(".bottom-right").css("visibility", "hidden");
 				
 				if(loadNum == 1) $("#loadInfo1 h2").html("LOAD");
 				
@@ -847,34 +725,19 @@ $(document).ready(function () {
 				
 				
 				
-				
-				
-				
-				
-				
 				// Update Autarky Progress-Bar
 				
-				gridPower = 0;
-				loadPower = 0;
-				batteryPower = 0
+				gridPower = 0; loadPower = 0; batteryPower = 0
 				if(json.hasOwnProperty("353")) gridPower = round(parseInt(json["353"][Object.keys(json["353"])[0]]["entityvalue"]), 1);
 				if(json.hasOwnProperty("1377")) loadPower = round(parseInt(json["1377"][Object.keys(json["1377"])[0]]["entityvalue"]), 1);
 				if(json.hasOwnProperty("1121")) batteryPower = round(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"]), 1);
-				
-				if(gridPower <= 0) bar.animate(1);
-				else bar.animate(Math.max(1 - gridPower / (loadPower + Math.max(batteryPower, 0)), 0));
+				if(gridPower <= 0) bar.animate(1); else bar.animate(Math.max(1 - gridPower / (loadPower + Math.max(batteryPower, 0)), 0));
 				
 				
 				
 				
 				
-				
-				
-				
-				
-				
-				// Update Device Status (Business Series Only)
-				
+				// Update Device Status (BS Only)
 				if(model == 'batterx bs') {
 					var devicePFC = '-';
 					var deviceBoost = '-';
@@ -882,18 +745,15 @@ $(document).ready(function () {
 					
 					var temp = null;
 					if(json.hasOwnProperty("24577")) temp = parseInt(json["24577"][Object.keys(json["24577"])[0]]["entityvalue"]);
-					if(temp == 1) devicePFC = "ON"; 
-					else if(temp == 0) devicePFC = "OFF";
+					if(temp == 1) devicePFC = "ON"; else if(temp == 0) devicePFC = "OFF";
 					
 					temp = null;
 					if(json.hasOwnProperty("24578")) temp = parseInt(json["24578"][Object.keys(json["24578"])[0]]["entityvalue"]);
-					if(temp == 1) deviceBoost = "ON";
-					else if(temp == 0) deviceBoost = "OFF";
+					if(temp == 1) deviceBoost = "ON"; else if(temp == 0) deviceBoost = "OFF";
 					
 					temp = null;
 					if(json.hasOwnProperty("24579")) temp = parseInt(json["24579"][Object.keys(json["24579"])[0]]["entityvalue"]);
-					if(temp == 1) deviceECO = "ON";
-					else if(temp == 0) deviceECO = "OFF";
+					if(temp == 1) deviceECO = "ON"; else if(temp == 0) deviceECO = "OFF";
 					
 					$('#devicePFC').html(devicePFC);
 					$('#deviceBoost').html(deviceBoost);
@@ -904,22 +764,8 @@ $(document).ready(function () {
 				
 				
 				
-				
-				
-				
-				
-				
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 	
@@ -927,22 +773,11 @@ $(document).ready(function () {
 	
 	
 	
-	
-	
-	
-	
-
 	// Round Number to X decimal places (in order to avoid 230.70000000000002)
-	
 	function round(value, precision) {
 		var multiplier = Math.pow(10, precision || 0);
 		return Math.round(value * multiplier) / multiplier;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
