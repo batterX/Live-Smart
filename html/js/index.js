@@ -55,18 +55,6 @@ $(document).ready(function () {
 				"action": "getDeviceModel"
 			},
 			success: function (response) {
-				// Update Device Image + Label
-				if(response) {
-					model = response.toLowerCase();
-					switch(response.toLowerCase()) {
-						case 'batterx bs':
-							$(".logo-livesmart").attr("src", "img/logo-efm.svg");
-							break;
-						default:
-							$(".logo-livesmart").attr("src", "img/logo-livesmart.svg");
-							break;
-					}
-				}
 				// Hide Overlay
 				$('.overlay').fadeOut();
 			}
@@ -193,7 +181,7 @@ $(document).ready(function () {
 			success: function (response) {
 				// Parse Response to JSON
 				var json = JSON.parse(response);
-				// Display New Warnings in the Right-Side-Drawer
+				// Display Latest Warnings in the Right-Side-Drawer
 				for(var x = 0; x < json.length; x++) {
 					if(lastWarningTime <= new Date(json[x]['logtime'].replace(" ", "T"))) {
 						if(json[x]['entityvalue'] != "") {
@@ -201,8 +189,8 @@ $(document).ready(function () {
 							for(var y = 0; y < tempList.length; y++) {
 								if(lastWarningList.indexOf(tempList[y]) == -1) {
 									var article = buildWarning(
-										warningsList[tempList[0]],
-										warningsList[tempList[1]],
+										warningsList[tempList[y]][0],
+										warningsList[tempList[y]][1],
 										convertDate(json[x]['logtime'])
 									);
 									$("#notif-container").html(article + $("#notif-container").html());
