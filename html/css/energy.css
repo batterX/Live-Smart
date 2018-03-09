@@ -1,4 +1,3 @@
-/* Remove any extra spacing + Add some basic settings */
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -19,9 +18,18 @@ body {
 	padding: 0px;
 }
 
+/* OVERLAY */
+.overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: #131313;
+	z-index: 10000;
+}
 
-
-/* Style the Top Part */
+/* NAVIGATION ROW */
 div.top {
 	flex-grow: 0;
 	flex-shrink: 1;
@@ -29,7 +37,6 @@ div.top {
 	padding-left: 2.5vw;
 	padding-right: 2.5vw;
 }
-
 div.top .container {
 	background-color: #1b1b1b;
 	width: 100%;
@@ -56,9 +63,7 @@ div.top .container img {
 	color: white !important;
 }
 
-
-
-/* Style the Middle Part */
+/* DIVIDER */
 div.middle {
 	height: 1px;
 	background: #333333;
@@ -67,7 +72,7 @@ div.middle {
 
 
 
-/* Style the Bottom Part */
+/* CHART SECTION */
 div.bottom {
 	height: auto;
 	flex-grow: 1;
@@ -76,7 +81,7 @@ div.bottom {
 	position: relative;
 }
 div.bottom .chart-container {
-	height: calc(100vh - 14.75vh - 15px); /* 11vh + 10px is the top container, 3.75vh + 1px is the middle container, 4px are added for rounding etc. */
+	height: calc(100vh - 14.75vh - 15px);
 	width: 100%;
 }
 #chart {
@@ -97,9 +102,7 @@ div.bottom .chart-container {
 	cursor: pointer;
 }
 
-
-
-/* Style the Tooltips */
+/* TOOLTIP STYLE */
 #chartjs-tooltip {
 	font-family: "Raleway";
 	font-size: 14px;

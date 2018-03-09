@@ -73,6 +73,10 @@ function hidePanel() {
 	$("#btnSave").css("display", "none");
 }
 
+
+
+
+
 // Save Changes - Button Save
 function saveChanges() {
 	var setting = "";
@@ -120,7 +124,6 @@ function saveChanges() {
 			}
 		});
 	}
-	
 }
 
 
@@ -254,7 +257,6 @@ $.ajax({
 			else
 				$(".images").prepend( '<a style="background-image: url(uploads/' + json[x] + ')" href="uploads/' + json[x] + '" data-lightbox="device-images"></a>' );
 		}
-		
 		// Make Carousel
 		$('.images').waitForImages(function() {
 			$('.images').css('display', 'block');

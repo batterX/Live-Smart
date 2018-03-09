@@ -452,9 +452,7 @@ function updateInfo() {
 					json["16386"][Object.keys(json["16386"])[0]]["logtime"]
 				);
 			// Update Last Timestamp
-			window.parent.updateLastTimestamp(
-				json["273"][Object.keys(json["273"])[0]]['logtime']
-			);
+			window.parent.updateLastTimestamp(json["273"][Object.keys(json["273"])[0]]['logtime']);
 		}
 	});
 }

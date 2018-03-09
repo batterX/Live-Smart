@@ -1,4 +1,3 @@
-/* Remove any extra spacing + Add some basic settings */
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -23,6 +22,17 @@ body {
 	margin: 0;
 }
 
+/* OVERLAY */
+.overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: #131313;
+	z-index: 10000;
+}
+
 
 
 
@@ -45,7 +55,7 @@ body {
 	height: 25vh;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: cover; /* cover will scale to fill the width and height */
+	background-size: cover;
 	border-radius: 0.5vh 0.5vh 0 0;
 }
 .device-inside {
@@ -247,7 +257,7 @@ h2 {
 .top-left .arrow-line .line, 
 .bottom-left .arrow-line .line {
 	position: absolute;
-	width: 0.5vh; /* old 0.25vh */
+	width: 0.5vh;
 	height: 7.5vh;
 	background-color: #87d403;
 	margin-left: 37.5%;
@@ -255,21 +265,13 @@ h2 {
 .top-left .arrow-line .arrow, 
 .bottom-left .arrow-line .arrow {
 	position: absolute;
-	margin-left: calc(37.5% - 1.25vh); /* old -1.4vh */
+	margin-left: calc(37.5% - 1.25vh);
 	width: 3vh;
 	height: 3vh;
 	color: white;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-}
-.top-left .test,
-.bottom-left .test {
-	position: absolute;
-	right: 66%;
-	font-size: 2.5vh;
-	margin: 2vh;
-	color: white;
 }
 
 
@@ -280,7 +282,7 @@ h2 {
 .top-right .arrow-line .line,
 .bottom-right .arrow-line .line {
 	position: absolute;
-	width: 0.5vh; /* old 0.25vh */
+	width: 0.5vh;
 	height: 7.5vh;
 	background-color: #87d403;
 	margin-left: 12.5%;
@@ -288,22 +290,13 @@ h2 {
 .top-right .arrow-line .arrow, 
 .bottom-right .arrow-line .arrow {
 	position: absolute;
-	margin-left: calc(12.5% - 1.25vh); /* old -1.35vh */
+	margin-left: calc(12.5% - 1.25vh);
 	width: 3vh;
 	height: 3vh;
 	color: white;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-}
-
-.top-right .test,
-.bottom-right .test {
-	position: absolute;
-	left: 66%;
-	font-size: 2.5vh;
-	margin: 2vh;
-	color: white;
 }
 
 .top-left {

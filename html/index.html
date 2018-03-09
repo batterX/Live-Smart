@@ -19,29 +19,22 @@
 	
 	<body>
 		
-		<div class="overlay" style="
-			position: absolute;
-			top: 0px;
-			left: 0px;
-			width: 100vw;
-			height: 100vh;
-			background-color: #131313;
-			z-index: 10000;
-		"></div>
+		<!-- OVERLAY -->
+		<div class="overlay"></div>
 		
-		<!-- NAVIGATION MENU - LEFT-SIDE DRAWER -->
+		<!-- LEFT-SIDE DRAWER -->
 		<div id="slider-left" class="navmenu navmenu-fixed-left offcanvas-port">
 			<div class="wrap">
 				<div class="menu-container text-center">
 					<img src="img/logo-livesmart.svg" class="logo-livesmart">
 					<img src="img/x-lg.png" class="logo" id="logo">
-					<div><button type="button" id="live"><h4 class="active">LIVE</h4></button></div>
+					<button type="button" id="live"><h4 class="active">LIVE</h4></button>
 					<img src="img/under.png" class="img-under">
-					<div><button type="button" id="energy"><h4>ENERGY</h4></button></div>
+					<button type="button" id="energy"><h4>ENERGY</h4></button>
 					<img src="img/under.png" class="img-under">
-					<div><button type="button" id="device"><h4>SYSTEM</h4></button></div>
+					<button type="button" id="device"><h4>SYSTEM</h4></button>
 					<img src="img/under.png" class="img-under">
-					<div><button type="button" id="gpio"><h4>GPIO</h4></button></div>
+					<button type="button" id="gpio" class="gpio"><h4>GPIO</h4></button>
 					<img src="img/under.png" class="img-under">
 				</div>
 			</div>
@@ -53,27 +46,28 @@
 			<!-- NAVIGATION BAR -->
 			<div class="navigation row">
 				
-				<div class="col-2 no-padding no-margin">
+				<!-- HAMBURGER -->
+				<div class="col-2 p-0 m-0">
 					<button type="button" class="navbar-toggle hidden-land" data-toggle="offcanvas" data-target="#slider-left">
 						<img src="img/hamburger.png" class="hamburger">
 					</button>
 				</div>
-				
+				<!-- TITLE -->
 				<div class="col-8 text-center">
 					<img src="img/x-sm.png" class="logo">
-					<h4 class="title" id="title">LIVE</h4>
+					<h4 class="title" id="title"><?php echo mb_strtoupper($lang['live']); ?></h4>
 					<img src="img/under.png" class="img-under">
 				</div>
-				
-				<div id="btnNotification" class="col-2 no-margin no-padding">
+				<!-- NOTIFICATION BUTTON & BADGE -->
+				<div id="btnNotification" class="col-2 m-0 p-0">
 					<img src="img/notification-white.png" class="notification blink">
 					<span class="button-badge blink"></span>
 				</div>
 				
 			</div>
-
-			<!-- MAIN CONTENT (FRAME + LIST) -->
-			<iframe src="live.html" id="frame"></iframe>
+			
+			<!-- IFRAME -->
+			<iframe src="live.php" id="frame"></iframe>>
 
 			<!-- BOTTOM NOTIFICATION BAR -->
 			<div class="notifbar">
@@ -85,34 +79,37 @@
 			
 		</div>
 		
-		<!-- NOTIFICATIONS MENU - RIGHT-SIDE DRAWER -->
+		<!-- RIGHT-SIDE DRAWER -->
 		<div id="slider-right" class="navmenu navmenu-fixed-right offcanvas">
 			
+			<!-- TITLE -->
 			<div class="text-center">
 				<img src="img/x-sm.png" class="logo">
 				<h4 class="title">NOTIFICATIONS</h4>
 				<img src="img/under.png" class="img-under">
 			</div>
 			
-			<!-- SHOW LAST UPDATE TIME -->
+			<!-- LAST TIMESTAMP -->
 			<div class="wrap" id="notif-lastupdate">
-				<!-- USE index.js -->
+				<!-- Set using 'index.js' -->
 			</div>
 			
-			<!-- LIST WITH ACTIVE WARNINGS -->
+			<!-- LIST - ACTIVE WARNINGS -->
 			<div class="wrap" id="notif-active">
 				<div class="warnings">
-					<!-- USE index.js -->
+					<!-- Set using 'index.js' -->
 				</div>
 				<div class="faults"></div>
 			</div>
 			
-			<!-- LIST WITH NOTIFICATIONS -->
+			<!-- LIST - NOTIFICATIONS -->
 			<div class="wrap" id="notif-container">
-				<!-- USE index.js -->
+				<!-- Set using 'index.js' -->
 			</div>
+			
 		</div>
 		
+		<!-- IMPORT JS FILES -->
 		<script src="js/components/jquery.js"></script>
 		<script src="js/components/bootstrap.js"></script>
 		<script src="js/components/moment.js"></script>
