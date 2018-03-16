@@ -7,8 +7,8 @@ body {
 	border-radius: 0px !important;
 }
 
-.container * {
-	font-family: monospace!important;
+.container *, .container-fluid * {
+	font-family: monospace !important;
 }
 
 input, select {
