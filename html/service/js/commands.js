@@ -271,7 +271,7 @@ $('#submit').on('click', function() {
 	
 	if(!checkPassword()) return;
 	
-	var VarName = ''; // GridInjection | BatteryCharging | BatteryChargingAC
+	var VarName = ''; // GridInjection | BatteryCharging | BatteryChargingAC | BatteryDischarging
 	var mode = ''; // 0=n/a 1=enable 2=disable
 	var V4 = ''; // min-active-time
 	var V5 = ''; // off-delay

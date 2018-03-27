@@ -11,7 +11,6 @@ if(!empty($_POST['action']))
 		case 'setLabels':
 			echo $serviceObj->setLabels();
 			break;
-			
 		case 'getLabels':
 			echo $serviceObj->getLabels();
 			break;
@@ -19,7 +18,6 @@ if(!empty($_POST['action']))
 		case 'setOutputConfig':
 			echo $serviceObj->setOutputConfig();
 			break;
-			
 		case 'getOutputConfig':
 			echo $serviceObj->getOutputConfig();
 			break;
@@ -27,17 +25,29 @@ if(!empty($_POST['action']))
 		case 'setCloudLogging':
 			echo $serviceObj->setCloudLogging();
 			break;
-			
 		case 'getCloudLogging':
 			echo $serviceObj->getCloudLogging();
+			break;
+			
+		case 'setNGRelayFunction':
+			echo $serviceObj->setNGRelayFunction();
+			break;
+		case 'getNGRelayFunction':
+			echo $serviceObj->getNGRelayFunction();
 			break;
 			
 		case 'setCommandConfig':
 			echo $serviceObj->setCommandConfig();
 			break;
-			
 		case 'getCommandConfig':
 			echo $serviceObj->getCommandConfig();
+			break;
+			
+		case 'getIgnoreWarnings':
+			echo $serviceObj->getIgnoreWarnings();
+			break;
+		case 'setSolar2LossWarning':
+			echo $serviceObj->setSolar2LossWarning();
 			break;
 		
 		default:

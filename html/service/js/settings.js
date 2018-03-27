@@ -21,22 +21,24 @@ function checkPassword() {
 
 
 
-
-
-
-
-
-
-// Load Setting
-
 $.ajax({
 	type: "POST",
-	url: "../db-interaction/service.php",
-	data: { "action": "getCloudLogging" },
+	url: "../db-interaction/data.php",
+	data: {
+		"action": "getDeviceModel"
+	},
 	success: function (response) {
-		var json = JSON.parse(response);
-		if(json.hasOwnProperty('Mode')) 
-			$('#CloudLogging').val(json['Mode']).change();
+		if(response) {
+			switch(response.toLowerCase()) {
+				case 'batterx h3':
+					$('#cardSolar2LossWarning').css('display', 'none');
+				case 'batterx h5-eco':
+					$('#cardNGRelayFunction').css('display', 'none');
+					break;
+				default:
+					break;
+			}
+		}
 	}
 });
 
@@ -49,9 +51,55 @@ $.ajax({
 
 
 
-// Update Labels
+// LOAD SETTINGS
+$.ajax({
+	type: "POST",
+	url: "../db-interaction/service.php",
+	data: { "action": "getCloudLogging" },
+	success: function (response) {
+		var json = JSON.parse(response);
+		if(json.hasOwnProperty('Mode')) 
+			$('#CloudLogging').val(json['Mode']).change();
+	}
+});
+$.ajax({
+	type: "POST",
+	url: "../db-interaction/service.php",
+	data: { "action": "getNGRelayFunction" },
+	success: function (response) {
+		var json = JSON.parse(response);
+		if(json.hasOwnProperty('Mode')) 
+			$('#NGRelayFunction').val(json['Mode']).change();
+	}
+});
+$.ajax({
+	type: "POST",
+	url: "../db-interaction/service.php",
+	data: { "action": "getIgnoreWarnings" },
+	success: function (response) {
+		console.log(response);
+		var json = JSON.parse(response);
+		if(json.hasOwnProperty('Mode') && json['Mode'] == '1') {
+			if(json.hasOwnProperty('S1') && json['S1'] != '') {
+				var tempList = json['S1'].split(" ");
+				if(tempList.includes('17922') && tempList.includes('17954'))
+					$('#Solar2LossWarning').val('0').change();
+			}
+		}
+	}
+});
 
-$('#submit').on('click', function() {
+
+
+
+
+
+
+
+
+
+// SET CloudLogging
+$('#submitCloudLogging').on('click', function() {
 	
 	if(!checkPassword()) return;
 	
@@ -64,7 +112,7 @@ $('#submit').on('click', function() {
 		},
 		success: function (response) {
 			if(response) {
-				alert("All settings have been updated");
+				alert("CloudLogging Updated Successfully!");
 				console.log(response);
 			} else {
 				alert("Error, please try again!");
@@ -72,7 +120,65 @@ $('#submit').on('click', function() {
 			}
 		},
 		error: function (response) {
-			alert("Error, please try again!");
+			alert("Hard Error, please try again!");
+			console.log(response);
+		}
+	});
+
+});
+
+// SET NGRelayFunction
+$('#submitNGRelayFunction').on('click', function() {
+	
+	if(!checkPassword()) return;
+	
+	$.ajax({
+		type: 'POST',
+		url: '../db-interaction/service.php',
+		data: {
+			"action": 'setNGRelayFunction',
+			"mode": $('#NGRelayFunction').find('option:selected').val()
+		},
+		success: function (response) {
+			if(response) {
+				alert("N/G Relay Function Updated Successfully!");
+				console.log(response);
+			} else {
+				alert("Error, please try again!");
+				console.log(response);
+			}
+		},
+		error: function (response) {
+			alert("Hard Error, please try again!");
+			console.log(response);
+		}
+	});
+
+});
+
+// SET Solar2LossWarning
+$('#submitSolar2LossWarning').on('click', function() {
+	
+	if(!checkPassword()) return;
+	
+	$.ajax({
+		type: 'POST',
+		url: '../db-interaction/service.php',
+		data: {
+			"action": 'setSolar2LossWarning',
+			"mode": $('#Solar2LossWarning').find('option:selected').val()
+		},
+		success: function (response) {
+			if(response) {
+				alert("Solar 2 Loss Warning - Setting Updated Successfully!");
+				console.log(response);
+			} else {
+				alert("Error, please try again!");
+				console.log(response);
+			}
+		},
+		error: function (response) {
+			alert("Hard Error, please try again!");
 			console.log(response);
 		}
 	});
