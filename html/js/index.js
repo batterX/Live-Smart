@@ -323,12 +323,20 @@ function updateFaultStatus(flag, fault, logtime) {
 function updateLastTimestamp(str) {
 	$("#notif-lastupdate").html("<div class='row notif-head-active'><h4 style='color:white; letter-spacing: 0.75vh;'><b>LAST TIMESTAMP<b></h4></div>");
 	$("#notif-lastupdate").append("<div class='row notif-head-active'><h4 class='last-timestamp'>" + convertDate(str) + "</h4></div>");
+	if(moment.duration(moment().diff(moment.utc(str))).asMinutes() > 5) {
+		// NOT UPDATED IN OVER 5 MINUTES
+		$("#notif-lastupdate h4").css('color', 'red');
+		$(".notification").attr("src", "img/notification-red.png");
+		$(".button-badge").css("color", "red");
+		$(".button-badge").css("border-color", "red");
+		if(lastWarningList.length != 0) $(".button-badge").css("display", "block");
+	}
 }
 
 
 
 
-	
+
 // Convert Date from Database to Local Time
 function convertDate(dateStr) {
 	var utc = moment.utc(dateStr).toDate();

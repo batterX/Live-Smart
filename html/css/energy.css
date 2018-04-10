@@ -10,7 +10,12 @@ html, body {
 }
 body {
 	background-color: #131313;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-flow: column;
 	flex-flow: column;
 }
 .row {
@@ -31,11 +36,15 @@ body {
 
 /* NAVIGATION ROW */
 div.top {
+	-webkit-box-flex: 0;
+	-ms-flex-positive: 0;
 	flex-grow: 0;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
-	padding-left: 2.5vw;
-	padding-right: 2.5vw;
+	padding-left: 1vw;
+	padding-right: 1vw;
 }
 div.top .container {
 	background-color: #1b1b1b;
@@ -47,8 +56,11 @@ div.top .container {
 	height: 0.25vh;
 	width: 100%;
 }
-div.top .col-2, div.top .col-5 {
-	padding: 3.5vh 2.5vw 2.25vh 2.5vw;
+div.top .col-2, div.top .col-4, div.top .col-5 {
+	padding: 3.5vh 1vw 2.25vh 1vw;
+}
+div.top .col-1 {
+	padding: 3.5vh 0 2.25vh 0;
 }
 div.top .container .name {
 	color: gray;
@@ -75,8 +87,12 @@ div.middle {
 /* CHART SECTION */
 div.bottom {
 	height: auto;
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
 	flex-grow: 1;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
 	position: relative;
 }
@@ -111,9 +127,12 @@ div.bottom .chart-container {
 	background: rgba(0, 0, 0, .9);
 	color: white;
 	border-radius: 5px;
+	-webkit-box-shadow: 0 0 0 0.25vh #87d403;
 	box-shadow: 0 0 0 0.25vh #87d403;
+	-webkit-transition: all .1s ease;
 	transition: all .1s ease;
 	pointer-events: none;
+	-webkit-transform: translate(-50%, 0);
 	transform: translate(-50%, 0);
 }
 .chartjs-tooltip-key {

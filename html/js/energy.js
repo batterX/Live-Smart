@@ -392,10 +392,37 @@ $('#btn-consumption').on('click', function() {
 	];
 	chart.update();
 });
+
 $("#btnZoom").on('click', function() {
 	zoomActive = !zoomActive;
 	getEnergy(false);
 });
+
+$('#btnPrev').on('click', function() {
+	date_from = moment(date_from).subtract(1, "days").format("YYYYMMDD");
+	date_to = moment(date_to).subtract(1, "days").format("YYYYMMDD");
+	$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
+	$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
+	getEnergy();
+	$('#btnNext').find('h4').html('&gt;');
+});
+$('#btnNext').on('click', function() {
+	if(moment().diff(moment(date_to), 'days') != 0) {
+		date_from = moment(date_from).add(1, "days").format("YYYYMMDD");
+		date_to = moment(date_to).add(1, "days").format("YYYYMMDD");
+		$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
+		$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
+		getEnergy();
+		if(moment().diff(moment(date_to), 'days') == 0)
+			$('#btnNext').find('h4').html('&#10227;');
+	} else {
+		getEnergy();
+	}
+});
+
+
+
+
 
 // Date-Range-Picker
 $('#btn-calendar').daterangepicker({
@@ -474,15 +501,24 @@ function getEnergy(updateChartType) {
 		overlay_gridOut = false;
 		overlay_gridIn = false;
 		overlay_directConsumption = false;
-		// Display Correct Chart Type
+		$('#btnNext').find('h4').html('&gt;');
+		// Display Correct Chart Type + Show/Hide Control Buttons
 		if(moment(date_to).diff(moment(date_from), 'days') < 1) {
 			chart.destroy();
 			chart = new Chart(ctx, config_line);
 			$("#btnZoom").css("display", "block");
+			// 1 Day - Show Buttons
+			$('.main-toggler').removeClass('col-5').addClass('col-4');
+			$('.main-control').show();
+			if(moment().diff(moment(date_to), 'days') == 0)
+				$('#btnNext').find('h4').html('&#10227;');
 		} else {
 			chart.destroy();
 			chart = new Chart(ctx, config_bar);
 			$("#btnZoom").css("display", "none");
+			// 1+ Days - Hide Buttons
+			$('.main-toggler').removeClass('col-4').addClass('col-5');
+			$('.main-control').hide();
 		}
 	}
 	
