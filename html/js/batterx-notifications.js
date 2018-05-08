@@ -250,6 +250,11 @@ var warningsList = {
 	"18713": [
 		"AC Circuit Voltage Sample Error",
 		"AC Circuit Voltage Sample Error"
-	]
+	],
+
+	"18928": [
+		"Energy Meter Not Working",
+		"Energy Meter Not Working"
+	],
 	
 }

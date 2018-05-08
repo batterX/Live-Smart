@@ -97,7 +97,7 @@ div.bottom {
 	position: relative;
 }
 div.bottom .chart-container {
-	height: calc(100vh - 14.75vh - 15px);
+	height: calc(100vh - 14.75vh - 2.5vh - 15px);
 	width: 100%;
 }
 #chart {
@@ -162,6 +162,11 @@ tfoot td {
 .value {
 	padding-left:10px;
 	color: #87d403;
+}
+
+.date-range {
+	font-size: 2.5vh !important;
+	color: white;
 }
 
 

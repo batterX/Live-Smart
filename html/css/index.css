@@ -46,8 +46,14 @@ body {
 .navmenu-fixed-left .wrap {
 	width: 100%;
 	height: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
 	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
 }
 .navmenu-fixed-left #settings {
@@ -117,14 +123,23 @@ body {
 	height: 100vh;
 	margin: 0;
 	padding: 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient:vertical;
+	-webkit-box-direction:normal;
+	-ms-flex-flow:column;
 	flex-flow:column;
 }
 
 /* NAVIGATION BAR */
 .navigation {
+	-webkit-box-flex: 0;
+	-ms-flex-positive: 0;
 	flex-grow: 0;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
 }
 .navigation button {
@@ -188,21 +203,30 @@ body {
 /* IFRAME */
 #frame {
 	width: 100%;
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
 	flex-grow: 1;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
 	border: 0;
 }
 
 /* USERS/DEVICES LIST */
 div.list-container {
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
 	flex-grow: 1;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
 	border: 0;
 	overflow: auto;
 }
 div.list-item {
+	-o-border-image: url(../img/input-field.png) 0 0 0 3 fill;
 	border-image: url(../img/input-field.png) 0 0 0 3 fill;
 	border-width: 0 0 0 1vh;
 	margin: 2vh 2vh;
@@ -230,8 +254,12 @@ h4.deletetab {
 
 /* BOTTOM NOTIFICATION BAR */
 .notifbar {
+	-webkit-box-flex: 0;
+	-ms-flex-positive: 0;
 	flex-grow: 0;
+	-ms-flex-negative: 1;
 	flex-shrink: 1;
+	-ms-flex-preferred-size: auto;
 	flex-basis: auto;
 	border-top: 1px solid;
 	border-color: #333333;
@@ -240,8 +268,14 @@ h4.deletetab {
 	display: none;
 }
 .notifbar div {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
 	justify-content: center;
 	margin: 2.5vh 2.5vw;
 }
@@ -292,11 +326,19 @@ h4.deletetab {
 	border: 1px solid gray;
 }
 .navmenu-fixed-right .wrap .notif-head {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
 }
 .navmenu-fixed-right .wrap .notif-head-active {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
 	padding: 0.75vh 0;
 	color: gray;
@@ -340,7 +382,6 @@ h4.deletetab {
 	letter-spacing: 0.5px;
 }
 .navmenu-fixed-right .wrap .img-under {
-	width: 7.5%;
 	margin: 0;
 }
 .navmenu-fixed-right .wrap .time {

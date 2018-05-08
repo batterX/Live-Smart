@@ -1,28 +1,6 @@
-// Init Variables (needed for overlay, when updating the page)
-var overlay_batteryOut = false;
-var overlay_batteryIn = false;
-var overlay_gridOut = false;
-var overlay_gridIn = false;
-var overlay_directConsumption = false;
-
-// Hide Overlay
-function hideOverlay() {
-	if(overlay_batteryOut == true && 
-	   overlay_batteryIn == true && 
-	   overlay_gridOut == true && 
-	   overlay_gridIn == true && 
-	   overlay_directConsumption == true
-	) $('.overlay').fadeOut();
-}
-
-
-
-
-
 // Get Device Model
+
 var model = "batterx bs";
-
-// Get Device Model
 $.ajax({
 	type: "POST",
 	url: "db-interaction/data.php",
@@ -32,7 +10,7 @@ $.ajax({
 	success: function (response) {
 		if(response) {
 			model = response.toLowerCase();
-			getEnergy();
+			$('#btn-production').click();
 		}
 	}
 });
@@ -41,71 +19,156 @@ $.ajax({
 
 
 
-// Define all needed Variables
-// Zoom, Data, Labels, Colors, Datasets, Date From-To
+// Hide Overlay - Variables
+
+var overlay_batteryOut = false;
+var overlay_batteryIn = false;
+var overlay_gridOut = false;
+var overlay_gridIn = false;
+var overlay_directConsumption = false;
+
+// Hide Overlay - Function
+
+function hideOverlay(varName) {
+	// Set Variable to True
+	if(varName == "overlay_batteryOut") overlay_batteryOut = true;
+	if(varName == "overlay_batteryIn") overlay_batteryIn = true;
+	if(varName == "overlay_gridOut") overlay_gridOut = true;
+	if(varName == "overlay_gridIn") overlay_gridIn = true;
+	if(varName == "overlay_directConsumption") overlay_directConsumption = true;
+	// Hide Overlay if all Variables == True
+	if(overlay_batteryOut && overlay_batteryIn && overlay_gridOut && overlay_gridIn && overlay_directConsumption)
+		$('.overlay').fadeOut();
+}
+
+// Show Overlay
+
+function showOverlay() {
+	$('.overlay').show();
+	overlay_batteryOut = false;
+	overlay_batteryIn = false;
+	overlay_gridOut = false;
+	overlay_gridIn = false;
+	overlay_directConsumption = false;
+}
+
+
+
+
+
+// Set OnClick Listeners for all Buttons
+
+$('#btn-production').on('click', function() {
+	$('#btn-production').addClass('btn-selected');
+	$('#btn-consumption').removeClass('btn-selected');
+	btnSelected = 1;
+	chart.config.data.datasets = [
+		dataset_directConsumption,
+		dataset_batteryIn
+	];
+	if(model != "batterx bs") 
+		chart.config.data.datasets.push(dataset_gridIn);
+	chart.update();	
+});
+
+$('#btn-consumption').on('click', function() {
+	$('#btn-production').removeClass('btn-selected');
+	$('#btn-consumption').addClass('btn-selected');
+	btnSelected = 2;
+	chart.config.data.datasets = [
+		dataset_directConsumption,
+		dataset_batteryOut,
+		dataset_gridOut
+	];
+	chart.update();
+});
+
+$("#btnZoom").on('click', function() {
+	zoomActive = !zoomActive;
+	getEnergy(false);
+});
+
+$('#btnPrev').on('click', function() {
+	date_from = moment(date_from).subtract(1, "days").format("YYYYMMDD");
+	date_to = moment(date_to).subtract(1, "days").format("YYYYMMDD");
+	$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
+	$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
+	getEnergy();
+	$('#btnNext').find('h4').html('&gt;');
+	setSelectedDateRange();
+});
+
+$('#btnNext').on('click', function() {
+	if(moment().diff(moment(date_to), 'days') != 0) {
+		date_from = moment(date_from).add(1, "days").format("YYYYMMDD");
+		date_to = moment(date_to).add(1, "days").format("YYYYMMDD");
+		$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
+		$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
+		getEnergy();
+		if(moment().diff(moment(date_to), 'days') == 0)
+			$('#btnNext').find('h4').html('&#10227;');
+	} else {
+		getEnergy();
+	}
+	setSelectedDateRange();
+});
+
+
+
+
+
+// Initialize Variables
 
 var btnSelected = 1; // 1=Production 2=Consumption
 var zoomActive = true; // If True -> Show hours 05:00 to 21:00 else show 00:00 to 24:00
 
-var data_batteryOut = []; // Battery - Discharged
-var data_batteryIn = []; // Battery - Charged
-var data_gridOut = []; // Grid - Consumption
-var data_gridIn = []; // Grid - Injection
-var data_directConsumption = []; // Load Consumption - Solar Only
-
-var label_batteryOut = "Battery";
-var label_batteryIn = "Battery (Charging)";
-var label_gridOut = "Grid";
-var label_gridIn = "Grid (Injection)";
-var label_directConsumption = "Direct Consumption";
-
-var color_battery = "green";
-var color_grid = "rgb(0, 191, 255)";
-var color_directConsumption = "rgb(255, 165, 0)";
-var bgColor_battery = "rgba(0, 128, 0, 1)";
-var bgColor_grid = "rgba(0, 191, 255, 1)";
-var bgColor_directConsumption = "rgba(255, 165, 0, 1)";
+var data_batteryOut = [];
+var data_batteryIn = [];
+var data_gridOut = [];
+var data_gridIn = [];
+var data_directConsumption = [];
 
 var labels = [];
 
 var dataset_batteryOut = {
-	label: label_batteryOut,
-	borderColor: color_battery,
-	backgroundColor: bgColor_battery,
+	label: "Battery",
+	borderColor: "green",
+	backgroundColor: "rgba(0, 128, 0, 1)",
 	fill: true,
 	data: data_batteryOut
 };
 var dataset_batteryIn = {
-	label: label_batteryIn,
-	borderColor: color_battery,
-	backgroundColor: bgColor_battery,
+	label: "Battery (Charging)",
+	borderColor: "green",
+	backgroundColor: "rgba(0, 128, 0, 1)",
 	fill: true,
 	data: data_batteryIn
 };
 var dataset_gridOut = {
-	label: label_gridOut,
-	borderColor: color_grid,
-	backgroundColor: bgColor_grid,
+	label: "Grid",
+	borderColor: "rgb(0, 191, 255)",
+	backgroundColor: "rgba(0, 191, 255, 1)",
 	fill: true,
 	data: data_gridOut
 };
 var dataset_gridIn = {
-	label: label_gridIn,
-	borderColor: color_grid,
-	backgroundColor: bgColor_grid,
+	label: "Grid (Injection)",
+	borderColor: "rgb(0, 191, 255)",
+	backgroundColor: "rgba(0, 191, 255, 1)",
 	fill: true,
 	data: data_gridIn
 };
 var dataset_directConsumption = {
-	label: label_directConsumption,
-	borderColor: color_directConsumption,
-	backgroundColor: bgColor_directConsumption,
+	label: "Direct Consumption",
+	borderColor: "rgb(255, 165, 0)",
+	backgroundColor: "rgba(255, 165, 0, 1)",
 	fill: true,
 	data: data_directConsumption
 };
 
 var date_from = moment().format("YYYYMMDD");
 var date_to = moment().format("YYYYMMDD");
+setSelectedDateRange();
 
 
 
@@ -171,8 +234,8 @@ var customTooltips = function(tooltip) {
 		});
 		innerHtml += '</tbody><tfoot>';
 		// Add Total Production/Consumption
-		if(btnSelected == 1) innerHtml += '<tr><td>' + 'Total Production';
-		else innerHtml += '<tr><td>' + 'Total Consumption';
+		if(btnSelected == 1) innerHtml += '<tr><td>' + "Total Production";
+		else innerHtml += '<tr><td>' + "Total Consumption";
 		// Show Value (W or KW)
 		if(total < 1000) total = Math.round(total * 10) / 10 + " W" + extraChar;
 		else total = Math.round(total / 100) / 10 + " KW" + extraChar;
@@ -361,69 +424,6 @@ var chart = new Chart(ctx, config_line);
 
 
 
-// Get Energy For Today (First Time Init)
-getEnergy();
-
-
-
-
-
-// Set OnClick Listeners for all Buttons
-$('#btn-production').on('click', function() {
-	$('#btn-production').addClass('btn-selected');
-	$('#btn-consumption').removeClass('btn-selected');
-	btnSelected = 1;
-	chart.config.data.datasets = [
-		dataset_directConsumption,
-		dataset_batteryIn
-	];
-	if(model != "batterx bs") 
-		chart.config.data.datasets.push(dataset_gridIn);
-	chart.update();	
-});
-$('#btn-consumption').on('click', function() {
-	$('#btn-production').removeClass('btn-selected');
-	$('#btn-consumption').addClass('btn-selected');
-	btnSelected = 2;
-	chart.config.data.datasets = [
-		dataset_directConsumption,
-		dataset_batteryOut,
-		dataset_gridOut
-	];
-	chart.update();
-});
-
-$("#btnZoom").on('click', function() {
-	zoomActive = !zoomActive;
-	getEnergy(false);
-});
-
-$('#btnPrev').on('click', function() {
-	date_from = moment(date_from).subtract(1, "days").format("YYYYMMDD");
-	date_to = moment(date_to).subtract(1, "days").format("YYYYMMDD");
-	$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
-	$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
-	getEnergy();
-	$('#btnNext').find('h4').html('&gt;');
-});
-$('#btnNext').on('click', function() {
-	if(moment().diff(moment(date_to), 'days') != 0) {
-		date_from = moment(date_from).add(1, "days").format("YYYYMMDD");
-		date_to = moment(date_to).add(1, "days").format("YYYYMMDD");
-		$('#btn-calendar').data('daterangepicker').setStartDate(moment(date_from).format("MM/DD/YYYY"));
-		$('#btn-calendar').data('daterangepicker').setEndDate(moment(date_to).format("MM/DD/YYYY"));
-		getEnergy();
-		if(moment().diff(moment(date_to), 'days') == 0)
-			$('#btnNext').find('h4').html('&#10227;');
-	} else {
-		getEnergy();
-	}
-});
-
-
-
-
-
 // Date-Range-Picker
 $('#btn-calendar').daterangepicker({
 	"ranges": {
@@ -449,6 +449,7 @@ $('#btn-calendar').daterangepicker({
 }, function(start, end, label) {
 	date_from = start.format("YYYYMMDD");
 	date_to = end.format("YYYYMMDD");
+	setSelectedDateRange();
 	getEnergy();
 });
 
@@ -488,23 +489,24 @@ function updateInfo() {
 
 
 
+// Get Energy For Today (First Time Init)
+getEnergy();
+
+
+
+
+
 // Get Energy Data
 function getEnergy(updateChartType) {
 	
 	// Rebuild Chart If Needed
-	if(updateChartType === undefined) updateChartType = true;
-	if(updateChartType) {
+	if(updateChartType === undefined || updateChartType == true) {
 		// Show Overlay
-		$('.overlay').show();
-		overlay_batteryOut = false;
-		overlay_batteryIn = false;
-		overlay_gridOut = false;
-		overlay_gridIn = false;
-		overlay_directConsumption = false;
-		$('#btnNext').find('h4').html('&gt;');
+		showOverlay();
 		// Display Correct Chart Type + Show/Hide Control Buttons
+		$('#btnNext').find('h4').html('&gt;');
+		chart.destroy();
 		if(moment(date_to).diff(moment(date_from), 'days') < 1) {
-			chart.destroy();
 			chart = new Chart(ctx, config_line);
 			$("#btnZoom").css("display", "block");
 			// 1 Day - Show Buttons
@@ -513,7 +515,6 @@ function getEnergy(updateChartType) {
 			if(moment().diff(moment(date_to), 'days') == 0)
 				$('#btnNext').find('h4').html('&#10227;');
 		} else {
-			chart.destroy();
 			chart = new Chart(ctx, config_bar);
 			$("#btnZoom").css("display", "none");
 			// 1+ Days - Hide Buttons
@@ -528,171 +529,28 @@ function getEnergy(updateChartType) {
 	dataset_gridOut.data = [];
 	dataset_gridIn.data = [];
 	dataset_directConsumption.data = [];
-	if(btnSelected == 1) {
-		chart.config.data.datasets = [dataset_directConsumption, dataset_batteryIn];
-		if(model != "batterx bs") chart.config.data.datasets.push(dataset_gridIn);
-	} else {
-		chart.config.data.datasets = [dataset_directConsumption, dataset_batteryOut, dataset_gridOut];
-	}
+	
+	// if(btnSelected == 1)
+	// -> chart.config.data.datasets = [ dataset_directConsumption, dataset_batteryIn, (dataset_gridIn) ]
+	// else
+	// -> chart.config.data.datasets = [ dataset_directConsumption, dataset_batteryOut, dataset_gridOut ]
 	
 	// Show Data for Single Day
 	if(moment(date_to).diff(moment(date_from), 'days') < 1) {
 		// Make Labels (05-21 or 00-24)
 		var quarterHours = ["00", "15", "30", "45"];
 		var labels = [];
-		if(zoomActive) { // 05:00 - 21:00
-			for(var i = 5; i < 21; i++){
-				for(var j = 0; j < 4; j++){
-					var time = i + ":" + quarterHours[j];
-					if(i < 10) time = "0" + time;
-					labels.push(time);
-				}
-			}
-		} else { // 00:00 - 24:00
-			for(var i = 0; i < 24; i++){
-				for(var j = 0; j < 4; j++){
-					var time = i + ":" + quarterHours[j];
-					if(i < 10) time = "0" + time;
-					labels.push(time);
-				}
+		var startHour = 0, endHour = 24; // 00:00 - 24:00
+		if(zoomActive) { startHour = 5; endHour = 21; } // 05:00 - 21:00
+		for(var i = startHour; i < endHour; i++) {
+			for(var j = 0; j < 4; j++) {
+				var time = i + ":" + quarterHours[j];
+				if(i < 10) time = "0" + time;
+				labels.push(time);
 			}
 		}
-		
-		// Get Data For Selected Day
-		$.ajax({
-			type: "POST",
-			url: "db-interaction/data.php",
-			data: {
-				"action": "getPowerData",
-				"type": date_from,
-				"entity": "40"
-			},
-			success: function(result) {
-				// Parse Result
-				if(result == "0") data_batteryOut = [0];
-				else data_batteryOut = convertStringsToIntegers(result.split(" "));
-				// Edit Data For Zoom
-				if(zoomActive) data_batteryOut = sliceForZoom(data_batteryOut);
-				// Update Data
-				dataset_batteryOut.data = data_batteryOut;
-				// Update Chart
-				if(btnSelected == 2) {
-					chart.config.data.datasets.push = dataset_batteryOut;
-					chart.update();
-				}
-				// Try to hide Overlay
-				overlay_batteryOut = true;
-				hideOverlay();
-			}
-		});
-		$.ajax({
-			type: "POST",
-			url: "db-interaction/data.php",
-			data: {
-				"action": "getPowerData",
-				"type": date_from,
-				"entity": "41"
-			},
-			success: function(result) {
-				// Parse Result
-				if(result == "0") data_batteryIn = [0];
-				else data_batteryIn = convertStringsToIntegers(result.split(" "));
-				// Edit Data For Zoom
-				if(zoomActive) data_batteryIn = sliceForZoom(data_batteryIn);
-				// Update Data
-				dataset_batteryIn.data = data_batteryIn;
-				// Update Chart
-				if(btnSelected == 1) {
-					chart.config.data.datasets.push = dataset_batteryIn;
-					chart.update();
-				}
-				// Try to hide Overlay
-				overlay_batteryIn = true;
-				hideOverlay();
-			}
-		});
-		$.ajax({
-			type: "POST",
-			url: "db-interaction/data.php",
-			data: {
-				"action": "getPowerData",
-				"type": date_from,
-				"entity": "10"
-			},
-			success: function(result) {
-				// Parse Result
-				if(result == "0") data_gridOut = [0];
-				else data_gridOut = convertStringsToIntegers(result.split(" "));
-				// Edit Data For Zoom
-				if(zoomActive) data_gridOut = sliceForZoom(data_gridOut);
-				// Update Data
-				dataset_gridOut.data = data_gridOut;
-				// Update Chart
-				if(btnSelected == 2) {
-					chart.config.data.datasets.push = dataset_gridOut;
-					chart.update();
-				}
-				// Try to hide Overlay
-				overlay_gridOut = true;
-				hideOverlay();
-			}
-		});
-		if(model != "batterx bs") {
-			$.ajax({
-				type: "POST",
-				url: "db-interaction/data.php",
-				data: {
-					"action": "getPowerData",
-					"type": date_from,
-					"entity": "11"
-				},
-				success: function(result) {
-					// Parse Result
-					if(result == "0") data_gridIn = [0];
-					else data_gridIn = convertStringsToIntegers(result.split(" "));
-					// Edit Data For Zoom
-					if(zoomActive) data_gridIn = sliceForZoom(data_gridIn);
-					// Update Data
-					dataset_gridIn.data = data_gridIn;
-					// Update Chart
-					if(btnSelected == 1) {
-						chart.config.data.datasets.push = dataset_gridIn;
-						chart.update();
-					}
-					// Try to hide Overlay
-					overlay_gridIn = true;
-					hideOverlay();
-				}
-			});
-		} else {
-			// Try to hide Overlay
-			overlay_gridIn = true;
-			hideOverlay();
-		}
-		$.ajax({
-			type: "POST",
-			url: "db-interaction/data.php",
-			data: {
-				"action": "getPowerData",
-				"type": date_from,
-				"entity": "61"
-			},
-			success: function(result) {
-				// Parse Result
-				if(result == "0") data_directConsumption = [0];
-				else data_directConsumption = convertStringsToIntegers(result.split(" "));
-				// Edit Data For Zoom
-				if(zoomActive) data_directConsumption = sliceForZoom(data_directConsumption);
-				// Update Data
-				dataset_directConsumption.data = data_directConsumption;
-				// Update Chart
-				chart.config.data.datasets.push = dataset_directConsumption;
-				chart.update();
-				// Try to hide Overlay
-				overlay_directConsumption = true;
-				hideOverlay();
-			}
-		});
+		// Load Data
+		getPower_day(date_from);
 	}
 	// Show Daily Data (up to 2 months)
 	else if(moment(date_to).diff(moment(date_from), 'months') < 2) {
@@ -735,7 +593,6 @@ function getEnergy(updateChartType) {
 		}
 		// Load Data
 		getEnergy_monthly(days);
-		
 	} 
 	// Show Yearly Data (more than 2 years)
 	else {
@@ -772,15 +629,127 @@ function getEnergy(updateChartType) {
 
 
 
+// Get Single-Day Power (24 hours, 15 minutes data)
+
+function getPower_day(day) {
+	$.ajax({
+		type: "POST",
+		url: "db-interaction/data.php",
+		data: getPowerAjaxDataObj(day, 40),
+		success: function(result) {
+			// Parse Result
+			if(result == "0") data_batteryOut = [0];
+			else data_batteryOut = convertStringsToIntegers(result.split(" "));
+			// Edit Data For Zoom
+			if(zoomActive) data_batteryOut = sliceForZoom(data_batteryOut);
+			// Update Data
+			dataset_batteryOut.data = data_batteryOut;
+			// Update Chart
+			if(btnSelected == 2) {
+				chart.config.data.datasets.push = dataset_batteryOut;
+				chart.update();
+			}
+			// Try to hide Overlay
+			hideOverlay("overlay_batteryOut");
+		}
+	});
+	$.ajax({
+		type: "POST",
+		url: "db-interaction/data.php",
+		data: getPowerAjaxDataObj(day, 41),
+		success: function(result) {
+			// Parse Result
+			if(result == "0") data_batteryIn = [0];
+			else data_batteryIn = convertStringsToIntegers(result.split(" "));
+			// Edit Data For Zoom
+			if(zoomActive) data_batteryIn = sliceForZoom(data_batteryIn);
+			// Update Data
+			dataset_batteryIn.data = data_batteryIn;
+			// Update Chart
+			if(btnSelected == 1) {
+				chart.config.data.datasets.push = dataset_batteryIn;
+				chart.update();
+			}
+			// Try to hide Overlay
+			hideOverlay("overlay_batteryIn");
+		}
+	});
+	$.ajax({
+		type: "POST",
+		url: "db-interaction/data.php",
+		data: getPowerAjaxDataObj(day, 10),
+		success: function(result) {
+			// Parse Result
+			if(result == "0") data_gridOut = [0];
+			else data_gridOut = convertStringsToIntegers(result.split(" "));
+			// Edit Data For Zoom
+			if(zoomActive) data_gridOut = sliceForZoom(data_gridOut);
+			// Update Data
+			dataset_gridOut.data = data_gridOut;
+			// Update Chart
+			if(btnSelected == 2) {
+				chart.config.data.datasets.push = dataset_gridOut;
+				chart.update();
+			}
+			// Try to hide Overlay
+			hideOverlay("overlay_gridOut");
+		}
+	});
+	if(model != "batterx bs") {
+		$.ajax({
+			type: "POST",
+			url: "db-interaction/data.php",
+			data: getPowerAjaxDataObj(day, 11),
+			success: function(result) {
+				// Parse Result
+				if(result == "0") data_gridIn = [0];
+				else data_gridIn = convertStringsToIntegers(result.split(" "));
+				// Edit Data For Zoom
+				if(zoomActive) data_gridIn = sliceForZoom(data_gridIn);
+				// Update Data
+				dataset_gridIn.data = data_gridIn;
+				// Update Chart
+				if(btnSelected == 1) {
+					chart.config.data.datasets.push = dataset_gridIn;
+					chart.update();
+				}
+				// Try to hide Overlay
+				hideOverlay("overlay_gridIn");
+			}
+		});
+	} else hideOverlay("overlay_gridIn");
+	$.ajax({
+		type: "POST",
+		url: "db-interaction/data.php",
+		data: getPowerAjaxDataObj(day, 61),
+		success: function(result) {
+			// Parse Result
+			if(result == "0") data_directConsumption = [0];
+			else data_directConsumption = convertStringsToIntegers(result.split(" "));
+			// Edit Data For Zoom
+			if(zoomActive) data_directConsumption = sliceForZoom(data_directConsumption);
+			// Update Data
+			dataset_directConsumption.data = data_directConsumption;
+			// Update Chart
+			chart.config.data.datasets.push = dataset_directConsumption;
+			chart.update();
+			// Try to hide Overlay
+			hideOverlay("overlay_directConsumption");
+		}
+	});
+}
+
+
+
+
+
+// Get Daily Energy (up to 2 months)
+
 function getEnergy_daily(days) {
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "40"
-		},
+		data: getEnergyAjaxDataObj(days, 40),
 		success: function(result) {
 			// Update Data
 			data_batteryOut = convertStringsToIntegers(result.split(","));
@@ -791,18 +760,13 @@ function getEnergy_daily(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryOut = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryOut");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "41"
-		},
+		data: getEnergyAjaxDataObj(days, 41),
 		success: function(result) {
 			// Update Data
 			data_batteryIn = convertStringsToIntegers(result.split(","));
@@ -813,18 +777,13 @@ function getEnergy_daily(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryIn = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryIn");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "10"
-		},
+		data: getEnergyAjaxDataObj(days, 10),
 		success: function(result) {
 			// Update Data
 			data_gridOut = convertStringsToIntegers(result.split(","));
@@ -835,19 +794,14 @@ function getEnergy_daily(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_gridOut = true;
-			hideOverlay();
+			hideOverlay("overlay_gridOut");
 		}
 	});
 	if(model != "batterx bs") {
 		$.ajax({
 			type: "POST",
 			url: "db-interaction/data.php",
-			data: {
-				"action": "getEnergyData",
-				"type": days.join(),
-				"entity": "11"
-			},
+			data: getEnergyAjaxDataObj(days, 11),
 			success: function(result) {
 				// Update Data
 				data_gridIn = convertStringsToIntegers(result.split(","));
@@ -858,23 +812,14 @@ function getEnergy_daily(days) {
 					chart.update();
 				}
 				// Try to hide Overlay
-				overlay_gridIn = true;
-				hideOverlay();
+				hideOverlay("overlay_gridIn");
 			}
 		});
-	} else {
-		// Try to hide Overlay
-		overlay_gridIn = true;
-		hideOverlay();
-	}
+	} else hideOverlay("overlay_gridIn");
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "61"
-		},
+		data: getEnergyAjaxDataObj(days, 61),
 		success: function(result) {
 			// Update Data
 			data_directConsumption = convertStringsToIntegers(result.split(","));
@@ -883,8 +828,7 @@ function getEnergy_daily(days) {
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
 			// Try to hide Overlay
-			overlay_directConsumption = true;
-			hideOverlay();
+			hideOverlay("overlay_directConsumption");
 		}
 	});
 }
@@ -893,15 +837,13 @@ function getEnergy_daily(days) {
 
 
 
+// Get Monthly Energy (up to 2 years)
+
 function getEnergy_monthly(days) {
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "40"
-		},
+		data: getEnergyAjaxDataObj(days, 40),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -913,18 +855,13 @@ function getEnergy_monthly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryOut = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryOut");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "41"
-		},
+		data: getEnergyAjaxDataObj(days, 41),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -936,18 +873,13 @@ function getEnergy_monthly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryIn = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryIn");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "10"
-		},
+		data: getEnergyAjaxDataObj(days, 10),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -959,19 +891,14 @@ function getEnergy_monthly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_gridOut = true;
-			hideOverlay();
+			hideOverlay("overlay_gridOut");
 		}
 	});
 	if(model != "batterx bs") {
 		$.ajax({
 			type: "POST",
 			url: "db-interaction/data.php",
-			data: {
-				"action": "getEnergyData",
-				"type": days.join(),
-				"entity": "11"
-			},
+			data: getEnergyAjaxDataObj(days, 11),
 			success: function(result) {
 				// Update Data
 				resultArray = convertStringsToIntegers(result.split(","));
@@ -983,23 +910,14 @@ function getEnergy_monthly(days) {
 					chart.update();
 				}
 				// Try to hide Overlay
-				overlay_gridIn = true;
-				hideOverlay();
+				hideOverlay("overlay_gridIn");
 			}
 		});
-	} else {
-		// Try to hide Overlay
-		overlay_gridIn = true;
-		hideOverlay();
-	}
+	} else hideOverlay("overlay_gridIn");
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "61"
-		},
+		data: getEnergyAjaxDataObj(days, 61),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -1009,8 +927,7 @@ function getEnergy_monthly(days) {
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
 			// Try to hide Overlay
-			overlay_directConsumption = true;
-			hideOverlay();
+			hideOverlay("overlay_directConsumption");
 		}
 	});
 }
@@ -1019,15 +936,12 @@ function getEnergy_monthly(days) {
 
 
 
+// Get Yearly Energy (no limit)
 function getEnergy_yearly(days) {
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "40"
-		},
+		data: getEnergyAjaxDataObj(days, 40),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -1039,18 +953,13 @@ function getEnergy_yearly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryOut = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryOut");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "41"
-		},
+		data: getEnergyAjaxDataObj(days, 41),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -1062,18 +971,13 @@ function getEnergy_yearly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_batteryIn = true;
-			hideOverlay();
+			hideOverlay("overlay_batteryIn");
 		}
 	});
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "10"
-		},
+		data: getEnergyAjaxDataObj(days, 10),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -1085,19 +989,14 @@ function getEnergy_yearly(days) {
 				chart.update();
 			}
 			// Try to hide Overlay
-			overlay_gridOut = true;
-			hideOverlay();
+			hideOverlay("overlay_gridOut");
 		}
 	});
 	if(model != "batterx bs") {
 		$.ajax({
 			type: "POST",
 			url: "db-interaction/data.php",
-			data: {
-				"action": "getEnergyData",
-				"type": days.join(),
-				"entity": "11"
-			},
+			data: getEnergyAjaxDataObj(days, 11),
 			success: function(result) {
 				// Update Data
 				resultArray = convertStringsToIntegers(result.split(","));
@@ -1109,23 +1008,14 @@ function getEnergy_yearly(days) {
 					chart.update();
 				}
 				// Try to hide Overlay
-				overlay_gridIn = true;
-				hideOverlay();
+				hideOverlay("overlay_gridIn");
 			}
 		});
-	} else {
-		// Try to hide Overlay
-		overlay_gridIn = true;
-		hideOverlay();
-	}
+	} else hideOverlay("overlay_gridIn");
 	$.ajax({
 		type: "POST",
 		url: "db-interaction/data.php",
-		data: {
-			"action": "getEnergyData",
-			"type": days.join(),
-			"entity": "61"
-		},
+		data: getEnergyAjaxDataObj(days, 61),
 		success: function(result) {
 			// Update Data
 			resultArray = convertStringsToIntegers(result.split(","));
@@ -1135,8 +1025,7 @@ function getEnergy_yearly(days) {
 			chart.config.data.datasets.push = dataset_directConsumption;
 			chart.update();
 			// Try to hide Overlay
-			overlay_directConsumption = true;
-			hideOverlay();
+			hideOverlay("overlay_directConsumption");
 		}
 	});
 }
@@ -1145,12 +1034,34 @@ function getEnergy_yearly(days) {
 
 
 
+// Returns Object for PowerData, formatted for use when making AJAX requests
+function getPowerAjaxDataObj(day, entity) {
+	return {
+		"action": "getPowerData",
+		"type": day,
+		"entity": entity.toString()
+	};
+}
+
+// Returns Object for EnergyData, formatted for use when making AJAX requests
+function getEnergyAjaxDataObj(days, entity) {
+	return {
+		"action": "getEnergyData",
+		"type": days.join(),
+		"entity": entity.toString()
+	};
+}
+
+
+
+
+
+// Calculate Monthly Energy from Array with Daily Energy
 function calculateMonthlyEnergy(arr) {
 	// Define Variables
 	var dataArray = [];
-	var startMonth = moment(date_from).startOf("month");
+	var month = moment(date_from).startOf("month");
 	var endMonth = moment(date_to).endOf("month");
-	var month = startMonth;
 	// Populate dataArray
 	var indexNum = 0;
 	while(month <= endMonth) {
@@ -1167,12 +1078,12 @@ function calculateMonthlyEnergy(arr) {
 	return dataArray;
 }
 
+// Calculate Yearly Energy From Array with Daily Energy
 function calculateYearlyEnergy(arr) {
 	// Define Variables
 	var dataArray = [];
-	var startYear = moment(date_from).startOf("year");
+	var year = moment(date_from).startOf("year");
 	var endYear = moment(date_to).endOf("year");
-	var year = startYear;
 	// Populate dataArray
 	var indexNum = 0;
 	while(year <= endYear) {
@@ -1205,15 +1116,23 @@ function convertStringsToIntegers(arr) {
 
 // Slice Array (used when zoomActive)
 function sliceForZoom(arr) {
-	if(arr.length > 84) 
+	if(arr.length > 84)
 		arr = arr.slice(20, 84);
-	else if(arr.length > 20) 
+	else if(arr.length > 20)
 		arr = arr.slice(20);
+	else
+		arr = [0];
 	return arr;
 }
 
-// Round Number to X decimal places (in order to avoid 230.70000000000002)
-function round(value, precision) {
-	var multiplier = Math.pow(10, precision || 0);
-	return Math.round(value * multiplier) / multiplier;
+
+
+
+
+// Set Selected Date-Range
+function setSelectedDateRange() {
+	if(date_from == date_to)
+		$('.date-range').text(moment(date_from).format('YYYY-MM-DD'));
+	else
+		$('.date-range').text(moment(date_from).format('YYYY-MM-DD') + ' - ' + moment(date_to).format('YYYY-MM-DD'));
 }
