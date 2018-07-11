@@ -15,6 +15,10 @@
 	* setCommandConfig()
 	* getCommandConfig()
 	
+	* getSettings()
+	
+	* setCommandsIn()
+	
 	@author Ivan Gavrilov
 */
 
@@ -239,6 +243,7 @@ class BatterXService
 		
 		return FALSE;
 	}
+	
 	public function getLabels()
 	{
 		// Connect to Database
@@ -252,7 +257,7 @@ class BatterXService
 			$VarName = (string) $row['VarName'];
 			$entity = (string) $row['entity'];
 			if(!isset($dbh->$VarName))
-				$dbh->VarName = new stdClass();
+				$dbh->$VarName = new stdClass();
 			$dbh->$VarName->$entity = $row['Name'];
 		}
 		
@@ -623,6 +628,60 @@ class BatterXService
 		
 		return $this->setIgnoreWarnings($mode, $S1);
 		
+	}
+	
+	
+	
+	public function getSettings()
+	{
+		// Connect to Database
+		$db = new PDO('sqlite:/srv/bx/usv.db3');
+		
+		$result = $db->query("SELECT * FROM `Settings`");
+		
+		$dbh = new stdClass();
+		
+		foreach($result as $row) {
+			$VarName = (string) $row['VarName'];
+			$entity = (string) $row['entity'];
+			if(!isset($dbh->$VarName))
+				$dbh->$VarName = new stdClass();
+			$dbh->$VarName->$entity = $row;
+		}
+		
+		return json_encode($dbh, JSON_FORCE_OBJECT);
+	}
+	
+	
+	
+	public function setCommand()
+	{
+		// Connect to Database
+		$db = new PDO('sqlite:/srv/bx/ram/currentC.db3');
+		
+		// Check if all needed parameters are available
+		if(!isset($_POST['type']) || $_POST['type'] == "" || !isset($_POST['entity']) || $_POST['entity'] == "" || !isset($_POST['text1']) || !isset($_POST['text2']))
+			return FALSE;
+		
+		// Get all needed variables
+		$type   = $_POST['type'];
+		$entity = $_POST['entity'];
+		$text1  = $_POST['text1'];
+		$text2  = $_POST['text2'];
+		
+		// Build SQL String
+		$sql = "INSERT INTO `CommandsIn` (`type`, `entity`, `text1`, `text2`, `exectime`) VALUES (".$type.", ".$entity.", '".$text1."', '".$text2."', CURRENT_TIMESTAMP)";
+		
+		// Insert To Database
+		try {
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			if($stmt->rowCount() == 1)
+				return TRUE;
+			$stmt->closeCursor();
+		} catch(PDOException $e) {}
+		
+		return FALSE;
 	}
 	
 }

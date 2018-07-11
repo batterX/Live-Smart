@@ -21,30 +21,6 @@ function checkPassword() {
 
 
 
-$.ajax({
-	type: "POST",
-	url: "../db-interaction/data.php",
-	data: {
-		"action": "getDeviceModel"
-	},
-	success: function (response) {
-		if(response) {
-			switch(response.toLowerCase()) {
-				case 'batterx h3':
-					$('#cardSolar2LossWarning').css('display', 'none');
-				case 'batterx h5-eco':
-					$('#cardNGRelayFunction').css('display', 'none');
-					break;
-				default:
-					break;
-			}
-		}
-	}
-});
-
-
-
-
 
 
 
@@ -60,16 +36,6 @@ $.ajax({
 		var json = JSON.parse(response);
 		if(json.hasOwnProperty('Mode')) 
 			$('#CloudLogging').val(json['Mode']).change();
-	}
-});
-$.ajax({
-	type: "POST",
-	url: "../db-interaction/service.php",
-	data: { "action": "getNGRelayFunction" },
-	success: function (response) {
-		var json = JSON.parse(response);
-		if(json.hasOwnProperty('Mode')) 
-			$('#NGRelayFunction').val(json['Mode']).change();
 	}
 });
 $.ajax({
@@ -113,35 +79,6 @@ $('#submitCloudLogging').on('click', function() {
 		success: function (response) {
 			if(response) {
 				alert("CloudLogging Updated Successfully!");
-				console.log(response);
-			} else {
-				alert("Error, please try again!");
-				console.log(response);
-			}
-		},
-		error: function (response) {
-			alert("Hard Error, please try again!");
-			console.log(response);
-		}
-	});
-
-});
-
-// SET NGRelayFunction
-$('#submitNGRelayFunction').on('click', function() {
-	
-	if(!checkPassword()) return;
-	
-	$.ajax({
-		type: 'POST',
-		url: '../db-interaction/service.php',
-		data: {
-			"action": 'setNGRelayFunction',
-			"mode": $('#NGRelayFunction').find('option:selected').val()
-		},
-		success: function (response) {
-			if(response) {
-				alert("N/G Relay Function Updated Successfully!");
 				console.log(response);
 			} else {
 				alert("Error, please try again!");

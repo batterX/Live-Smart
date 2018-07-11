@@ -49,6 +49,14 @@ if(!empty($_POST['action']))
 		case 'setSolar2LossWarning':
 			echo $serviceObj->setSolar2LossWarning();
 			break;
+			
+		case 'getSettings':
+			echo $serviceObj->getSettings();
+			break;
+			
+		case 'setCommand':
+			echo $serviceObj->setCommand();
+			break;
 		
 		default:
 			echo "";

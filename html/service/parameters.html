@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<title>BatterX Inverter-Parameters</title>
+
+		<link href="../css/components/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/components/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/parameters.css">
+
+	</head>
+	
+	
+	<body>
+	
+		<!-- Static Navbar -->
+		<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+			
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<a class="navbar-brand" href="#">BatterX Service</a>
+
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+														
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="labels.html">Labels</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="outputs.html">Outputs</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="commands.html">Commands</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="settings.html">Settings</a>
+					</li>
+				</ul>
+				
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="parameters.html">Inverter Parameters</a>
+					</li>
+				</ul>
+				
+			</div>
+			
+		</nav>
+		<!-- Static Navbar -->
+		
+		<div class="overlay text-center" style="display:none">
+			<div>
+				<h2>Setting Parameters</h2>
+				<h2>Please wait...</h2>
+			</div>
+		</div>
+		
+		<div class="container p-2">
+			
+			<div class="row p-0 m-0">
+				
+				<!-- GRID PARAMETERS -->
+				
+				<div class="col-12 p-0 m-0">
+				
+					<div id="gridParameters" class="card card-inverse bg-inverse m-0 p-0 pb-1">
+					
+						<h5 class="mb-1 px-2 py-3">Grid Parameters</h5>
+						
+						<div class="row m-0 p-0">
+
+							<div class="col-lg-6 m-0 px-2 pr-lg-5">
+
+								<div class="form-inline py-1">
+									<label for="maxGridFeedInPower">Max. Grid Feed-in Power</label>
+									<input id="maxGridFeedInPower" type="number" step="10" min="0" max="10000" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>W</span>
+								</div>
+								
+							</div>
+							
+							<div class="col-lg-6 m-0 px-2 pl-lg-5">
+
+								<div class="form-inline py-1">
+									<label for="waitTimeForFeed">Waiting time before Grid-connection</label>
+									<input id="waitTimeForFeed" type="number" step="1" min="0" max="999" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>s</span>
+								</div>
+								
+							</div>
+
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<!-- BATTERY PARAMETERS -->
+				
+				<div class="col-12 p-0 m-0 mt-2">
+				
+					<div id="batteryParameters" class="card card-inverse bg-inverse m-0 p-0 pb-1">
+					
+						<h5 class="mb-1 px-2 py-3">Battery Parameters</h5>
+						
+						<div class="row m-0 p-0">
+
+							<div class="col-xl-6 m-0 px-2 pr-xl-5">
+
+								<div class="form-inline py-1">
+									<label for="maxChargingCurrent">Max. Charging Current</label>
+									<input id="maxChargingCurrent" type="number" step="0.1" min="0" max="999.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>A</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="maxChargingCurrentAC">Max. AC Charging Current</label>
+									<input id="maxChargingCurrentAC" type="number" step="0.1" min="0" max="999.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>A</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="bulkChargingVoltage">Bulk Charging Voltage</label>
+									<input id="bulkChargingVoltage" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="floatChargingVoltage">Floating Charging Voltage</label>
+									<input id="floatChargingVoltage" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+								
+								<div class="form-inline py-1">
+									<label>Battery Type</label>
+									<select id="batteryType" class="form-control p-1 m-0 ml-auto mr-2">
+										<option value="0">Ordinary</option>
+										<option value="1">Li-Fe</option>
+									</select>
+									<span>&nbsp;</span>
+								</div>
+								
+							</div>
+							
+							<div class="col-xl-6 m-0 px-2 pl-xl-5 pt-xl-0 pt-2">
+
+								<div class="form-inline py-1">
+									<label for="cutoffVoltageHybrid">Cut-off voltage when Grid is available</label>
+									<input id="cutoffVoltageHybrid" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="redischargeVoltageHybrid">Re-discharging voltage when Grid is available</label>
+									<input id="redischargeVoltageHybrid" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="cutoffVoltage">Cut-off voltage when Grid is unavailable</label>
+									<input id="cutoffVoltage" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="redischargeVoltage">Re-discharging voltage when Grid is unavailable</label>
+									<input id="redischargeVoltage" type="number" step="0.1" min="0" max="99.9" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>V</span>
+								</div>
+
+								<div class="form-inline py-1">
+									<label for="maxDischargeCurrentHybrid">Max. discharging current in Hybrid Mode</label>
+									<input id="maxDischargeCurrentHybrid" type="number" step="1" min="0" max="999" class="form-control p-1 m-0 ml-auto mr-2">
+									<span>A</span>
+								</div>
+								
+							</div>
+
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<!-- ENERGY DISTRIBUTION -->
+				
+				<div class="col-lg-6 col-12 p-0 m-0 mt-2 pr-lg-1">
+				
+					<div id="energyDistribution" class="card card-inverse bg-inverse m-0 p-0 pb-1">
+					
+						<h5 class="mb-1 px-2 py-3">Energy Distribution</h5>
+						
+						<div class="row m-0 p-0">
+
+							<div class="col-12 m-0 pl-2 pr-2">
+								
+								<div class="form-inline py-1">
+									<label class="d-inline-block">Solar Energy Priority<br><span class="_h3 _h5e" style="color: #ff1919 !important;"><i>Output will be switched off during setup</i></span></label>
+									<select id="solarEnergyPriority" class="form-control p-1 m-0 ml-auto mr-0">
+										<option value="0">Battery - Load - Grid</option>
+										<option value="1">Load - Battery - Grid</option>
+										<option value="2">Load - Grid - Battery</option>
+									</select>
+								</div>
+
+								<div class="form-inline py-1 mt-2">
+									<label>
+										<input id="allowBatteryCharging" type="checkbox" class="mr-2"> Allow battery charging
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="allowBatteryChargingAC" type="checkbox" class="mr-2"> Allow battery charging from AC
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="allowGridFeedIn" type="checkbox" class="mr-2"> Allow to feed-in to the Grid
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="allowBatteryDischargeSolarOK" type="checkbox" class="mr-2"> Allow battery to discharge when PV is available
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="allowBatteryDischargeSolarNOK" type="checkbox" class="mr-2"> Allow battery to discharge when PV is unavailable
+									</label>
+								</div>
+								
+							</div>
+
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<!-- OTHER PARAMETERS -->
+				
+				<div class="col-lg-6 col-12 p-0 m-0 mt-2 pl-lg-1">
+				
+					<div id="otherParameters" class="card card-inverse bg-inverse m-0 p-0 pb-1">
+					
+						<h5 class="mb-1 px-2 py-3">Other Parameters</h5>
+						
+						<div class="row m-0 p-0">
+
+							<div class="col-12 m-0 pl-2 pr-2">
+								
+								<div class="form-inline py-1">
+									<label>LCD Active Time</label>
+									<select id="LCDActiveTime" class="form-control p-1 m-0 ml-auto">
+										<option value="00">Always On</option>
+										<option value="01">30 seconds</option>
+										<option value="02">60 seconds</option>
+										<option value="10">300 seconds</option>
+										<option value="20">600 seconds</option>
+									</select>
+								</div>
+								
+								<div class="form-inline py-1">
+									<label for="deviceDate">Date-Time</label>
+									<input id="deviceDate" type="date" class="form-control p-1 m-0 ml-auto" disabled>
+									<input id="deviceTime" type="time" class="form-control p-1 m-0" disabled>
+								</div>
+								
+								<div class="form-inline py-1 mt-2">
+									<label>
+										<input id="muteBuzzer" type="checkbox" class="mr-2"> Mute buzzer alarm
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="muteBuzzerStandby" type="checkbox" class="mr-2"> Mute buzzer alarm in standby mode
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="muteBuzzerBattery" type="checkbox" class="mr-2"> Mute buzzer alarm in battery mode
+									</label>
+								</div>
+
+								<div class="form-inline py-1">
+									<label>
+										<input id="wideInputRange" type="checkbox" class="mr-2"> Enable wide AC input range
+									</label>
+								</div>
+
+								<div class="_h5 _h10 form-inline py-1">
+									<label>
+										<input id="generatorAsInput" type="checkbox" class="mr-2"> Generator as Input
+									</label>
+								</div>
+
+								<div class="_h5 form-inline py-1">
+									<label>
+										<input id="ngRelayFunction" type="checkbox" class="mr-2"> N/G Relay Function
+									</label>
+								</div>
+								
+							</div>
+
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<div class="card card-inverse bg-inverse my-2 p-2">
+				<button id="submit" class="btn btn-secondary btn-block py-3">APPLY PARMETERS</button>
+			</div>
+			
+		</div>
+		
+		
+		
+		<script src="../js/components/jquery.js"></script>
+		<script src="../js/components/bootstrap.js"></script>
+		<script src="js/parameters.js"></script>
+		
+	</body>
+	
+</html>

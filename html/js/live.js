@@ -644,7 +644,13 @@ function mainLoop() {
 			if(batteryNum == 1) $("#batteryInfo1 h2").html("BATTERY");
 			
 			if(json.hasOwnProperty("1121")) {
-				$('#batteryPowerTotal').html(round(Math.abs(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"])), 1).toString() + " W");
+				if(model == "batterx bs") {
+					if(json.hasOwnProperty("1042") && json.hasOwnProperty("1041")) {
+						var voltPlus = "+" + round(parseInt(json["1042"][Object.keys(json["1042"])[0]]["entityvalue"])*0.01, 0).toString();
+						var voltMinus = "-" + round(parseInt(json["1041"][Object.keys(json["1041"])[0]]["entityvalue"])*0.01, 0).toString();
+						$('#batteryPowerTotal').html(voltPlus + " " + voltMinus + " V");
+					}
+				} else $('#batteryPowerTotal').html(round(Math.abs(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"])), 1).toString() + " W");
 				// Update Battery Arrow
 				if(round(parseInt(json["1121"][Object.keys(json["1121"])[0]]["entityvalue"]), 1) < 0) {
 					$('.bottom-left .arrow').removeClass('arrow-down');
@@ -662,12 +668,12 @@ function mainLoop() {
 			if(batteryNum > 0) {
 				if(json.hasOwnProperty("1042")) $('#batteryVoltage1').html(round(parseInt(json["1042"][Object.keys(json["1042"])[0]]["entityvalue"])*0.01, 1).toString() + " V");
 				if(json.hasOwnProperty("1058")) $('#batteryCurrent1').html(round(parseInt(json["1058"][Object.keys(json["1058"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
-				if(json.hasOwnProperty("1125")) $('#batteryCapacity1').html(round(parseInt(json["1125"][Object.keys(json["1125"])[0]]["entityvalue"]), 1).toString() + " %");
+				if(json.hasOwnProperty("1074")) $('#batteryCapacity1').html(round(parseInt(json["1074"][Object.keys(json["1074"])[0]]["entityvalue"]), 1).toString() + " %");
 			}
 			if(batteryNum > 1) {
 				if(json.hasOwnProperty("1041")) $('#batteryVoltage2').html(round(parseInt(json["1041"][Object.keys(json["1041"])[0]]["entityvalue"])*0.01, 1).toString() + " V");
 				if(json.hasOwnProperty("1057")) $('#batteryCurrent2').html(round(parseInt(json["1057"][Object.keys(json["1057"])[0]]["entityvalue"])*0.01, 1).toString() + " A");
-				if(json.hasOwnProperty("1124")) $('#batteryCapacity2').html(round(parseInt(json["1124"][Object.keys(json["1124"])[0]]["entityvalue"]), 1).toString() + " %");
+				if(json.hasOwnProperty("1073")) $('#batteryCapacity2').html(round(parseInt(json["1073"][Object.keys(json["1073"])[0]]["entityvalue"]), 1).toString() + " %");
 			}
 			
 			

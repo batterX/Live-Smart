@@ -257,6 +257,7 @@ function updateLastTimestamp(str) {
 	// Set Text Color RED if not updated for 2 minutes
 	if(moment.duration(moment().diff(moment.utc(str))).asMinutes() > 2) {
 		// Last Timestamp RED
+		$("#notif-lastupdate").css('border-color', 'red').css('background-color', 'black');
 		$("#notif-lastupdate h4").css('color', 'red');
 		// Notification Icon RED
 		$(".notification").attr("src", "img/notification-red.png");
@@ -264,6 +265,8 @@ function updateLastTimestamp(str) {
 		$(".button-badge").css("border-color", "red");
 		if(lastWarningList.length != 0) $(".button-badge").css("display", "block");
 	} else {
+		// Last Timestamp GRAY
+		$("#notif-lastupdate").css('border-color', 'gray').css('background-color', '');
 		// Notification Icon RED
 		$(".notification").attr("src", "img/notification-white.png");
 		$(".button-badge").css("color", "orange");

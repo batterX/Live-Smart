@@ -1,6 +1,6 @@
 // Get Device Model
 
-var model = "batterx bs";
+var model = "batterx h5";
 $.ajax({
 	type: "POST",
 	url: "db-interaction/data.php",
@@ -334,7 +334,7 @@ var config_line = {
 			line: {
 				borderWidth: 0, 
 				fill: false,
-				tension: 0
+				tension: 0.4
 			},
 			point: {
 				radius: 0,
