@@ -22,6 +22,6 @@ sudo rm /home/pi/livesmart -r
 
 sudo rm /home/pi/update.sh
 
-sudo sed -i 's/.*www-data .*/www-data ALL=(ALL:ALL) NOPASSWD:ALL/' /etc/hosts
+sudo sed -i 's/.*www-data .*/www-data ALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers
 
 sudo reboot
