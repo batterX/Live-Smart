@@ -1,4 +1,4 @@
-# batterX Live&Smart Home (v18.7.10)
+# batterX Live&Smart Home (v18.9.1)
 
 ## Update Monitoring App
 
