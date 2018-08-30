@@ -17,7 +17,10 @@
 	
 	* getSettings()
 	
-	* setCommandsIn()
+	* setCommand()
+	
+	* setIgnoreWarnings()
+	* getIgnoreWarnings()
 	
 	@author Ivan Gavrilov
 */
@@ -406,66 +409,6 @@ class BatterXService
 	
 	
 	
-	public function setNGRelayFunction()
-	{
-		// Connect to Database
-		$db = new PDO('sqlite:/srv/bx/usv.db3');
-		
-		// Declare all needed variables
-		$mode = null;
-		
-		// Fill Variables
-		if(isset($_POST['mode'])) $mode = $_POST['mode']; // 0=N/A 1=Enabled 2=Disabled
-		
-		if($mode != 0 && $mode != 1 && $mode != 2) $mode = 0;
-		
-		// Build SQL String
-		$sql = "REPLACE INTO `Settings` (`VarName`, `entity`, `Name`, `InUse`, `Mode`, `V1`, `V2`, `V3`, `V4`, `V5`, `V6`, `S1`, `S2`, `UpDateTime`)
-				VALUES (
-					'NGRelayFunction',
-					0,
-					'',
-					1,
-					" . $mode . ",
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					'1',
-					'',
-					CURRENT_TIMESTAMP
-				)";
-		
-		// Insert To Database
-		try {
-			$stmt = $db->prepare($sql);
-			$stmt->execute();
-			if($stmt->rowCount() == 1)
-				return TRUE;
-			$stmt->closeCursor();
-		} catch(PDOException $e) {}
-		
-		return FALSE;
-	}
-	
-	public function getNGRelayFunction()
-	{
-		// Connect to Database
-		$db = new PDO('sqlite:/srv/bx/usv.db3');
-		
-		$sql = "SELECT * FROM `Settings` WHERE `VarName` = 'NGRelayFunction' AND `entity` = 0";
-		
-		$result = $db->query($sql);
-		
-		$dbh = $result->fetch();
-		
-		return json_encode($dbh, JSON_FORCE_OBJECT);
-	}
-	
-	
-	
 	public function setCommandConfig()
 	{
 		// Connect to Database
@@ -546,92 +489,6 @@ class BatterXService
 	
 	
 	
-	public function setIgnoreWarnings($mode, $S1)
-	{
-		// Connect to Database
-		$db = new PDO('sqlite:/srv/bx/usv.db3');
-		
-		// Verify Mode
-		if($mode != 1) $mode = 0;
-		
-		// Build SQL String
-		$sql = "REPLACE INTO `Settings` (`VarName`, `entity`, `Name`, `InUse`, `Mode`, `V1`, `V2`, `V3`, `V4`, `V5`, `V6`, `S1`, `S2`, `UpDateTime`)
-				VALUES (
-					'IgnoreWarnings',
-					0,
-					'',
-					1,
-					" . $mode . ",
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					'" . strval($S1) . "',
-					'',
-					CURRENT_TIMESTAMP
-				)";
-		
-		// Insert To Database
-		try {
-			$stmt = $db->prepare($sql);
-			$stmt->execute();
-			if($stmt->rowCount() == 1)
-				return TRUE;
-			$stmt->closeCursor();
-		} catch(PDOException $e) {}
-		
-		return FALSE;
-	}
-	
-	public function getIgnoreWarnings()
-	{
-		// Connect to Database
-		$db = new PDO('sqlite:/srv/bx/usv.db3');
-		
-		$sql = "SELECT * FROM `Settings` WHERE `VarName`='IgnoreWarnings' AND `entity`=0 AND `mode`=1";
-		
-		$result = $db->query($sql);
-		
-		$dbh = $result->fetch();
-		
-		return json_encode($dbh, JSON_FORCE_OBJECT);
-	}
-	
-	public function setSolar2LossWarning()
-	{
-		// Define Variables
-		$mode = 0;
-		$S1 = "";
-		
-		// Get Variables
-		if(isset($_POST['mode']) && $_POST['mode'] == 1) $mode = 1;
-		$warnings = json_decode($this->getIgnoreWarnings(), true);
-		if(isset($warnings['S1'])) $S1 = $warnings['S1'];
-		
-		if($mode == 0) {
-			// DISABLE (HIDE)
-			$mode = 1;
-			if(strpos($S1, '17922') === false) $S1 .= " 17922";
-			if(strpos($S1, '17954') === false) $S1 .= " 17954";
-			$S1 = str_replace("  ", " ", $S1);
-			$S1 = trim($S1);
-		} else if($mode == 1) {
-			// ENABLE (SHOW)
-			$mode = 1;
-			$S1 = str_replace("17922", "", $S1);
-			$S1 = str_replace("17954", "", $S1);
-			$S1 = str_replace("  ", " ", $S1);
-			$S1 = trim($S1);
-		}
-		
-		return $this->setIgnoreWarnings($mode, $S1);
-		
-	}
-	
-	
-	
 	public function getSettings()
 	{
 		// Connect to Database
@@ -682,6 +539,63 @@ class BatterXService
 		} catch(PDOException $e) {}
 		
 		return FALSE;
+	}
+	
+	
+	
+	public function setIgnoreWarnings()
+	{
+		if(!isset($_POST['list'])) return FALSE;
+		
+		// Connect to Database
+		$db = new PDO('sqlite:/srv/bx/usv.db3');
+		
+		// Get List
+		$S1 = $_POST['list'];
+		
+		// Build SQL String
+		$sql = "REPLACE INTO `Settings` (`VarName`, `entity`, `Name`, `InUse`, `Mode`, `V1`, `V2`, `V3`, `V4`, `V5`, `V6`, `S1`, `S2`, `UpDateTime`)
+				VALUES (
+					'IgnoreWarnings',
+					0,
+					'',
+					1,
+					1,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					'" . strval($S1) . "',
+					'',
+					CURRENT_TIMESTAMP
+				)";
+		
+		// Insert To Database
+		try {
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			if($stmt->rowCount() == 1)
+				return TRUE;
+			$stmt->closeCursor();
+		} catch(PDOException $e) {}
+		
+		return FALSE;
+	}
+	
+	public function getIgnoreWarnings()
+	{
+		// Connect to Database
+		$db = new PDO('sqlite:/srv/bx/usv.db3');
+		
+		$sql = "SELECT * FROM `Settings` WHERE `VarName`='IgnoreWarnings' AND `entity`=0 AND `mode`=1";
+		
+		$result = $db->query($sql);
+		
+		$dbh = $result->fetch();
+		
+		return json_encode($dbh, JSON_FORCE_OBJECT);
 	}
 	
 }

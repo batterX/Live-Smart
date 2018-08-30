@@ -25,7 +25,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			
-			<a class="navbar-brand" href="#">BatterX Service</a>
+			<a class="navbar-brand" href="#">batterX Service</a>
 
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 														
@@ -72,16 +72,16 @@
 		
 		
 		
-		<div class="row m-0">
-		
-			<div class="col-12">
-				
-				<!-- PIN SELECT + ENABLE/DISABLE -->
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
-					<div>
-						<h5 class="p-0 m-0 pb-2">Select Command</h5>
-						<div class="row">
-							<div class="col-7 pr-2">
+		<div class="container p-2">
+			
+			<div class="row p-0 m-0">
+			
+				<!-- SELECT COMMAND + STATE -->
+				<div class="col-12 p-0 m-0">
+					<div id="selectPin" class="card card-inverse bg-inverse m-0 p-0">
+						<h5 class="m-0 px-2 py-3">Select Command</h5>
+						<div class="row m-0 p-0">
+							<div class="col-7 pl-2 pr-1 py-2">
 								<select id="command" class="form-control text-center">
 									<option value="GridInjection">Grid Injection</option>
 									<option value="BatteryCharging">Battery Charging</option>
@@ -89,7 +89,7 @@
 									<option value="BatteryDischarging">Battery Discharging</option>
 								</select>
 							</div>
-							<div class="col-5 pl-2">
+							<div class="col-5 pl-1 pr-2 py-2">
 								<select id="mode" class="form-control text-center">
 									<option value="0" selected>N/A</option>
 									<option value="1">Enable</option>
@@ -100,104 +100,112 @@
 					</div>
 				</div>
 				
-				<!-- ACTIVE WHEN -->
-				<div id="activeWhen" class="card card-inverse bg-inverse my-3 mx-0 p-3">
-					
-					<div class="row px-2">
-					
-						<div class="col-12 px-2">
-							<h5 class="p-0 m-0">Active when</h5>
-							<hr class="mt-2 mb-1" style="background-color: #666666">
-						</div>
-						
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Voltage</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Voltage</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Voltage</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Voltage</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Current</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Current</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Current</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Current</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Grid Power</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Battery Power</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Solar Power</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Load Power</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 1</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 2</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 3</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Input 4</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 1</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 2</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 3</button></div>
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Switch 4</button></div>
-						
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Current Time</button></div>
-						
-						<div class="col-2 col-md-1 p-1"></div>
-						
-						<div class="col-2 col-md-1 p-1"><button class="btnLogic btn btn-secondary btn-block px-0">AND</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnLogic btn btn-secondary btn-block px-0">OR</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&lt;</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&gt;</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&lt;=</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">&gt;=</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">==</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnCompare btn btn-secondary btn-block px-0">!=</button></div>
-						
-						<div class="col-6 col-md-3 p-1"><button class="btnFunc btn btn-secondary btn-block px-0">Current State</button></div>
-						
-						<div class="col-2 col-md-1 p-1"></div>
-						
-						<div class="col-2 col-md-1 p-1"><button class="btnBrOpen btn btn-secondary btn-block px-0">(</button></div>
-						<div class="col-2 col-md-1 p-1"><button class="btnBrClose btn btn-secondary btn-block px-0">)</button></div>
-						<div class="col-8 col-md-4 p-1"><input id="value" type="number" step="0.01" class="form-control text-center" placeholder="VALUE"></div>
-						<div class="col-4 col-md-2 p-1"><button class="addValue btn btn-secondary btn-block px-0">ENTER</button></div>
-						
-						<div class="col-12 px-2"><hr class="my-2" style="background-color: #666666"></div>
-						
-						<div class="col-8 col-md-10 px-1 pt-1"><input id="statement" type="text" class="form-control text-center" placeholder="S T A T E M E N T" disabled></div>
-						<div class="col-4 col-md-2 px-1 pt-1"><button class="btnDel btn btn-secondary btn-block px-0">DEL</button></div>
-						
-					</div>
-
-				</div>
-				
-				<div id="delayView" class="row">
-					<div class="col-12 col-md-6 p-0 m-0 mb-3 mb-md-0">
-						<div class="card card-inverse bg-inverse my-0 ml-3 mr-3 mr-md-2 px-3 py-2">
-							<div class="row px-2">
-								<div class="col-12 col-xl-7 px-2"><h5 class="p-0 m-0" style='line-height: 50px'>Switch-on delay (seconds)</h5></div>
-								<div class="col-12 col-xl-5 px-1 pt-1"><input id="onDelay" type="number" min="0" class="form-control form-control-lg text-center"></div>
+				<!-- ACTIVE (CLOSED) WHEN -->
+				<div id="activeWhen" class="col-12 p-0 m-0 mt-2">
+					<div class="card card-inverse bg-inverse m-0 p-0">
+						<h5 class="m-0 px-2 py-3">Active (closed) when</h5>
+						<div class="p-0">
+							<div class="row m-0 p-1">
+								<!-- Voltage -->
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="grid_voltage" title="Grid Voltage (Unit: V)">Grid Voltage</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="battery_voltage" title="Battery Voltage (Unit: V)">Battery Voltage</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="solar_voltage" title="Solar Voltage (Unit: V)">Solar Voltage</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="load_voltage" title="Load Voltage (Unit: V)">Load Voltage</button></div>
+								<!-- Current -->
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="grid_current" title="Grid Current (Unit: A)">Grid Current</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="battery_current" title="Battery Current (Unit: A)">Battery Current</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="solar_current" title="Solar Current (Unit: A)">Solar Current</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="load_current" title="Load Current (Unit: A)">Load Current</button></div>
+								<!-- Power -->
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="grid_power" title="Grid Power (Unit: W)">Grid Power</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="battery_power" title="Battery Power (Unit: W)">Battery Power</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="solar_power" title="Solar Power (Unit: W)">Solar Power</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="load_power" title="Load Power (Unit: W)">Load Power</button></div>
+								<!-- Inputs -->
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="input_1" title="Input 1 (0=Low 1=High)">Input 1</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="input_2" title="Input 2 (0=Low 1=High)">Input 2</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="input_3" title="Input 3 (0=Low 1=High)">Input 3</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="input_4" title="Input 4 (0=Low 1=High)">Input 4</button></div>
+								<!-- Switches -->
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="switch_1" title="Switch 1 (0=Off 1=On)">Switch 1</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="switch_2" title="Switch 2 (0=Off 1=On)">Switch 2</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="switch_3" title="Switch 3 (0=Off 1=On)">Switch 3</button></div>
+								<div class="col-3 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="switch_4" title="Switch 4 (0=Off 1=On)">Switch 4</button></div>
+								<!-- State & Time Parameters -->
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_state" title="Current State of the Output (0=Low 1=High)">Current State</button></div>
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_weekday" title="Current Weekday (1=Monday ... 7=Sunday)">Weekday</button></div>
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_month" title="Current Month (1=January ... 12=December)">Month</button></div>
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_day" title="Current Day (1 ... 31)">Day</button></div>
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_hour" title="Current Hour (0 ... 23)">Hour</button></div>
+								<div class="col-2 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="current_minute" title="Current Minute (0 ... 59)">Minute</button></div>
+								<!-- Operators -->
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="and" title="X and Y (Returns X if X is false, Y otherwise)">and</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="or" title="X or Y (Returns Y if X is false, X otherwise)">or</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="not" title="not X (Returns true if X is true, false otherwise)">not</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="in" title="X in Y (Returns true if it finds a variable X in the specified sequence Y">in</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="not in" title="X not in Y (Returns true if it does not finds a variable X in the specified sequence Y">not in</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="<" title="X < Y (Retruns true if the value of X is less than the value of Y">&lt;</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value=">" title="X > Y (Returns true if the value of X is greater than the value of Y">&gt;</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="<=" title="X <= Y (Returns true if the value of X is less than or equal to the value of Y">&lt;=</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value=">=" title="X >= Y (Returns true if the value of X is greater than or equal to the value of Y">&gt;=</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="==" title="X == Y (Returns true if the values of X and Y are equal">==</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="!=" title="X != Y (Returns true if the values of X and Y are not equal">!=</button></div>
+								<div class="col-1 p-1"><button class="btnFunc btn btn-secondary btn-sm py-2 btn-block" value="%" title="X % Y (Modulus - Divides X by Y and returns remainder">%</button></div>
 							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-6 p-0 m-0">
-						<div class="card card-inverse bg-inverse my-0 ml-3 ml-md-2 mr-3 px-3 py-2">
-							<div class="row px-2">
-								<div class="col-12 col-xl-7 px-2"><h5 class="p-0 m-0" style='line-height: 50px'>Switch-off delay (seconds)</h5></div>
-								<div class="col-12 col-xl-5 px-1 pt-1"><input id="offDelay" type="number" min="0" class="form-control form-control-lg text-center"></div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-3 p-0 m-0"></div>
-					<div class="col-12 col-md-6 p-0 m-0 mt-3 mb-0 mb-md-0">
-						<div class="card card-inverse bg-inverse my-0 ml-3 mr-3 mr-md-2 px-3 py-2">
-							<div class="row px-2">
-								<div class="col-12 col-xl-7 px-2"><h5 class="p-0 m-0" style='line-height: 50px'>Minimal Active Time (seconds)</h5></div>
-								<div class="col-12 col-xl-5 px-1 pt-1"><input id="minActiveTime" type="number" min="0" class="form-control form-control-lg text-center"></div>
+							<div class="px-2 pb-2">
+								<input id="statement" type="text" class="form-control text-center py-3" placeholder="S T A T E M E N T">
 							</div>
 						</div>
 					</div>
 				</div>
 				
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3">
-					<button id="submit" class="btn btn-lg btn-secondary btn-block">A P P L Y &nbsp; C H A N G E S</button>
+				<!-- DELAYS -->
+				<div id="delayView" class="col-12 p-0 m-0 mt-2">
+					<div class="card card-inverse bg-inverse m-0 p-0">
+						<h5 class="m-0 px-2 py-3">Switch-on / Switch-off Delays</h5>
+						<div class="row m-0 p-0">
+							<div class="col-4 p-2 pr-5">
+								<div class="row p-0 m-0">
+									<div class="col-6 p-0 m-0">
+										<span>Switch-on Delay</span>
+									</div>
+									<div class="col-6 p-0 m-0">
+										<input id="onDelay" type="number" class="form-control p-1 text-center" placeholder="seconds">
+									</div>
+								</div>
+							</div>
+							<div class="col-4 p-2 px-4">
+								<div class="row p-0 m-0">
+									<div class="col-6 p-0 m-0">
+										<span>Switch-off Delay</span>
+									</div>
+									<div class="col-6 p-0 m-0">
+										<input id="offDelay" type="number" class="form-control p-1 text-center" placeholder="seconds">
+									</div>
+								</div>
+							</div>
+							<div class="col-4 p-2 pl-5">
+								<div class="row p-0 m-0">
+									<div class="col-6 p-0 m-0">
+										<span>Minimal Active Time</span>
+									</div>
+									<div class="col-6 p-0 m-0">
+										<input id="minActiveTime" type="number" class="form-control p-1 text-center" placeholder="seconds">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				
-				<div class="card card-inverse bg-inverse my-3 mx-0 p-3 text-center">
-					The customer takes full responsibility for the correct programming of the Commands. Incorrect programming makes the warranty invalid
+				<!-- APPLY CHANGES -->
+				<div class="col-12 p-0 mt-2">
+					<div class="card card-inverse bg-inverse m-0 p-0 p-2">
+						<span class="text-center p-0 m-0 p-2">By clicking the "Apply Changes" button, you accept full responsibility for the correct programming of the Inverter Commands.<br>Incorrect programming may damage the Inverter or the Live&amp;Smart System and makes the warranty invalid</span>
+						<button id="submit" class="btn btn-secondary btn-block py-3 mt-2">A P P L Y &nbsp; C H A N G E S</button>
+					</div>
 				</div>
-			
+				
 			</div>
 			
 		</div>

@@ -46,8 +46,8 @@ if(!empty($_POST['action']))
 		case 'getIgnoreWarnings':
 			echo $serviceObj->getIgnoreWarnings();
 			break;
-		case 'setSolar2LossWarning':
-			echo $serviceObj->setSolar2LossWarning();
+		case 'setIgnoreWarnings':
+			echo $serviceObj->setIgnoreWarnings();
 			break;
 			
 		case 'getSettings':

@@ -34,8 +34,8 @@ $('#pin').on('change', function() {
 	var temp = $('#active').find('option:selected').val().toLowerCase();
 	
 	if(temp == 'enable') {
-		$("#activeWhen").css('display', 'flex');
-		$("#delayView").css('display', 'flex');
+		$("#activeWhen").css('display', '');
+		$("#delayView").css('display', '');
 	} else { 
 		$("#activeWhen").css('display', 'none');
 		$("#delayView").css('display', 'none');
@@ -99,8 +99,8 @@ $('#pin').on('change', function() {
 
 $('#active').on('change', function() {
 	if($(this).val().toLowerCase() == 'enable') {
-		$("#activeWhen").css('display', 'flex');
-		$("#delayView").css('display', 'flex');
+		$("#activeWhen").css('display', '');
+		$("#delayView").css('display', '');
 	} else {
 		$("#activeWhen").css('display', 'none');
 		$("#delayView").css('display', 'none');
@@ -123,141 +123,22 @@ $('#pin').change();
 
 
 $('.btnFunc').on('click', function() {
-	var st = $('#statement').val();
-	var val = $(this).text().toLowerCase().split(" ").join("_");
-	var last = st.substr(st.lastIndexOf(' ') + 1);
-		
-	if(last == '' || last == '(' || last == '>' || last == '<' || last == '<=' || last == '>=' || last == '==' || last == '!=' || last == 'and' || last == 'or')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.btnLogic').on('click', function() {
-	var st = $('#statement').val();
-	var val = $(this).text().toLowerCase().split(" ").join("_");
-	var last = st.substr(st.lastIndexOf(' ') + 1);
 	
-	if(last != '' && !isNaN(last))
-		$('#statement').val(st + " " + val);
-	else if(last == 'grid_voltage' || 
-			last == 'grid_current' || 
-			last == 'grid_power' || 
-			last == 'battery_voltage' || 
-			last == 'battery_current' || 
-			last == 'battery_power' || 
-			last == 'solar_voltage' || 
-			last == 'solar_current' || 
-			last == 'solar_power' || 
-			last == 'load_voltage' || 
-			last == 'load_current' || 
-			last == 'load_power' || 
-			last == 'input_1' || 
-			last == 'input_2' || 
-			last == 'input_3' || 
-			last == 'input_4' || 
-			last == 'switch_1' || 
-			last == 'switch_2' || 
-			last == 'switch_3' || 
-			last == 'switch_4' || 
-			last == 'current_time' || 
-			last == 'current_state' || 
-			last == ')')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.btnCompare').on('click', function() {
-	var st = $('#statement').val();
-	var val = $(this).text().toLowerCase().split(" ").join("_");
-	var last = st.substr(st.lastIndexOf(' ') + 1);
+	var statement = $('#statement').val();
+	var value = $(this).val();
+	var lastChar = statement.slice(-1);
 	
-	if(last != '' && !isNaN(last))
-		$('#statement').val(st + " " + val);
-	else if(last == 'grid_voltage' || 
-			last == 'grid_current' || 
-			last == 'grid_power' || 
-			last == 'battery_voltage' || 
-			last == 'battery_current' || 
-			last == 'battery_power' || 
-			last == 'solar_voltage' || 
-			last == 'solar_current' || 
-			last == 'solar_power' || 
-			last == 'load_voltage' || 
-			last == 'load_current' || 
-			last == 'load_power' || 
-			last == 'input_1' || 
-			last == 'input_2' || 
-			last == 'input_3' || 
-			last == 'input_4' || 
-			last == 'switch_1' || 
-			last == 'switch_2' || 
-			last == 'switch_3' || 
-			last == 'switch_4' ||
-			last == 'current_time' || 
-			last == 'current_state' || 
-			last == ')')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.btnBrOpen').on('click', function() {
-	var st = $('#statement').val();
-	var val = $(this).text().toLowerCase().split(" ").join("_");
-	var last = st.substr(st.lastIndexOf(' ') + 1);
+	if(lastChar == " ")
+		statement = statement + value + " ";
+	else if(statement.length > 0)
+		statement = statement + " " + value + " ";
+	else
+		statement = value + " ";
 	
-	if(last == '' || last == '(' || last == '>' || last == '<' || last == '<=' || last == '>=' || last == '==' || last == '!=' || last == 'and' || last == 'or')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.btnBrClose').on('click', function() {
-	var st = $('#statement').val();
-	var val = $(this).text().toLowerCase().split(" ").join("_");
-	var last = st.substr(st.lastIndexOf(' ') + 1);
+	$('#statement').val(statement);
 	
-	if(last != '' && !isNaN(last))
-		$('#statement').val(st + " " + val);
-	else if(last == 'grid_voltage' || 
-			last == 'grid_current' || 
-			last == 'grid_power' || 
-			last == 'battery_voltage' || 
-			last == 'battery_current' || 
-			last == 'battery_power' || 
-			last == 'solar_voltage' || 
-			last == 'solar_current' || 
-			last == 'solar_power' || 
-			last == 'load_voltage' || 
-			last == 'load_current' || 
-			last == 'load_power' || 
-			last == 'input_1' || 
-			last == 'input_2' || 
-			last == 'input_3' || 
-			last == 'input_4' || 
-			last == 'switch_1' || 
-			last == 'switch_2' || 
-			last == 'switch_3' || 
-			last == 'switch_4' ||
-			last == 'current_time' || 
-			last == 'current_state' || 
-			last == ')')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.addValue').on('click', function() {
-	var st = $('#statement').val();
-	var val = $('#value').val();
-	var last = st.substr(st.lastIndexOf(' ') + 1);
+	$('#statement')[0].scrollLeft = $('#statement')[0].scrollWidth;
 	
-	if(last == '' || last == '(' || last == '>' || last == '<' || last == '<=' || last == '>=' || last == '==' || last == '!=' || last == 'and' || last == 'or')
-		$('#statement').val(st + " " + val);
-});
-
-
-$('.btnDel').on('click', function() {
-	var st = $('#statement').val();
-	st = st.substr(0, st.lastIndexOf(' '));
-	$('#statement').val(st);
 });
 
 

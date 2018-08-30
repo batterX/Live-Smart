@@ -10,10 +10,11 @@ body {
 * {
 	font-family: 'Raleway' !important;
 	border-radius: 0px !important;
+	border: 0 !important;
 }
 
 .row * {
-	font-family: monospace!important;
+	font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
 input, select {

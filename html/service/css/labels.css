@@ -5,30 +5,28 @@ body {
 * {
 	font-family: 'Raleway' !important;
 	border-radius: 0px !important;
+	border: 0 !important;
 }
 
-.container * {
-	font-family: monospace!important;
+.row * {
+	font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+.container *, .container-fluid * {
+	font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
 input, select {
 	background: #212121 !important;
 }
-h1, h2, h3, h4, h5, h6, p, input, select, button, .list-group-item {
+
+h1, h2, h3, h4, h5, h6, p, input, select, button, .list-group-item, label, span {
 	color: white !important;
 }
 
-h5, button {
-	font-size: 1rem !important;
-}
-
-input, select {
-	font-size: 0.8rem !important;
-}
-
 .btn-secondary { 
-	color: #ffffff; 
-	background-color: #444; 
+	color: #ffffff;
+	background-color: #444;
 	border-color: #222;
 }
 .btn-secondary:hover, 
@@ -39,4 +37,22 @@ input, select {
 	color: #ffffff;
 	background-color: #333;
 	border-color: #222;
+}
+
+span, input, select, label, .btn-sm {
+	font-size: 0.75rem !important;
+	height: auto !important;
+}
+
+h5 {
+	background: #212121;
+}
+
+.navbar-toggler-icon {
+	width: 1.5rem !important;
+	height: 1.5rem !important;
+}
+
+select, input, button {
+	border: 1px solid #101010 !important;
 }

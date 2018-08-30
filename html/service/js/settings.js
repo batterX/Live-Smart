@@ -6,15 +6,12 @@ var authenticated = false;
 function checkPassword() {
 	if(!authenticated) {
 		pw = prompt("Enter Password", "");
-		if(password == MD5(pw)) 
-			authenticated = true;
+		if(password == MD5(pw)) authenticated = true;
 	}
-
 	if(!authenticated) {
 		alert("That password is incorrect!");
 		return false;
 	}
-	
 	return true;
 }
 
@@ -28,6 +25,7 @@ function checkPassword() {
 
 
 // LOAD SETTINGS
+
 $.ajax({
 	type: "POST",
 	url: "../db-interaction/service.php",
@@ -38,6 +36,7 @@ $.ajax({
 			$('#CloudLogging').val(json['Mode']).change();
 	}
 });
+
 $.ajax({
 	type: "POST",
 	url: "../db-interaction/service.php",
@@ -48,8 +47,7 @@ $.ajax({
 		if(json.hasOwnProperty('Mode') && json['Mode'] == '1') {
 			if(json.hasOwnProperty('S1') && json['S1'] != '') {
 				var tempList = json['S1'].split(" ");
-				if(tempList.includes('17922') && tempList.includes('17954'))
-					$('#Solar2LossWarning').val('0').change();
+				tempList.forEach(function(val) { $('#w'+val).prop('checked', true); });
 			}
 		}
 	}
@@ -93,21 +91,58 @@ $('#submitCloudLogging').on('click', function() {
 
 });
 
-// SET Solar2LossWarning
-$('#submitSolar2LossWarning').on('click', function() {
+// SET ChangeHostname
+$('#submitChangeHostname').on('click', function() {
 	
 	if(!checkPassword()) return;
+	
+	var hostname = $('#ChangeHostname').val().split(" ").join("");
+	
+	if(hostname != "") {
+		$.ajax({
+			type: 'POST',
+			url: 'php/changeHostname.php?hostname=' + hostname,
+			success: function (response) {
+				if(response != "" && JSON.parse(response)[0] == hostname) {
+					alert("Hostname Changed Successfully!");
+					console.log(response);
+				} else {
+					alert("Error, please try again!");
+					console.log(response);
+				}
+			},
+			error: function (response) {
+				alert("Hard Error, please try again!");
+				console.log(response);
+			}
+		});
+	}
+	
+});
+
+// SET IgnoreWarnings
+$('#submitIgnoreWarnings').on('click', function() {
+	
+	if(!checkPassword()) return;
+	
+	var ignoreWarnings = [];
+	
+	$('input[name=ignoreWarnings]').each(function() {
+		if(this.checked) ignoreWarnings.push($(this).val());
+	});
+	
+	var ignoreWarnings = ignoreWarnings.join(" ");
 	
 	$.ajax({
 		type: 'POST',
 		url: '../db-interaction/service.php',
 		data: {
-			"action": 'setSolar2LossWarning',
-			"mode": $('#Solar2LossWarning').find('option:selected').val()
+			"action": 'setIgnoreWarnings',
+			"list": ignoreWarnings
 		},
 		success: function (response) {
-			if(response) {
-				alert("Solar 2 Loss Warning - Setting Updated Successfully!");
+			if(response != "") {
+				alert("Ignore Warnings List Changed Successfully!");
 				console.log(response);
 			} else {
 				alert("Error, please try again!");
@@ -119,5 +154,5 @@ $('#submitSolar2LossWarning').on('click', function() {
 			console.log(response);
 		}
 	});
-
+	
 });
