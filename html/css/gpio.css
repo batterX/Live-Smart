@@ -66,6 +66,7 @@ body {
 }
 .switch-container .btn-toggle {
 	left: 50%;
+	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
 }
 .btn-toggle {
@@ -88,6 +89,7 @@ body {
 	letter-spacing: 1px;
 	position: absolute;
 	bottom: 0;
+	-webkit-transition: opacity .25s;
 	transition: opacity .25s;
 }
 .btn-toggle:before {
@@ -107,13 +109,16 @@ body {
 	height: 3vh;
 	border-radius: 3vh;
 	background: #fff;
+	-webkit-transition: left .25s;
 	transition: left .25s;
 }
 .btn-toggle.active {
+	-webkit-transition: background-color 0.25s;
 	transition: background-color 0.25s;
 }
 .btn-toggle.active > .handle {
 	left: 4.5vh;
+	-webkit-transition: left .25s;
 	transition: left .25s;
 }
 .btn-toggle.active:before {
@@ -128,6 +133,10 @@ body {
 
 /* INPUTS & OUTPUTS */
 #out1, #out2, #out3, #out4, #in1, #in2, #in3, #in4 {
+	display: grid;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
 	border-left: 0.25vh solid #87d403;
 	background-color: #191919;
 }
