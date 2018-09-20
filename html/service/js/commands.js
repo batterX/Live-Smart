@@ -180,39 +180,12 @@ $('#submit').on('click', function() {
 	if(V4 < 0) V4 = 0;
 	
 	// STATEMENT
-	var st = $('#statement').val();
+	var st = $('#statement').val().trim();
 	var last = st.substr(st.lastIndexOf(' ') + 1);
-		
-	if(st != '' && last != '' && last != ' ') 
-	{
-		if(!isNaN(last) || 
-		   last == 'grid_voltage' || 
-		   last == 'grid_current' || 
-		   last == 'grid_power' || 
-		   last == 'battery_voltage' || 
-		   last == 'battery_current' || 
-		   last == 'battery_power' || 
-		   last == 'solar_voltage' || 
-		   last == 'solar_current' || 
-		   last == 'solar_power' || 
-		   last == 'load_voltage' || 
-		   last == 'load_current' || 
-		   last == 'load_power' || 
-		   last == 'input_1' || 
-		   last == 'input_2' || 
-		   last == 'input_3' || 
-		   last == 'input_4' || 
-		   last == 'switch_1' || 
-		   last == 'switch_2' || 
-		   last == 'switch_3' || 
-		   last == 'switch_4' ||
-		   last == 'current_time' || 
-		   last == 'current_state' || 
-		   last == ')') 
-		{
-			if(st.split('(').length - 1 == st.split(')').length - 1)
-				S1 = st;
-		}
+	
+	if(st.trim() != '' && last.trim() != '') {
+		if(st.split('(').length - 1 == st.split(')').length - 1)
+			S1 = st;
 	}
 
 	$.ajax({
