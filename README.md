@@ -41,9 +41,20 @@ $ sudo sh /home/pi/update.sh
 
 ## Version History
 
-#### `v18.10.1`
-This version is still in development.
-Should be released in the second half of October.
+#### `v18.10.1` *(Coming Soon)*
+
+**This version is still in development. Should be released in the second half of October.**
+
+- Now it is possible to replace a Live&Smart Box simply by disconnecting the old and connecting the new Box. No additional steps are required.
+- Many new & improved features in the Cloud Monitoring App
+- Automatically hide certain warnings when Inverter running in Grid-Tie or Off-Grid mode.
+- Grid (Feed-in point) Energy Meter Slave-Address changed to `1`, and Parity changed to `EVEN` with `1` stop-bit.
+- Implemented another Energy Meter with Slave-Address `2`, Parity `Even`, `1` stop-bit, for monitoring External Solar Inverters.
+- Many changes to the Local API, incompatible with the previous versions.
+- Many bug-fixes
+
+**NOTE: All batterX h5/h10 Inverters purchased before November 2018 will require a new Firmware Upgrade before updating the Live&Smart to this version.**
+
 
 #### `v18.9.1`
 - Added option to change Live&Smart Hostname
