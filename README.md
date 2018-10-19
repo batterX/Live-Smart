@@ -53,7 +53,7 @@ $ sudo sh /home/pi/update.sh
 - Many changes to the Local API, incompatible with the previous versions.
 - Many bug-fixes
 
-#### `v18.9.1`
+#### `v18.9.1` *(Latest Stable Release)*
 - Added option to change Live&Smart Hostname
 - Removed 'Energy Meter Not Working' Warning
 - Fixed a bug that caused problems when no warnings were present
