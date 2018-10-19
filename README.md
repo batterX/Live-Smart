@@ -43,8 +43,6 @@ $ sudo sh /home/pi/update.sh
 
 #### `v18.11.1` *(Coming Soon)*
 
-**This version is in development.**
-
 **NOTE: All batterX h5/h10 Inverters purchased before November 2018 will require a new Firmware Upgrade before updating the Live&Smart to this version.**
 
 - Now it is possible to replace a Live&Smart Box simply by disconnecting the old and connecting the new Box. No additional steps are required.
