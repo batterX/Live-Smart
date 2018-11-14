@@ -41,7 +41,7 @@ $ sudo sh /home/pi/update.sh
 
 ## Version History
 
-#### `v18.11.1` *(Coming Soon)*
+#### `v18.12.1` *(Coming Soon)*
 
 **NOTE: All batterX h5/h10 Inverters purchased before November 2018 will require a new Firmware Upgrade before updating the Live&Smart to this version.**
 
