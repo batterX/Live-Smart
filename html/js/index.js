@@ -1,3 +1,22 @@
+// Get All Needed Strings
+
+var lang = {
+	"devices":            "Devices",
+	"users":              "Users",
+	"settings":           "Settings",
+	"live":               "Live",
+	"energy":             "Energy",
+	"system":             "System",
+	"gpio":               "GPIO",
+	"active_warnings":    "Active Warnings",
+	"no_active_warnings": "There are no warnings",
+	"last_timestamp":     "Last Timestamp"
+}
+
+
+
+
+
 // Set Warnings Begin Variables State
 
 var lastWarningTime = new Date("2000-01-01T01:01:01");
@@ -7,31 +26,26 @@ var lastWarningList = [];
 
 
 
-// Get Device Model
+// Get All Needed SESSION Variables
 
-var model = "";
-$.ajax({
-	type: "POST",
-	url: "db-interaction/data.php",
-	data: {
-		"action": "getDeviceModel"
-	},
-	success: function (response) {
-		if(response) {
-			model = response.toLowerCase();
-			switch(response.toLowerCase()) {
-				case 'batterx bs':
-					$(".gpio").hide();
-					break;
-				default:
-					$(".gpio").show();
-					break;
-			}
-		}
-		// Hide Overlay
-		$('.overlay').fadeOut();
-	}
-});
+var token = "";
+var accountType = "";
+
+
+
+
+
+// String to use for EntityValue
+
+var entityValue = "entityvalue";
+
+
+
+
+
+// Set Device Name
+
+$("#device-name").html("");
 
 
 
@@ -39,6 +53,185 @@ $.ajax({
 
 // Set OnClick Listeners
 
+// Switch to Live View
+$('#live').on('click', function() {
+	$('#frame').attr("src", "live.html");
+	$('#title').html(lang['live'].toUpperCase());
+	toggleActive("live");
+});
+
+// Switch to Energy View
+$('#energy').on('click', function() {
+	$('#frame').attr("src", "energy.html");
+	$('#title').html(lang['energy'].toUpperCase());
+	toggleActive("energy");
+});
+
+// Switch to Device/System View
+$('#device').on('click', function() {
+	$('#frame').attr("src", "device.html");
+	$('#title').html(lang['system'].toUpperCase());
+	toggleActive("device");
+});
+
+// Switch to GPIO View
+$('#gpio').on('click', function() {
+	if(model != 'batterx bs') {
+		$('#frame').attr("src", "gpio.html");
+		$('#title').html(lang['gpio'].toUpperCase());
+		toggleActive("gpio");
+	}
+});
+
+// Get Device Model
+
+var model = "";
+$.ajax({
+	type: "POST",
+	url: "db-interaction/data.php",
+	data: { "action": "getDeviceModel", "token": token },
+	success: function(response) {
+		if(response) {
+			model = response.toLowerCase();
+			if(model == 'batterx bs')
+				$(".gpio").hide();
+			else
+				$(".gpio").show();
+		}
+		$('.overlay').fadeOut(); // Hide Overlay
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	BOTH CLOUD AND LOCAL ARE SAME ABOVE THIS COMMENT
+	
+	WHEN EDITING, IT'S BETTER TO USE THE CLOUD FILE
+*/
+
+
+
+
+
+
+
+
+
+
+/*
+	Set OnClick Listeners
+*/
+
+// Notifications Button
 $('#btnNotification').on('click', function() {
 	$('#slider-right').offcanvas({
 		placement: 'right',
@@ -47,11 +240,13 @@ $('#btnNotification').on('click', function() {
 	$('#slider-right').offcanvas('show');
 });
 
+// Pin Right-Side Drawer to View
 $('#btnPinToView').on('click', function() {
 	if($('#middle').hasClass('full-view')) {
 		$('#middle').removeClass('full-view');
 		$('#slider-right').addClass('offcanvas');
 		$('#btnPinToView').attr('src', 'img/ic_tack_save.png');
+		Cookies.set('bx_index_drawer_pintoview', '0'); // Set Cookie FALSE
 	} else {
 		$('#middle').addClass('full-view');
 		$('#slider-right').removeClass('offcanvas');
@@ -59,45 +254,23 @@ $('#btnPinToView').on('click', function() {
 		$('#slider-right').removeClass('canvas-sliding');
 		$('#slider-right').removeClass('canvas-slid');
 		$('#btnPinToView').attr('src', 'img/ic_tack_save_active.png');
+		Cookies.set('bx_index_drawer_pintoview', '1'); // Set Cookie TRUE
 	}
 });
 
+// Hide Left-Side Drawer onClick
 $('#slider-left').on('click', function() {
 	if(window.innerHeight > window.innerWidth)
 		setTimeout(function() { $("#slider-left").offcanvas('hide'); }, 200);
 });
 
+// Hide Right-Side Drawe onClick
 $('#slider-right').on('click', function() {
 	if(!$('#middle').hasClass('full-view'))
 		setTimeout(function() { $("#slider-right").offcanvas('hide'); }, 200);
 });
 
-$('#live').on('click', function() {
-	$('#frame').attr("src", "live.html");
-	$('#title').html("LIVE");
-	toggleActive("live");
-});
-
-$('#energy').on('click', function() {
-	$('#frame').attr("src", "energy.html");
-	$('#title').html("ENERGY");
-	toggleActive("energy");
-});
-
-$('#device').on('click', function() {
-	$('#frame').attr("src", "device.html");
-	$('#title').html("SYSTEM");
-	toggleActive("device");
-});
-
-$('#gpio').on('click', function() {
-	if(model != 'batterx bs') {
-		$('#frame').attr("src", "gpio.html");
-		$('#title').html("GPIO");
-		toggleActive("gpio");
-	}
-});
-
+// Toggle Active Button (Color)
 function toggleActive(id) {
 	$('#live, #energy, #device, #gpio').find('h4').removeClass("active");
 	$('#'+id).find('h4').addClass('active');
@@ -107,15 +280,23 @@ function toggleActive(id) {
 
 
 
-// Initialize Notifications
-// Load the 10 latest Warnings for the current device
+
+
+
+
+
+/*
+	Initialize Notifications
+	Load the 10 Latest Warnings for the Current Device
+*/
 
 $.ajax({
 	type: "POST",
 	url: "db-interaction/data.php",
 	data: {
 		"action": "getWarningsData",
-		"count": "10"
+		"count": "10",
+		"token": token
 	},
 	success: function(response) {
 		// Parse Result to JSON
@@ -123,16 +304,23 @@ $.ajax({
 		// Display Latest Warnings in the Right-Side-Drawer
 		for(var x = 0; x < json.length; x++) {
 			if(lastWarningTime <= formatDate(json[x]['logtime'])) {
-				if(json[x]['entityvalue'] != "") {
-					var tempList = json[x]['entityvalue'].split(" ");
-					for(var y = 0; y < tempList.length; y++)
-						if(!lastWarningList.includes(tempList[y]))
-							addWarning('orange', convertDate(json[x]['logtime']), warningsList[tempList[y]][0], warningsList[tempList[y]][1]);
-					lastWarningList = json[x]['entityvalue'].split(" ");
+				if(json[x][entityValue] != "") {
+					var tempList = json[x][entityValue].split(" ");
+					for(var y = 0; y < tempList.length; y++) {
+						if(!lastWarningList.includes(tempList[y])) {
+							addWarning(
+								warningsList[tempList[y]][2] == 1 ? 'red' : 'orange',
+								convertDate(json[x]['logtime']),
+								warningsList[tempList[y]][0],
+								warningsList[tempList[y]][1]
+							);
+						}
+					}
+					lastWarningList = json[x][entityValue].split(" ");
 				} else lastWarningList = [];
 			}
 		}
-		// Update Active Notifications
+		// Update Active Notificaitons
 		updateActiveNotifications();
 		// Update Last Warning Time
 		lastWarningTime = formatDate(json[json.length-1]['logtime']);
@@ -152,7 +340,8 @@ function updateNotifications() {
 		url: "db-interaction/data.php",
 		data: {
 			"action": "getWarningsData",
-			"count": "1"
+			"count": "1",
+			"token": token
 		},
 		complete: function (data) {
 			setTimeout(function() { updateNotifications(); }, 5000);
@@ -160,19 +349,26 @@ function updateNotifications() {
 		success: function (response) {
 			// Parse Response to JSON
 			var json = JSON.parse(response);
-			// Display Latest Warnings in the Right-Side-Drawer
+			// Display New Warnings in the Right-Side-Drawer
 			for(var x = 0; x < json.length; x++) {
 				if(lastWarningTime <= formatDate(json[x]['logtime'])) {
-					if(json[x]['entityvalue'] != "") {
-						var tempList = json[x]['entityvalue'].split(" ");
-						for(var y = 0; y < tempList.length; y++)
-							if(lastWarningList.indexOf(tempList[y]) == -1)
-								addWarning('orange', convertDate(json[x]['logtime']), warningsList[tempList[y]][0], warningsList[tempList[y]][1]);
-						lastWarningList = json[x]['entityvalue'].split(" ");
+					if(json[x][entityValue] != "") {
+						var tempList = json[x][entityValue].split(" ");
+						for(var y = 0; y < tempList.length; y++) {
+							if(!lastWarningList.includes(tempList[y])) {
+								addWarning(
+									warningsList[tempList[y]][2] == 1 ? 'red' : 'orange',
+									convertDate(json[x]['logtime']),
+									warningsList[tempList[y]][0],
+									warningsList[tempList[y]][1]
+								);
+							}
+						}
+						lastWarningList = json[x][entityValue].split(" ");
 					} else lastWarningList = [];
 				}
 			}
-			// Update Active Notifications
+			// Update Active Notificaitons
 			updateActiveNotifications();
 			// Update Last Warning Time
 			lastWarningTime = formatDate(json[json.length-1]['logtime']);
@@ -186,67 +382,77 @@ function updateNotifications() {
 
 // Update Active Notifications List
 
+var blinkInterval = null;
+
 function updateActiveNotifications() {
-	// Set Title
+	
+	// Fault Status
+	var hasFault = false;
+	var faultRow = ["", "", 1];
+	
+	// LastTimestamp Status
+	var timestampFault = $('#notif-lastupdate').hasClass('fault');
+	
+	// Set ActiveWarnings Title
 	$("#notif-active .warnings").html(`
 		<div class='row notif-head-active'>
 			<h4 style='color:white; letter-spacing:0.75vh'>
-				<b>ACTIVE WARNINGS</b>
+				<b>${lang['active_warnings'].toUpperCase()}</b>
 			</h4>
 		</div>
 	`);
-	// Set Active Warnings
+	// Set ActiveWarnings Warnings
 	for(var y = 0; y < lastWarningList.length; y++) {
-		$("#notif-active .warnings").append(`
-			<div class='row notif-head-active'>
-				<h4>${warningsList[lastWarningList[y]][0]}</h4>
-			</div>
-		`);
-	}
-	// Show/Hide Badge + Set Badge Number
-	if(lastWarningList.length == 0) {
-		$("#notif-active .warnings").append(`
-			<div class='row notif-head-active'>
-				<h4>THERE ARE NO WARNINGS</h4>
-			</div>
-		`);
-		$(".button-badge").css("display", "none");
-	} else {
-		$(".button-badge").text((lastWarningList.length).toString());
-		$(".button-badge").css("display", "block");
-	}
-}
-
-
-
-
-
-// Update Fault Status From Iframe
-
-var blinkInterval = null;
-function updateFaultStatus(flag, fault, logtime) {
-	// If Fault has Occured
-	if(flag) {
-		$(".notifbar").css("display", "block");
-		$("#notifbar-text").html(warningsList[fault][0]);
-		if(blinkInterval == null) {
-			// Start Blinking the Bottom-Notifbar
-			blinkInterval = setInterval(function() {
-				$("#notifbar-parent").css('visibility', $("#notifbar-parent").css('visibility') === 'hidden' ? '' : 'hidden');
-			}, 1000);
-			// Add Fault to Notifications
-			addWarning('red', convertDate(logtime), warningsList[fault][0], warningsList[fault][1]);
-		}
-	// If No Active Faults
-	} else {
-		$(".notifbar").css("display", "none");
-		$("#notifbar-text").html("");
-		if(blinkInterval != null) {
-			clearInterval(blinkInterval);
-			blinkInterval = null;
-			$("#notifbar-parent").css('visibility', 'visible');
+		if(warningsList[lastWarningList[y]][2] == 1) {
+			// FAULT
+			hasFault = true;
+			faultRow = warningsList[lastWarningList[y]];
+			$("#notif-active .warnings").append(`<div class='row notif-head-active'><h4 style="color: red">${warningsList[lastWarningList[y]][0]}</h4></div>`);
+		} else {
+			// WARNING
+			$("#notif-active .warnings").append(`<div class='row notif-head-active'><h4>${warningsList[lastWarningList[y]][0]}</h4></div>`);
 		}
 	}
+	// Set ActiveWarnings Style
+	if(hasFault) {
+		$("#notif-active").css("border", "0.3vh solid red");
+		$("#notif-active").css("background", "black");
+	} else {
+		$("#notif-active").css("border", "");
+		$("#notif-active").css("background", "");
+	}
+	if(lastWarningList.length == 0)
+		$("#notif-active .warnings").append(`<div class='row notif-head-active'><h4>${lang['no_active_warnings'].toUpperCase()}</h4></div>`);
+	
+	
+	// Set ButtonBadge Style
+	$(".button-badge").css("display", lastWarningList.length != 0 ? "block" : "none"); // Show|Hide
+	$(".button-badge").css("color", hasFault || timestampFault ? "red" : "orange");
+	$(".button-badge").css("border-color", hasFault || timestampFault ? "red" : "orange");
+	// Set ButtonBadge Number
+	$(".button-badge").text((lastWarningList.length).toString());
+	
+	
+	// Set NotificationBell Image
+	$(".notification").attr("src", "img/notification-" + (hasFault || timestampFault ? "red" : "white") + ".png");
+	
+	
+	// Set Bottom Notification Bar
+	$(".notifbar").css("display", hasFault ? "block" : "none");
+	$("#notifbar-text").html(faultRow[0]);
+	// Start|Stop Blinking
+	if(hasFault && blinkInterval == null) {
+		// Start Blinking the Bottom-Notifbar
+		blinkInterval = setInterval(function() {
+			$("#notifbar-parent").css('visibility', $("#notifbar-parent").css('visibility') === 'hidden' ? '' : 'hidden');
+		}, 1000);
+	} else if(!hasFault && blinkInterval != null) {
+		// Stop Blinking the Bottom-Notifbar
+		clearInterval(blinkInterval);
+		blinkInterval = null;
+		$("#notifbar-parent").css('visibility', 'visible');
+	}
+	
 }
 
 
@@ -256,37 +462,41 @@ function updateFaultStatus(flag, fault, logtime) {
 // Update LastTimestamp From Iframe
 
 function updateLastTimestamp(str) {
-	// Set Last Timestamp
-	$("#notif-lastupdate").html(`
-		<div class='row notif-head-active'>
-			<h4 style='color:white; letter-spacing: 0.75vh;'>
-				<b>LAST TIMESTAMP</b>
-			</h4>
-		</div>
-		<div class='row notif-head-active'>
-			<h4 class='last-timestamp'>
-				${convertDate(str)}
-			</h4>
-		</div>
-	`);
-	// Set Text Color RED if not updated for 2 minutes
-	if(moment.duration(moment().diff(moment.utc(str))).asMinutes() > 2) {
-		// Last Timestamp RED
-		$("#notif-lastupdate").css('border-color', 'red').css('background-color', 'black');
-		$("#notif-lastupdate h4").css('color', 'red');
-		// Notification Icon RED
-		$(".notification").attr("src", "img/notification-red.png");
-		$(".button-badge").css("color", "red");
-		$(".button-badge").css("border-color", "red");
-		if(lastWarningList.length != 0) $(".button-badge").css("display", "block");
+	if(str) {
+		// Set Last Timestamp
+		$("#notif-lastupdate").html(`
+			<div class='row notif-head-active'>
+				<h4 style='color:white; letter-spacing: 0.75vh;'>
+					<b>${lang['last_timestamp'].toUpperCase()}</b>
+				</h4>
+			</div>
+			<div class='row notif-head-active'>
+				<h4 class='last-timestamp'>
+					${convertDate(str)}
+				</h4>
+			</div>
+		`);
+		// Add/Remove .fault Class
+		if(moment.duration(moment().diff(moment.utc(str))).asMinutes() > 2)
+			$("#notif-lastupdate").addClass('fault');
+		else
+			$("#notif-lastupdate").removeClass('fault');
 	} else {
-		// Last Timestamp GRAY
-		$("#notif-lastupdate").css('border-color', 'gray').css('background-color', '');
-		// Notification Icon RED
-		$(".notification").attr("src", "img/notification-white.png");
-		$(".button-badge").css("color", "orange");
-		$(".button-badge").css("border-color", "orange");
-		if(lastWarningList.length != 0) $(".button-badge").css("display", "block");
+		// Set Last Timestamp
+		$("#notif-lastupdate").html(`
+			<div class='row notif-head-active'>
+				<h4 style='color:white; letter-spacing: 0.75vh;'>
+					<b>${lang['last_timestamp'].toUpperCase()}</b>
+				</h4>
+			</div>
+			<div class='row notif-head-active'>
+				<h4 class='last-timestamp'>
+					-
+				</h4>
+			</div>
+		`);
+		// Add .fault Class
+		$("#notif-lastupdate").addClass('fault');
 	}
 }
 
@@ -338,3 +548,19 @@ function convertDate(dateStr) {
 function formatDate(dateStr) {
 	return new Date(dateStr.replace(" ", "T"));
 }
+
+
+
+
+
+
+
+
+
+
+/*
+	Read Cookies and do changes
+*/
+
+if(Cookies.get('bx_index_drawer_pintoview') == '1')
+	$('#btnPinToView').click();

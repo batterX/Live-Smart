@@ -81,13 +81,9 @@ class BatterXData
 		Outputs JSON Object
 		
 		{
-			type: {
-				entity: {
-					type: ...,
-					entity: ...,
-					entityvalue: ...,
-					logtime: ...
-				},
+			logtime: LOGTIME,
+			TYPE: {
+				ENTITY: VALUE,
 				...
 			},
 			...
@@ -97,7 +93,7 @@ class BatterXData
 	{
 		$db = new PDO('sqlite:/srv/bx/ram/currentD.db3');
 		
-		$result = $db->query('SELECT type, entity, entityvalue, logtime FROM CurrentState');
+		$result = $db->query('SELECT type, entity, entityvalue, logtime FROM CurrentState', PDO::FETCH_ASSOC);
 
 		$dbh = new stdClass();
 
@@ -106,7 +102,8 @@ class BatterXData
 			$entity = (string) $row['entity'];
 			if(!isset($dbh->$type)) 
 				$dbh->$type = new stdClass();
-			$dbh->$type->$entity = $row;
+			$dbh->$type->$entity = intval($row['entityvalue']);
+			$dbh->logtime = (string) $row['logtime'];
 		}
 		
 		return json_encode($dbh, JSON_FORCE_OBJECT);
@@ -208,7 +205,7 @@ class BatterXData
 			// Connect to Database
 			$db = new PDO('sqlite:/srv/bx/usv.db3');
 			
-			$result = $db->query("SELECT * FROM (SELECT id, type, entity, entityvalue, logtime FROM WarningsData ORDER BY id DESC LIMIT " . $_POST['count']. ") ORDER BY id ASC");
+			$result = $db->query("SELECT * FROM (SELECT id, type, entity, entityvalue, logtime FROM WarningsData ORDER BY id DESC LIMIT " . $_POST['count']. ") ORDER BY id ASC", PDO::FETCH_ASSOC);
 
 			$dbh = array();
 			
@@ -219,141 +216,6 @@ class BatterXData
 		}
 		else
 			return "";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/* Queries Data from CollectedData Table 
-		
-		Outputs JSON Object
-	*/
-	public function getCollectedData() 
-	{
-		if(isset($_POST['id'])) {
-			$db = new PDO('sqlite:/srv/bx/usv.db3');
-			
-			$sql = "SELECT * FROM 'CollectedData' WHERE id >= (SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT 1) ORDER BY id ASC LIMIT 1)";
-			
-			if($_POST['id'] > 1) 
-			{
-				$sql = "SELECT * FROM 'CollectedData' WHERE id BETWEEN (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['id'] . ") ORDER BY id ASC LIMIT 1
-						) AND (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . ($_POST['id'] - 1) . ") ORDER BY id ASC LIMIT 1
-						)";
-			}
-						
-			$result = $db->query($sql);
-			
-			$dbh = new stdClass();
-			
-			foreach($result as $row) {
-				$type = (string) $row['type'];
-				$entity = (string) $row['entity'];
-				$specifier = (string) $row['specifier'];
-				if(!isset($dbh->$type))
-					$dbh->$type = new stdClass();
-				if(!isset($dbh->$type->$entity))
-					$dbh->$type->$entity = new stdClass();
-				$dbh->$type->$entity->$specifier = $row;
-			}
-
-			return json_encode($dbh, JSON_FORCE_OBJECT);
-		}
-	}
-	
-	/* Queries Data from CollectedData Table for single Type and Entity
-		
-		Outputs JSON Object
-	*/
-	public function getCollectedData_compare() 
-	{
-		if(isset($_POST['id']) && isset($_POST['type']) && isset($_POST['entity']) && isset($_POST['count'])) {
-			$db = new PDO('sqlite:/srv/bx/usv.db3');
-			
-			$dbh = new stdClass();
-			$min = "2";
-			$med = "1";
-			$max = "4";
-			$minArr = array();
-			$medArr = array();
-			$maxArr = array();
-			
-			
-			// Query MIN Values
-			
-			$sql = "SELECT * FROM 'CollectedData' WHERE specifier=2 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id >= (SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['count'] . ") ORDER BY id ASC LIMIT 1)";
-			
-			if($_POST['id'] > $_POST['count']) 
-			{
-				$sql = "SELECT * FROM 'CollectedData' WHERE specifier=2 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id BETWEEN (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['id'] . ") ORDER BY id ASC LIMIT 1
-						) AND (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . ($_POST['id'] - $_POST['count']) . ") ORDER BY id ASC LIMIT 1
-						)";
-			}
-			
-			$result = $db->query($sql);
-			
-			foreach($result as $row) {
-				$minArr[] = $row;
-			}
-			
-			
-			// Query MED Values
-			
-			$sql = "SELECT * FROM 'CollectedData' WHERE specifier=1 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id >= (SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['count'] . ") ORDER BY id ASC LIMIT 1)";
-			
-			if($_POST['id'] > $_POST['count']) 
-			{
-				$sql = "SELECT * FROM 'CollectedData' WHERE specifier=1 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id BETWEEN (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['id'] . ") ORDER BY id ASC LIMIT 1
-						) AND (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . ($_POST['id'] - $_POST['count']) . ") ORDER BY id ASC LIMIT 1
-						)";
-			}
-			
-			$result = $db->query($sql);
-			
-			foreach($result as $row) {
-				$medArr[] = $row;
-			}
-			
-			
-			// Query MAX Values
-			
-			$sql = "SELECT * FROM 'CollectedData' WHERE specifier=4 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id >= (SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['count'] . ") ORDER BY id ASC LIMIT 1)";
-			
-			if($_POST['id'] > $_POST['count']) 
-			{
-				$sql = "SELECT * FROM 'CollectedData' WHERE specifier=4 AND type=" . $_POST['type'] . " AND entity=" . $_POST['entity'] . " AND id BETWEEN (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . $_POST['id'] . ") ORDER BY id ASC LIMIT 1
-						) AND (
-							SELECT id FROM (SELECT id FROM 'CollectedData' WHERE type=1 ORDER BY id DESC LIMIT " . ($_POST['id'] - $_POST['count']) . ") ORDER BY id ASC LIMIT 1
-						)";
-			}
-			
-			$result = $db->query($sql);
-			
-			foreach($result as $row) {
-				$maxArr[] = $row;
-			}
-			
-			
-			
-			$dbh->$min = $minArr;
-			$dbh->$med = $medArr;
-			$dbh->$max = $maxArr;
-
-			return json_encode($dbh, JSON_FORCE_OBJECT);
-		}
 	}
 	
 }

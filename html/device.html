@@ -6,15 +6,14 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="description" content="The „Live&amp;Smart“ monitoring and controlling tool designed by batterX® is a sophisticated energy management for optimizing production and consumption." />
-		<title>BatterX | Device</title>
-		<link rel="stylesheet" href="css/components/fonts.css">
-		<link rel="stylesheet" type="text/css" href="css/components/normalize.css">
-		<link rel="stylesheet" type="text/css" href="css/components/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/components/slick.css">
-		<link rel="stylesheet" type="text/css" href="css/components/slick-theme.css">
+		<title>batterX | Device</title>
+		<link rel="stylesheet" type="text/css" href="css/components/bundle.css">
+		<link rel="stylesheet" type="text/css" href="css/components/slick-bundle.css">
 		<link rel="stylesheet" type="text/css" href="css/components/lightbox.css">
 		<link rel="stylesheet" type="text/css" href="css/device.css">
 	</head>
+	
+	
 	
 	<body>
 		
@@ -34,6 +33,7 @@
 						<input type="submit" name="submit">
 					</form>
 				</div>
+				<!-- IMAGES ARE LOADED USING 'DEVICE.JS' -->
 			</div>
 			
 			<!-- SLIDER -->
@@ -54,15 +54,15 @@
 		
 		</div>
 	
-		<!-- INFO PALENS -->
-		<div class="bottom row">
+		<!-- INFO PANELS -->
+		<div id="infoPanels" class="bottom row">
 			
 			<!-- BATTERX MODEL -->
-			<div id="model" class="col-4 text-center table-card border-none" onclick="showPanel('model')">
+			<div id="model" class="col-4 text-center table-card border-0" onclick="showPanel('model')">
 				<div>
 					<img src="img/x-sm.png" class="img-x" />
 					<h4 class="name">BatterX Model</h4>
-					<img src="img/under.png" class="img-under" />
+					<div class="sm-under"></div>
 				</div>
 			</div>
 			
@@ -71,16 +71,16 @@
 				<div>
 					<img src="img/ic_solar.png" class="img-x"/>
 					<h4 class="name">Solar Power</h4>
-					<img src="img/under.png" class="img-under"/>
+					<div class="sm-under"></div>
 				</div>
 			</div>
 			
 			<!-- ENERGY STORAGE -->
-			<div id="storage" class="col-4 text-center table-card border-none" onclick="showPanel('storage')">
+			<div id="storage" class="col-4 text-center table-card border-0" onclick="showPanel('storage')">
 				<div>
 					<img src="img/ic_battery.png" class="img-x"/>
 					<h4 class="name">Energy Storage</h4>
-					<img src="img/under.png" class="img-under"/>
+					<div class="sm-under"></div>
 				</div>
 			</div>
 			
@@ -89,7 +89,7 @@
 				<div>
 					<img src="img/ic_installation.png" class="img-x"/>
 					<h4 class="name">Installation</h4>
-					<img src="img/under.png" class="img-under"/>
+					<div class="sm-under"></div>
 				</div>
 			</div>
 			
@@ -98,7 +98,7 @@
 				<div>
 					<img src="img/ic_customer.png" class="img-x"/>
 					<h4 class="name">Customer</h4>
-					<img src="img/under.png" class="img-under"/>
+					<div class="sm-under"></div>
 				</div>
 			</div>
 			
@@ -116,8 +116,7 @@
 		</div>
 		
 		<!-- IMPORT JS FILES -->
-		<script src="js/components/jquery.js"></script>
-		<script src="js/components/bootstrap.js"></script>
+		<script src="js/components/bundle.js"></script>
 		<script src="js/components/waitForImages.js"></script>
 		<script src="js/components/slick.js"></script>
 		<script src="js/components/lightbox.js"></script>

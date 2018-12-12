@@ -1,5 +1,9 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: PUT, GET, POST");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
 // GET CurrentState
 
 if(isset($_GET['get']) && strtolower($_GET['get']) == 'currentstate') {
@@ -25,9 +29,9 @@ if(isset($_GET['get']) && strtolower($_GET['get']) == 'currentstate') {
 			$entity = (string) $row['entity'];
 			if(!isset($dbh->$type)) 
 				$dbh->$type = new stdClass();
-			$dbh->$type->$entity = $row;
+			$dbh->$type->$entity = intval($row['entityvalue']);
+			$dbh->logtime = (string) $row['logtime'];
 		}
-		
 		header('Content-Type: application/json');
 		echo json_encode($dbh, JSON_FORCE_OBJECT);
 	}
@@ -144,7 +148,7 @@ else if(isset($_GET['get']) && strtolower($_GET['get']) == 'warningsdata') {
 	// Connect to Database
 	$db = new PDO('sqlite:/srv/bx/usv.db3');
 	
-	$result = $db->query("SELECT * FROM (SELECT id, type, entity, entityvalue, logtime FROM WarningsData ORDER BY id DESC LIMIT " . $_GET['count']. ") ORDER BY id ASC", PDO::FETCH_ASSOC);
+	$result = $db->query("SELECT * FROM (SELECT id, type, entity, entityvalue, logtime FROM WarningsData ORDER BY id DESC LIMIT " . $count . ") ORDER BY id ASC", PDO::FETCH_ASSOC);
 	
 	$dbh = array();
 	foreach($result as $r) { $dbh[] = $r; }
@@ -188,10 +192,10 @@ else if(isset($_GET['set']) && strtolower($_GET['set']) == 'command') {
 	
 	// Build Command
 	$type = ""; $entity = "0"; $text1 = ""; $text2 = "";
-	if(isset($_GET['type']))   $type = $_GET['type'];
+	if(isset($_GET['type']))   $type   = $_GET['type'];
 	if(isset($_GET['entity'])) $entity = $_GET['entity'];
-	if(isset($_GET['text1']))  $text1 = $_GET['text1'];
-	if(isset($_GET['text2']))  $text2 = $_GET['text2'];
+	if(isset($_GET['text1']))  $text1  = $_GET['text1'];
+	if(isset($_GET['text2']))  $text2  = $_GET['text2'];
 	
 	// Send Command to Database
 	if($type != "" && $entity != "") {

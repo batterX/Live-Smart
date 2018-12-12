@@ -138,7 +138,7 @@ $('.btnFunc').on('click', function() {
 	$('#statement').val(statement);
 	
 	$('#statement')[0].scrollLeft = $('#statement')[0].scrollWidth;
-
+	
 });
 
 
@@ -166,8 +166,7 @@ $('#submit').on('click', function() {
 	
 	// MODE
 	mode = $('#active').find('option:selected').val().toLowerCase();
-	if(mode == 'enable') mode = 1;
-	else mode = 0;
+	if(mode == 'enable') mode = 1; else mode = 0;
 	
 	// ON-DELAY
 	V6 = $('#onDelay').val();
@@ -183,38 +182,37 @@ $('#submit').on('click', function() {
 	
 	// STATEMENT
 	var st = $('#statement').val().trim();
-	var last = st.substr(st.lastIndexOf(' ') + 1);
-
-	if(st.trim() != '' && last.trim() != '') {
-		if(st.split('(').length - 1 == st.split(')').length - 1)
-			S1 = st;
-	}
-
-	$.ajax({
-		type: 'POST',
-		url: '../db-interaction/service.php',
-		data: {
-			"action": 'setOutputConfig',
-			"entity": entity,
-			"mode": mode,
-			"V4": V4,
-			"V5": V5,
-			"V6": V6,
-			"S1": S1
-		},
-		success: function (response) {
-			if(response) {
-				alert("Output Configuration Saved!");
-				console.log(response);
-			} else {
+	
+	if(st != '' && st.split('(').join('').length == st.split(')').join('').length) {
+		S1 = st;
+		$.ajax({
+			type: 'POST',
+			url: '../db-interaction/service.php',
+			data: {
+				"action": 'setOutputConfig',
+				"entity": entity,
+				"mode": mode,
+				"V4": V4,
+				"V5": V5,
+				"V6": V6,
+				"S1": S1
+			},
+			success: function (response) {
+				if(response) {
+					alert("Output Configuration Saved!");
+					console.log(response);
+				} else {
+					alert("Error, please try again!");
+					console.log(response);
+				}
+			},
+			error: function (response) {
 				alert("Error, please try again!");
 				console.log(response);
 			}
-		},
-		error: function (response) {
-			alert("Error, please try again!");
-			console.log(response);
-		}
-	});
+		});
+	} else {
+		alert("There seems to be an error in the statement.");
+	}
 
 });

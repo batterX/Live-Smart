@@ -3,78 +3,284 @@ var MD5 = function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){
 password = "914706ee0483ce46dd61f26907167baf";
 authenticated = false;
 
-
-
-
-
-
-
-
-
-
-$('#update').on('click', function() {
+function checkPassword() {
 	if(!authenticated) {
 		pw = prompt("Enter Password", "");
 		if(password == MD5(pw)) 
 			authenticated = true;
 	}
-	
-	if(!authenticated)
-		return;
-	
-	flag = confirm("Press 'OK' to Update the System\nThe system will automatically reboot after a successfull update\nThe version number will change as well");
+	if(!authenticated) {
+		alert("That password is incorrect!");
+		return false;
+	}
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+/*
+	Update
+*/
+
+var checkUpdateInterval;
+
+$('#update').on('click', function() {
+	// Check Password
+	if(!checkPassword()) return;
+	// Prompt Confirm
+	flag = confirm("Press 'OK' to Update the Live&Smart\nThe Live&Smart will automatically reboot after a successfull update\n");
 	if(!flag) return;
-	
+	// Execute Command
 	$.ajax({
 		type: 'POST',
 		url: 'php/update.php',
-		success: function (response) {},
-		error: function (response) {}
+		success: function(response) {
+			location.reload(true);
+		}
 	});
+	// Wait 2.5 sec, then setInterval
+	setTimeout(function() {
+		$('.overlay-update'             ).show();
+		$('.overlay-update .downloading').show();
+		$('.overlay-update .rebooting'  ).hide();
+		$('.overlay-update .finishing'  ).hide();
+		$('.overlay-update .completed'  ).hide();
+		clearInterval(checkUpdateInterval);
+		checkUpdateInterval = undefined;
+		checkUpdateInterval = setInterval(checkUpdate_waitForError, 5000);
+	}, 2500);
 });
 
+// 1. Wait for Error
+function checkUpdate_waitForError() {
+	$.ajax({
+		type: 'GET',
+		url: './index.html',
+		timeout: 2500,
+		cache: false,
+		success: function(response) {
+			if(response) {
+				// don't care
+			} else {
+				$('.overlay-update'             ).show();
+				$('.overlay-update .downloading').hide();
+				$('.overlay-update .rebooting'  ).show();
+				$('.overlay-update .finishing'  ).hide();
+				$('.overlay-update .completed'  ).hide();
+				clearInterval(checkUpdateInterval);
+				checkUpdateInterval = undefined;
+				checkUpdateInterval = setInterval(checkUpdate_waitForSuccess, 5000);
+			}
+		},
+		error: function() {
+			$('.overlay-update'             ).show();
+			$('.overlay-update .downloading').hide();
+			$('.overlay-update .rebooting'  ).show();
+			$('.overlay-update .finishing'  ).hide();
+			$('.overlay-update .completed'  ).hide();
+			clearInterval(checkUpdateInterval);
+			checkUpdateInterval = undefined;
+			checkUpdateInterval = setInterval(checkUpdate_waitForSuccess, 5000);
+		}
+	});
+}
+// 2. Wait for Success
+function checkUpdate_waitForSuccess() {
+	$.ajax({
+		type: 'GET',
+		url: './index.html',
+		timeout: 2500,
+		cache: false,
+		success: function(response) {
+			if(response) {
+				$('.overlay-update'             ).show();
+				$('.overlay-update .downloading').hide();
+				$('.overlay-update .rebooting'  ).hide();
+				$('.overlay-update .finishing'  ).show();
+				$('.overlay-update .completed'  ).hide();
+				clearInterval(checkUpdateInterval);
+				checkUpdateInterval = undefined;
+				setTimeout(function() {
+					$('.overlay-update'             ).show();
+					$('.overlay-update .downloading').hide();
+					$('.overlay-update .rebooting'  ).hide();
+					$('.overlay-update .finishing'  ).hide();
+					$('.overlay-update .completed'  ).show();
+					//location.reload(true);
+				}, 30000);
+			} else {
+				// don't care
+			}
+		},
+		error: function() {
+			// don't care
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+/*
+	Reboot
+*/
+
+var checkRebootInterval;
+
 $('#reboot').on('click', function() {
-	if(!authenticated) {
-		pw = prompt("Enter Password", "");
-		if(password == MD5(pw)) 
-			authenticated = true;
-	}
-	
-	if(!authenticated)
-		return;
-	
-	flag = confirm("Press 'OK' to Reboot the System");
+	// Check Password
+	if(!checkPassword()) return;
+	// Prompt Confirm
+	flag = confirm("Press 'OK' to Reboot the Live&Smart");
 	if(!flag) return;
-	
+	// Execute Command
 	$.ajax({
 		type: 'POST',
 		url: 'php/reboot.php',
-		success: function (response) {},
-		error: function (response) {}
+		success: function(response) {
+			location.reload(true);
+		}
 	});
+	// Wait 2.5 sec, then setInterval
+	setTimeout(function() {
+		$('.overlay-reboot'           ).show();
+		$('.overlay-reboot .rebooting').show();
+		$('.overlay-reboot .completed').hide();
+		if(checkRebootInterval == undefined)
+			checkRebootInterval = setInterval(checkReboot_waitForError, 5000);
+	}, 2500);
 });
 
+// 1. Wait for Error
+function checkReboot_waitForError() {
+	$.ajax({
+		type: 'GET',
+		url: './index.html',
+		timeout: 2500,
+		cache: false,
+		success: function(response) {
+			if(response) {
+				// don't care
+			} else {
+				clearInterval(checkRebootInterval);
+				checkRebootInterval = undefined;
+				checkRebootInterval = setInterval(checkReboot_waitForSuccess, 5000);
+			}
+		},
+		error: function() {
+			clearInterval(checkRebootInterval);
+			checkRebootInterval = undefined;
+			checkRebootInterval = setInterval(checkReboot_waitForSuccess, 5000);
+		}
+	});
+}
+// 2. Wait for Success
+function checkReboot_waitForSuccess() {
+	$.ajax({
+		type: 'GET',
+		url: './index.html',
+		timeout: 2500,
+		cache: false,
+		success: function(response) {
+			if(response) {
+				$('.overlay-reboot'           ).show();
+				$('.overlay-reboot .rebooting').hide();
+				$('.overlay-reboot .completed').show();
+				clearInterval(checkRebootInterval);
+				checkRebootInterval = undefined;
+				setTimeout(function() { location.reload(true); }, 30000);
+			} else {
+				// don't care
+			}
+		},
+		error: function() {
+			// don't care
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	Reboot
+*/
+
+var checkShutdownInterval;
+
 $('#shutdown').on('click', function() {
-	if(!authenticated) {
-		pw = prompt("Enter Password", "");
-		if(password == MD5(pw)) 
-			authenticated = true;
-	}
-	
-	if(!authenticated)
-		return;
-	
-	flag = confirm("Press 'OK' to Shutdown the System");
+	// Check Password
+	if(!checkPassword()) return;
+	// Prompt Confirm
+	flag = confirm("Press 'OK' to Shutdown the Live&Smart");
 	if(!flag) return;
-	
+	// Execute Command
+	console.log("Shutting down...");
 	$.ajax({
 		type: 'POST',
 		url: 'php/shutdown.php',
-		success: function (response) {},
-		error: function (response) {}
+		success: function(response) {
+			console.log("Some Error, maybe?");
+			location.reload(true);
+		}
 	});
+	// Wait 2.5 sec, then setInterval
+	setTimeout(function() {
+		console.log("Executed!");
+		$('.overlay-shutdown').show();
+		if(checkShutdownInterval == undefined)
+			checkShutdownInterval = setInterval(checkShutdown_waitForError, 10000);
+	}, 2500);
 });
 
+// 1. Wait for Error
+function checkShutdown_waitForError() {
+	$.ajax({
+		type: 'GET',
+		url: './index.html',
+		timeout: 2500,
+		cache: false,
+		success: function(response) {
+			if(response) {
+				// don't care
+			} else {
+				clearInterval(checkShutdownInterval);
+				checkShutdownInterval = undefined;
+				$('.overlay-shutdown').hide();
+				$('.overlay-shutdown-success').show();
+			}
+		},
+		error: function() {
+			clearInterval(checkShutdownInterval);
+			checkShutdownInterval = undefined;
+			$('.overlay-shutdown').hide();
+			$('.overlay-shutdown-success').show();
+		}
+	});
+}
 
 
 
@@ -84,14 +290,25 @@ $('#shutdown').on('click', function() {
 
 
 
-$('#mainStart').on('click', function() {
-	
-	alert("Starting...");
 
-});
+/*
+	Animate dots
+*/
 
-$('#mainStop').on('click', function() {
+var step = 0;
 
-	alert("Stopping...");
-	
-});
+setInterval(function() {
+	if(step == 0) {
+		$('.dots').html('');
+		step++;
+	} else if(step == 1) {
+		$('.dots').html('.');
+		step++;
+	} else if(step == 2) {
+		$('.dots').html('..');
+		step++;
+	} else if(step == 3) {
+		$('.dots').html('...');
+		step = 0;
+	}
+}, 500);

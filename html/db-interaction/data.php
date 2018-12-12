@@ -14,9 +14,11 @@ if(!empty($_POST['action']))
 		case 'setDeviceInfo':
 			echo $dataObj->setDeviceInfo();
 			break;
+			
 		case 'getDeviceModel':
 			echo $dataObj->getDeviceModel();
 			break;
+		
 		case 'getCurrentState':
 			echo $dataObj->getCurrentState();
 			break;
