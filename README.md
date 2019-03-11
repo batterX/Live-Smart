@@ -1,4 +1,4 @@
-# batterX Live&Smart Home (v18.12.5)
+# batterX Live&Smart Home (v18.12.6)
 
 ## Update Monitoring App
 
@@ -40,6 +40,10 @@ $ sudo sh /home/pi/update.sh
 ---
 
 ## Version History
+
+#### `v18.12.6`
+
+- Fixed the problem with the Energy Meter, that caused the battery to discharge with full power into the Grid
 
 #### `v18.12.5`
 
