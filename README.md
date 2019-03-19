@@ -1,4 +1,4 @@
-# batterX Live&Smart Home (v18.12.6)
+# batterX Live&Smart Home (v18.12.7)
 
 ## Update Monitoring App
 
@@ -40,6 +40,10 @@ $ sudo sh /home/pi/update.sh
 ---
 
 ## Version History
+
+#### `v18.12.7`
+
+- Fixed a bug causing the monitoring to stop working when gpio/commands statement not correct
 
 #### `v18.12.6`
 
